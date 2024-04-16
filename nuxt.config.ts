@@ -231,7 +231,7 @@ export default defineNuxtConfig({
 
     // pwa配置
     pwa: {
-        registerType: 'autoUpdate',
+        // registerType: 'autoUpdate',
         base: '/',
         manifest: {
             id: '/',

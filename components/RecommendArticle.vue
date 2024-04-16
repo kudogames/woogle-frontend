@@ -13,7 +13,7 @@ const { articles, category } = defineProps({
 <template>
     <div>
         <h1 class="py-10px pl-10px text-28px">{{ category }}</h1>
-        <div class="flex flex-wrap justify-between gap-x-30px px-10px md-gap-x-60px">
+        <div class="flex flex-wrap justify-start gap-x-30px px-10px md-gap-x-60px">
             <a
                 v-for="(item, index) in articles"
                 :key="index"
