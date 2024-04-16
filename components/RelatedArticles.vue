@@ -20,14 +20,14 @@ defineProps({
                 <div class="group relative h-full w-full flex flex-col">
                     <div class="relative z-20 w-full">
                         <div
-                            class="bg-color9 absolute left-14px top-14px z-10 rd-20px px-20px py-2px text-center text-14px color-white opacity-80"
+                            class="absolute left-14px top-14px z-10 rd-20px bg-color9 px-20px py-2px text-center text-14px color-white opacity-80"
                         >
                             {{ item.category.name }}
                         </div>
 
                         <div
                             group-hover="rd-b-0 b-color8 b-b-#fff"
-                            class="border-color5 relative w-full flex flex-shrink-0 overflow-hidden b-2 rd-lg pt-51.8%"
+                            class="relative w-full flex flex-shrink-0 overflow-hidden b-2 border-color5 rd-lg pt-51.8%"
                         >
                             <img
                                 v-lazy="item.coverImg"

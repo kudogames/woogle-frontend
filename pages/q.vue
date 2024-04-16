@@ -43,74 +43,33 @@ useHead({
 })
 const relatedTag = ref([
     {
-        name: 'Health',
-        svg: 'i-svg-health',
+        name: 'Vehicle Donation',
+        svg: 'i-svg-donation',
         color1: '#ffad76',
         color2: '#fff2dc',
         color3: '#ba794d',
     },
 
     {
-        name: 'Career',
-        svg: 'i-svg-career',
+        name: 'Vehicle plans',
+        svg: 'i-svg-plans',
         color1: '#a6d893',
         color2: '#f0f9e4',
         color3: '#749e4c',
     },
     {
-        name: 'Education',
-        svg: 'i-svg-education',
-        color1: '#9dcbea',
-        color2: '#edf5f9',
-        color3: '#86acbc',
-        // END: abpxx6d04wxr
-    },
-
-    {
-        name: 'Housiong',
-        svg: 'i-svg-housing',
+        name: 'Motor Vehicles',
+        svg: 'i-svg-motor',
         color1: '#c29fdd',
         color2: '#f0ebf7',
         color3: '#a27cce',
     },
     {
-        name: 'LifeStyle',
-        svg: 'i-svg-lifestyle',
+        name: 'Repair',
+        svg: 'i-svg-repair',
         color1: '#ffa4a4',
         color2: '#f9eeea',
         color3: '#bf6d6d',
-    },
-
-    {
-        name: 'Fashion',
-        svg: 'i-svg-fashion',
-        color1: '#b5b5f7',
-        color2: '#edeef4',
-        color3: '#9191ce',
-    },
-
-    {
-        name: 'Law',
-        svg: 'i-svg-law',
-        color1: '#ffc364',
-        color2: '#ffefd2',
-        color3: '#c48458',
-    },
-
-    {
-        name: 'Game',
-        svg: 'i-svg-game',
-        color1: '#8faef2',
-        color2: '#e8f0f7',
-        color3: '#79a2cc',
-    },
-
-    {
-        name: 'TV show',
-        svg: 'i-svg-tvshow',
-        color1: '#e5ad88',
-        color2: '#f4ebe1',
-        color3: '#cc846a',
     },
 ])
 
@@ -156,7 +115,7 @@ const { isMobile } = useDevice()
                                 :href="`/article/${item.uid}`"
                             >
                                 <div
-                                    class="b-color5 h-100px w-100px flex flex-center flex-shrink-0 items-center overflow-hidden b-2 rd-10px sm-h-140px sm-w-140px"
+                                    class="h-100px w-100px flex flex-center flex-shrink-0 items-center overflow-hidden b-2 b-color5 rd-10px sm-h-140px sm-w-140px"
                                 >
                                     <!-- <div class="h-60px w-60px flex-center flex-shrink-0 sm-h-100px sm-w-100px"> -->
                                     <img
@@ -170,7 +129,7 @@ const { isMobile } = useDevice()
 
                                 <div class="w-full flex flex-col justify-between gap-4px sm-gap-12px">
                                     <div
-                                        class="color-color1 hover:color-color6 line-clamp-1 w-full text-16px font-bold md-text-20px sm-text-18px hover:italic"
+                                        class="line-clamp-1 w-full text-16px font-bold color-color1 md-text-20px sm-text-18px hover:italic hover:color-color6"
                                     >
                                         {{ item.title }}
                                     </div>
@@ -195,7 +154,7 @@ const { isMobile } = useDevice()
                         :svg="item.svg"
                     />
 
-                    <AdSenseBlock
+                    <!-- <AdSenseBlock
                         v-if="index === 0"
                         class="mt-20px w-full"
                         ins-style="display: block; width: 300px; height:
@@ -204,7 +163,7 @@ const { isMobile } = useDevice()
                         data-full-width-responsive="false"
                         :data-ad-slot="adQ1"
                         :screen-width-range="[768, -1]"
-                    />
+                    /> -->
                 </div>
             </div>
         </div>

@@ -13,7 +13,7 @@ const { articles } = defineProps({
             v-for="(item, index) in articles"
             :key="index"
             :href="`/article/${item.uid}`"
-            class="b-color5 w-full flex items-center b-b-2 py-40px"
+            class="w-full flex items-center b-b-2 b-color5 py-40px"
         >
             <div class="flex flex-center flex-col gap-x-30px sm-flex-row">
                 <div class="w-250px flex-center flex-shrink-0 xl-w-350px">
@@ -33,10 +33,10 @@ const { articles } = defineProps({
                         <span class="color-color7">{{ item.category.name.toUpperCase() }}</span>
                     </div>
 
-                    <div class="color-color1 line-clamp-1 text-18px font-550 xl-line-clamp-2">
+                    <div class="line-clamp-1 text-18px font-550 color-color1 xl-line-clamp-2">
                         {{ item.title }}
                     </div>
-                    <div class="color-color7 line-clamp-2 text-14px xl-line-clamp-3">{{ item.description }}</div>
+                    <div class="line-clamp-2 text-14px color-color7 xl-line-clamp-3">{{ item.description }}</div>
                 </div>
             </div>
         </a>

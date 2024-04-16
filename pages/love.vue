@@ -33,9 +33,9 @@ loadingMoreData<Article>({
         </div>
 
         <div class="mx-auto max-w-1200px w-full py-10px">
-            <AdSenseBlock :data-ad-slot="adIndex1" />
+            <!-- <AdSenseBlock :data-ad-slot="adIndex1" /> -->
             <LovePage class="pt-50px" :articles="trendingArticleList" category="Trending" :size="12" />
-            <AdSenseBlock :data-ad-slot="adIndex2" />
+            <!-- <AdSenseBlock :data-ad-slot="adIndex2" /> -->
             <LovePage class="pt-50px" :articles="allArticleList" category="All Articles" :size="36" />
         </div>
         <LoadingAnim :visible="dataLoading" />

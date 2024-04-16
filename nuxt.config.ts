@@ -213,7 +213,7 @@ export default defineNuxtConfig({
                 driver: 'redis',
                 host: 'localhost',
                 port: 6379,
-                db: 1,
+                db: 3,
             },
         },
         devStorage: {
@@ -221,7 +221,7 @@ export default defineNuxtConfig({
                 driver: 'redis',
                 host: 'localhost',
                 port: 6379,
-                db: 1,
+                db: 3,
             },
         },
         externals: {

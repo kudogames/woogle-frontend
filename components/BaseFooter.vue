@@ -18,12 +18,12 @@ const data = ref([
 
 <template>
     <footer class="w-full">
-        <div class="relative h-[30px] flex justify-center gap-[20px] flex-items-center bg-theme">
+        <div class="relative h-[30px] flex justify-center gap-[20px] flex-items-center bg-color1">
             <a
                 v-for="(item, index) in data"
                 :key="index"
                 :href="item.to"
-                class="text-[14px] color-[#333] hover:color-[#666] hover:underline"
+                class="text-[14px] color-[#fff] hover:color-color8 hover:underline"
             >
                 {{ item.text }}</a
             >

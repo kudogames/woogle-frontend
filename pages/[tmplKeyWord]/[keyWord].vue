@@ -123,13 +123,13 @@ loadingMoreData<Article>({
 
             <!-- -------------------------AD----------------------------   -->
             <template #Ad>
-                <AdSenseBlock
+                <!-- <AdSenseBlock
                     :class="adData.adClass"
                     :ins-style="adData.adStyle"
                     :data-ad-format="adData.adFormat"
                     :data-full-width-responsive="adData.adResponsive"
                     :data-ad-slot="adData.adSlot"
-                />
+                /> -->
             </template>
         </component>
         <LoadingAnim :visible="dataLoading" />

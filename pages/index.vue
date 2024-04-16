@@ -17,14 +17,14 @@ loadingMoreData<Article>({
 </script>
 
 <template>
-    <div class="bg-color2 mt-90px w-full">
+    <div class="mt-90px w-full bg-color2">
         <div class="mx-auto max-w-[1200px] w-full">
-            <AdSenseBlock :data-ad-slot="adIndex1" />
+            <!-- <AdSenseBlock :data-ad-slot="adIndex1" /> -->
 
             <SearchBar class="mx-auto max-w-900px px-10px py-30px" />
 
             <RecommendArticle class="pt-50px" :articles="trendingArticleList" category="Trending" :size="6" />
-            <AdSenseBlock :data-ad-slot="adIndex2" />
+            <!-- <AdSenseBlock :data-ad-slot="adIndex2" /> -->
             <RecommendArticle class="pt-50px" :articles="allArticleList" category="All Articles" :size="24" />
         </div>
         <LoadingAnim :visible="dataLoading" />

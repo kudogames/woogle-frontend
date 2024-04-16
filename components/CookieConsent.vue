@@ -28,7 +28,7 @@ onMounted(() => {
             </a>
         </div>
         <div
-            class="t-cookie-bar bg-color1 hover:bg-color8 cursor-pointer whitespace-nowrap b-transparent rd-[20px] px8 py-[0.8rem] line-height-[16px] color-#fff hover:color-white"
+            class="t-cookie-bar cursor-pointer whitespace-nowrap b-transparent rd-[20px] bg-color1 px8 py-[0.8rem] line-height-[16px] color-#fff hover:bg-color8 hover:color-white"
             @click="allowCookie"
         >
             Got it!

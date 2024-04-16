@@ -2,60 +2,30 @@
 const category = [
     {
         id: 1,
-        name: 'Health',
-        slug: 'health',
+        name: 'Vehicle Donation',
+        slug: 'vehicle-donation',
     },
     {
         id: 2,
-        name: 'Career',
-        slug: 'career',
+        name: 'Vehicle plans',
+        slug: 'vehicle-plans',
     },
     {
         id: 3,
-        name: 'Education',
-        slug: 'education',
+        name: 'Motor Vehicles',
+        slug: 'motor-vehicles',
     },
     {
         id: 4,
-        name: 'Housing',
-        slug: 'housing',
-    },
-    {
-        id: 5,
-        name: 'Lifestyle',
-        slug: 'lifestyle',
-    },
-    {
-        id: 6,
-        name: 'Fashion',
-        slug: 'fashion',
-    },
-    {
-        id: 7,
-        name: 'Law',
-        slug: 'law',
-    },
-    {
-        id: 8,
-        name: 'Game',
-        slug: 'game',
-    },
-    {
-        id: 9,
-        name: 'TV Show',
-        slug: 'tv-show',
-    },
-    {
-        id: 10,
-        name: 'Car',
-        slug: 'car',
+        name: 'Repair',
+        slug: 'repair',
     },
 ]
 const sidebarVisible = ref<boolean>(false)
 </script>
 
 <template>
-    <header class="bg-color1 fixed left-0 top-0 z-100 h-70px w-full flex-center py-10px shadow-lg">
+    <header class="fixed left-0 top-0 z-100 h-70px w-full flex-center bg-color1 py-10px shadow-lg">
         <div class="my0 h-50px max-w-1400px w-full flex justify-between px-20px">
             <a href="/" class="h-full w40 flex items-center justify-center xs-w50">
                 <div class="i-svg-logo h-full w-full"></div>
@@ -72,7 +42,7 @@ const sidebarVisible = ref<boolean>(false)
                 </a>
             </div>
             <div
-                class="color-color2 i-svg-menu relative block h-50px w-50px lg-hidden"
+                class="i-svg-menu relative block h-50px w-50px color-color2 lg-hidden"
                 @click="sidebarVisible = !sidebarVisible"
             ></div>
         </div>

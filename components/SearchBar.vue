@@ -8,7 +8,7 @@ const { searchText } = defineProps({
 </script>
 <template>
     <div>
-        <form action="/q" class="border-color5 focus:border-color5 relative h-40px overflow-hidden b-2px rd-40px">
+        <form action="/q" class="relative h-40px overflow-hidden b-2px border-color5 rd-40px focus:border-color5">
             <input
                 :value="searchText"
                 type="text"

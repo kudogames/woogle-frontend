@@ -9,9 +9,9 @@ const { rainArticleList } = data.value?.data ?? {}
 </script>
 
 <template>
-    <div class="mt-90px min-h-[calc(100vh-120px)] w-full bg-bg">
+    <div class="bg-bg mt-90px min-h-[calc(100vh-120px)] w-full">
         <div class="mx-auto max-w-[1200px] w-full">
-            <AdSenseBlock :data-ad-slot="adRain1" />
+            <!-- <AdSenseBlock :data-ad-slot="adRain1" /> -->
             <div class="flex flex-col text-center">
                 <h1 class="text-30px font-bold font-italic">
                     Explore curated, high-quality information customized just for you.

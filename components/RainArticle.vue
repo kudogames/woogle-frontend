@@ -31,30 +31,26 @@ const { articles } = defineProps({
                         </h2>
 
                         <p
-                            class="color-color7 line-clamp-2 block text-start text-16px font-100 xl-line-clamp-3 lg-text-18px"
+                            class="line-clamp-2 block text-start text-16px font-100 color-color7 xl-line-clamp-3 lg-text-18px"
                         >
                             {{ item.description }}
                         </p>
 
-                        <div class="">
-                            <a
-                                :href="`/article/${item.uid}`"
-                                type="button"
-                                style="
-                                    background: radial-gradient(
-                                                at 0 -15%,
-                                                hsla(0, 0%, 100%, 0.07) 70%,
-                                                hsla(0, 0%, 100%, 0) 71%
-                                            )
-                                            0 0/80% 90% no-repeat content-box,
-                                        linear-gradient(#00b700, #1d9b1d) content-box,
-                                        linear-gradient(#16b916, #309730) border-box;
-                                "
-                                class="h-60px w-200px flex-center border-4px border-#00000024 rd-20px text-32px font-bold color-white text-shadow-[1px_1px_rgba(0,0,0,0.5)] shadow-[inset_0_2px_2px_#76c376] contrast-100 transition-duration-0.14s transition-ease-in-out lg-h-80px lg-w-300px lg-text-40px hover:contrast-160"
-                            >
-                                START
-                            </a>
-                        </div>
+                        <button
+                            style="
+                                background: radial-gradient(
+                                            at 0 -15%,
+                                            hsla(0, 0%, 100%, 0.07) 70%,
+                                            hsla(0, 0%, 100%, 0) 71%
+                                        )
+                                        0 0/80% 90% no-repeat content-box,
+                                    linear-gradient(#00b700, #1d9b1d) content-box,
+                                    linear-gradient(#16b916, #309730) border-box;
+                            "
+                            class="h-60px w-200px flex-center border-4px border-#00000024 rd-20px text-32px font-bold color-white text-shadow-[1px_1px_rgba(0,0,0,0.5)] shadow-[inset_0_2px_2px_#76c376] contrast-100 transition-duration-0.14s transition-ease-in-out lg-h-80px lg-w-300px lg-text-40px hover:contrast-160"
+                        >
+                            START
+                        </button>
                     </div>
                 </div>
             </a>

@@ -18,9 +18,9 @@ const handleActiveIndexChange = (swiper: { realIndex: number }) => {
 </script>
 
 <template>
-    <div class="mb-100px mt-90px w-full bg-bg">
+    <div class="bg-bg mb-100px mt-90px w-full">
         <div class="mx-auto max-w-[1200px] w-full">
-            <AdSenseBlock :data-ad-slot="adBlue1" />
+            <!-- <AdSenseBlock :data-ad-slot="adBlue1" /> -->
             <div class="flex flex-col text-center">
                 <h1 class="text-30px font-bold font-italic">
                     Explore curated, high-quality information customized just for you.
