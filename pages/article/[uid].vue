@@ -30,7 +30,7 @@ const { currentArticle, relatedArticleList } = data.value?.data ?? {}
                         <p class="text-14px color-#4d5156">{{ currentArticle?.description }}</p>
                     </div>
                     <!-- 相关搜索 -->
-                    <RelatedSearch />
+                    <!-- <RelatedSearch /> -->
                     <!-- 图片 -->
                     <div class="relative w-full flex flex-shrink-0 overflow-hidden b-2 border-#efdcca rd-lg pt-52.12%">
                         <img

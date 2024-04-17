@@ -101,7 +101,7 @@ const { isMobile } = useDevice()
         <SearchBar v-model:search-text="searchText" class="mx-auto max-w-900px w-full px-10px py-30px" />
         <div class="flex flex-col justify-center gap-20px md-flex-row">
             <div class="max-w-900px w-full">
-                <div id="searchResult" class="w-full"></div>
+                <!-- <div id="searchResult" class="w-full"></div> -->
                 <div class="my-20px w-full flex flex-col flex-wrap">
                     <div class="my-2 pl-2 color-gray-5">Web Results</div>
                     <div class="flex flex-col gap-8px sm-gap-0">
