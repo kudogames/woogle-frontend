@@ -4,6 +4,10 @@ const { articles } = defineProps({
         type: Array<Article>,
         default: () => [],
     },
+    category: {
+        type: String,
+        default: '',
+    },
 })
 </script>
 
@@ -29,8 +33,8 @@ const { articles } = defineProps({
 
                 <div class="flex flex-col justify-center gap-10px">
                     <div class="flex gap-10px py-10px color-gray-4">
-                        <span class="color-color6">{{ item.category.name.toUpperCase() }}</span> |
-                        <span class="color-color7">{{ item.category.name.toUpperCase() }}</span>
+                        <span class="color-color6">{{ category.toUpperCase() }}</span> |
+                        <span class="color-color7">{{ category.toUpperCase() }}</span>
                     </div>
 
                     <div class="line-clamp-1 text-18px font-550 color-color1 xl-line-clamp-2">
