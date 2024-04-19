@@ -20,27 +20,27 @@ loadingMoreData<Article>({
         q: searchText,
     },
 })
-useHead({
-    script: [
-        {
-            async: true,
-            src: 'https://www.google.com/adsense/search/ads.js',
-        },
-        {
-            innerHTML: `
-            ;(function (g, o) {
-                    ;(g[o] =
-                        g[o] ||
-                        function () {
-                            ;(g[o]['q'] = g[o]['q'] || []).push(arguments)
-                        }),
-                        (g[o]['t'] = 1 * new Date())
-                })(window, '_googCsa')
-            `,
-            type: 'text/javascript',
-        },
-    ],
-})
+// useHead({
+//     script: [
+//         {
+//             async: true,
+//             src: 'https://www.google.com/adsense/search/ads.js',
+//         },
+//         {
+//             innerHTML: `
+//             ;(function (g, o) {
+//                     ;(g[o] =
+//                         g[o] ||
+//                         function () {
+//                             ;(g[o]['q'] = g[o]['q'] || []).push(arguments)
+//                         }),
+//                         (g[o]['t'] = 1 * new Date())
+//                 })(window, '_googCsa')
+//             `,
+//             type: 'text/javascript',
+//         },
+//     ],
+// })
 const relatedTag = ref([
     {
         name: 'Vehicle Donation',
@@ -77,28 +77,28 @@ const searchResultBlock = {
     container: 'searchResult',
     number: 2,
 }
-onMounted(() => {
-    const styleId = isMobile ? '2233686589' : '4728253849'
+// onMounted(() => {
+//     const styleId = isMobile ? '2233686589' : '4728253849'
 
-    const searchOptions = {
-        // pubId: 'pub-9616389000213823',
-        pubId: adsenseSearchId,
-        relatedSearchTargeting: 'content',
-        styleId,
-        adsafe: 'medium',
-        query: searchText,
-        resultsPageBaseUrl: `${frontUrl}/q?`, // Enter the base URL for your results page
-        resultsPageQueryParam: 'q', // (Default to 'q') Matches the param denoting the query on the search page
-    }
-    // @ts-ignore
-    _googCsa('ads', searchOptions, searchResultBlock)
-})
+//     const searchOptions = {
+//         // pubId: 'pub-9616389000213823',
+//         pubId: adsenseSearchId,
+//         relatedSearchTargeting: 'content',
+//         styleId,
+//         adsafe: 'medium',
+//         query: searchText,
+//         resultsPageBaseUrl: `${frontUrl}/q?`, // Enter the base URL for your results page
+//         resultsPageQueryParam: 'q', // (Default to 'q') Matches the param denoting the query on the search page
+//     }
+//     // @ts-ignore
+//     _googCsa('ads', searchOptions, searchResultBlock)
+// })
 
 const { isMobile } = useDevice()
 </script>
 <template>
     <div class="mt-70px min-h-[calc(100vh-100px)] w-full px-10px">
-        <SearchBar v-model:search-text="searchText" class="mx-auto max-w-900px w-full px-10px py-30px" />
+        <SearchBar v-model:search-text="searchText" class="mx-auto max-w-900px w-full px-10px pb-10px pt-20px" />
         <div class="flex flex-col justify-center gap-20px md-flex-row">
             <div class="max-w-900px w-full">
                 <!-- <div id="searchResult" class="w-full"></div> -->
@@ -121,7 +121,7 @@ const { isMobile } = useDevice()
                                     <img
                                         v-lazy="item.coverImg"
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                                        class="h-full w-full object-cover"
+                                        class="h-full w-full object-contain"
                                         :alt="item.title"
                                     />
                                     <!-- </div> -->
