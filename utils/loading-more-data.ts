@@ -9,17 +9,22 @@ interface PageResponseType<T> {
     previous?: number | null
     count?: number
 }
+
 interface LoadingMoreDataParams<T> {
     url?: string
     oldDataList?: T[]
     dataLoading?: Ref<boolean>
-    size?: number
     query?: object
 }
+type PageParams<T> = {
+    page?: Ref<number>
+    size: number
+} & {
+    [P in keyof T]?: T[P]
+}
 
-export function loadingMoreData<T>(options: LoadingMoreDataParams<T>) {
-    const { url = '', oldDataList = [], size = 24, dataLoading = ref(false), query } = options
-    const page: Ref<number> = ref(1)
+export function loadingMoreData<T>(options: PageParams<LoadingMoreDataParams<T>>) {
+    const { url = '', oldDataList = [], size = 24, dataLoading = ref(false), query, page = ref(1) } = options
     // const dataLoading: Ref<boolean> = ref(false)
     const hasMoreData: Ref<boolean> = ref(true)
 

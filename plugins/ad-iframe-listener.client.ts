@@ -1,29 +1,52 @@
 export default defineNuxtPlugin(() => {
-    const adIframeClick = (callback: any) => {
-        const isTrack = ref(false)
+    let adBlockIsTrack = false
+    let relatedSearchIsTrack = false
+    let searchResultIsTrack = false
 
-        setInterval(() => {
-            const iframeEleNodeList = document.querySelectorAll('.ad-block ins iframe, #relatedSearch iframe')
+    setInterval(() => {
+        const adBlockIframeList = document.querySelectorAll('.ad-block ins iframe')
+        const relatedSearchFrameList = document.querySelectorAll('.related-search iframe')
+        const searchResultIframeList = document.querySelectorAll('.search-result iframe')
 
-            if (document.activeElement) {
-                const iframeEleArr = Array.prototype.slice.call(iframeEleNodeList)
-                const activeEle = document.activeElement
+        if (document.activeElement) {
+            const activeEle = document.activeElement
 
-                if (iframeEleArr.includes(activeEle)) {
-                    if (!isTrack.value) {
-                        isTrack.value = true
-                        callback()
-                    }
-                } else {
-                    isTrack.value = false
+            const adBlockIframeArr = Array.prototype.slice.call(adBlockIframeList)
+            const relatedSearchFrameArr = Array.prototype.slice.call(relatedSearchFrameList)
+            const searchResultIframeArr = Array.prototype.slice.call(searchResultIframeList)
+
+            if (adBlockIframeArr.includes(activeEle)) {
+                if (!adBlockIsTrack) {
+                    adBlockIsTrack = true
+                    window.dataLayer?.push({
+                        event: '1111NB',
+                    })
                 }
+            } else {
+                adBlockIsTrack = false
             }
-        }, 200)
-    }
 
-    adIframeClick(() => {
-        window.dataLayer?.push({
-            event: '1111NB',
-        })
-    })
+            if (relatedSearchFrameArr.includes(activeEle)) {
+                if (!relatedSearchIsTrack) {
+                    relatedSearchIsTrack = true
+                    window.dataLayer?.push({
+                        event: '8888NB',
+                    })
+                }
+            } else {
+                relatedSearchIsTrack = false
+            }
+
+            if (searchResultIframeArr.includes(activeEle)) {
+                if (!searchResultIsTrack) {
+                    searchResultIsTrack = true
+                    window.dataLayer?.push({
+                        event: '2222NB',
+                    })
+                }
+            } else {
+                searchResultIsTrack = false
+            }
+        }
+    }, 200)
 })

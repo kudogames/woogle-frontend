@@ -1,14 +1,137 @@
 <script setup lang="ts">
-const searchText = useRoute().query.q?.toString() || ''
-const { data, error } = await useFetch<APIResponseType<QPageType>>(`/api/v1/article/page/q?q=${searchText}`, {
+const {
+    query: { saiId, q: searchText, clickId, campaignId, adGroupId, adId },
+} = useRoute() as unknown as {
+    query: { saiId: string; q: string; clickId: string; campaignId: string; adGroupId: string; adId: string }
+}
+
+let saiIdObj = {}
+if (saiId) {
+    saiIdObj = {
+        saiId,
+    }
+}
+
+const params = new URLSearchParams({
+    q: searchText,
+    ...saiIdObj,
+}).toString()
+const { data, error } = await useFetch<APIResponseType<QPageType>>(`/api/v1/article/page/q?${params}`, {
     headers: { accept: 'application/json' },
 })
-
-const { searchArticleList, tagList = [] } = data.value?.data ?? {}
+const { searchArticleList, tagList = [], styleIdInfo } = data.value?.data ?? ({} as QPageType)
+if (!styleIdInfo.resultsStyleId) {
+    styleIdInfo.resultsStyleId = '8773662877'
+}
 
 const {
-    public: { adQ1, frontUrl, adsenseSearchId },
+    public: { baseTrackUrl, frontUrl, adsenseSearchId },
 } = useRuntimeConfig()
+
+interface ServerTrackEventParams {
+    clickId: string
+    campaignId: string
+    adGroupId: string
+    adId: string
+    channelId: string
+    keyword: string
+    resultsStyleId: string
+    termsStyleId: string
+}
+
+// 服务器 Track埋点
+const serverTrackEvent = (params: ServerTrackEventParams) => {
+    const img = new Image()
+    img.width = 0
+    img.height = 0
+    img.crossOrigin = 'anonymous'
+
+    const trackUrl = new URL(baseTrackUrl)
+    const trackUrlParams = new URLSearchParams()
+
+    trackUrlParams.set('clickId', params.clickId)
+    trackUrlParams.set('campaignId', params.campaignId)
+    trackUrlParams.set('adGroupId', params.adGroupId)
+    trackUrlParams.set('adId', params.adId)
+    trackUrlParams.set('channelId', params.channelId)
+    trackUrlParams.set('keyword', params.keyword)
+    trackUrlParams.set('parentStyleId', params.termsStyleId)
+    trackUrlParams.set('styleId', params.resultsStyleId)
+
+    trackUrl.search = trackUrlParams.toString()
+    img.src = trackUrl.toString()
+}
+
+// 点击搜索广告触发
+const trackSearch = () => {
+    let searchAdIsTrack = false
+
+    setInterval(() => {
+        const searchAdIframeEleNodeList = document.querySelectorAll('#searchResult iframe')
+
+        if (document.activeElement) {
+            const activeEle = document.activeElement
+            const searchAdIframeEleArr = Array.prototype.slice.call(searchAdIframeEleNodeList)
+
+            if (searchAdIframeEleArr.includes(activeEle)) {
+                if (!searchAdIsTrack) {
+                    searchAdIsTrack = true
+                    // 传服务器 Track埋点
+                    serverTrackEvent({
+                        clickId,
+                        campaignId,
+                        adGroupId,
+                        adId,
+                        channelId: styleIdInfo.channelId,
+                        keyword: searchText,
+                        resultsStyleId: styleIdInfo.resultsStyleId,
+                        termsStyleId: styleIdInfo.termsStyleId,
+                    })
+                }
+            } else {
+                searchAdIsTrack = false
+            }
+        }
+    }, 200)
+}
+
+const searchResultBlock = {
+    container: 'searchResult',
+    number: 3,
+}
+
+interface searchOptions {
+    pubId: string
+    relatedSearchTargeting: string
+    styleId: string
+    adsafe: string
+    query: string
+    referrerAdCreative?: string
+    resultsPageBaseUrl: string
+    resultsPageQueryParam: string
+    channel?: string
+}
+onMounted(() => {
+    const searchOptions: searchOptions = {
+        // pubId: 'pub-9616389000213823',
+        pubId: adsenseSearchId,
+        relatedSearchTargeting: 'content',
+        styleId: styleIdInfo.resultsStyleId,
+        adsafe: 'low',
+        query: searchText,
+        resultsPageBaseUrl: `${frontUrl}/q`,
+        resultsPageQueryParam: 'q',
+    }
+
+    if (styleIdInfo.channelId) {
+        searchOptions.channel = styleIdInfo.channelId
+    }
+    // @ts-ignore
+    _googCsa('ads', searchOptions, searchResultBlock)
+
+    // 测试追踪搜索广告点击 自定义事件
+    trackSearch()
+})
 
 const dataLoading = ref(false)
 loadingMoreData<Article>({
@@ -20,27 +143,27 @@ loadingMoreData<Article>({
         q: searchText,
     },
 })
-// useHead({
-//     script: [
-//         {
-//             async: true,
-//             src: 'https://www.google.com/adsense/search/ads.js',
-//         },
-//         {
-//             innerHTML: `
-//             ;(function (g, o) {
-//                     ;(g[o] =
-//                         g[o] ||
-//                         function () {
-//                             ;(g[o]['q'] = g[o]['q'] || []).push(arguments)
-//                         }),
-//                         (g[o]['t'] = 1 * new Date())
-//                 })(window, '_googCsa')
-//             `,
-//             type: 'text/javascript',
-//         },
-//     ],
-// })
+useHead({
+    script: [
+        {
+            async: true,
+            src: 'https://www.google.com/adsense/search/ads.js',
+        },
+        {
+            innerHTML: `
+            ;(function (g, o) {
+                    ;(g[o] =
+                        g[o] ||
+                        function () {
+                            ;(g[o]['q'] = g[o]['q'] || []).push(arguments)
+                        }),
+                        (g[o]['t'] = 1 * new Date())
+                })(window, '_googCsa')
+            `,
+            type: 'text/javascript',
+        },
+    ],
+})
 const relatedTag = ref([
     {
         name: 'Vehicle Donation',
@@ -72,43 +195,20 @@ const relatedTag = ref([
         color3: '#bf6d6d',
     },
 ])
-
-const searchResultBlock = {
-    container: 'searchResult',
-    number: 2,
-}
-// onMounted(() => {
-//     const styleId = isMobile ? '2233686589' : '4728253849'
-
-//     const searchOptions = {
-//         // pubId: 'pub-9616389000213823',
-//         pubId: adsenseSearchId,
-//         relatedSearchTargeting: 'content',
-//         styleId,
-//         adsafe: 'medium',
-//         query: searchText,
-//         resultsPageBaseUrl: `${frontUrl}/q?`, // Enter the base URL for your results page
-//         resultsPageQueryParam: 'q', // (Default to 'q') Matches the param denoting the query on the search page
-//     }
-//     // @ts-ignore
-//     _googCsa('ads', searchOptions, searchResultBlock)
-// })
-
-const { isMobile } = useDevice()
 </script>
 <template>
-    <div class="mt-70px min-h-[calc(100vh-100px)] w-full px-10px">
+    <div class="mt-70px min-h-[calc(100vh-100px)] w-full bg-black px-10px">
         <SearchBar v-model:search-text="searchText" class="mx-auto max-w-900px w-full px-10px pb-10px pt-20px" />
         <div class="flex flex-col justify-center gap-20px md-flex-row">
             <div class="max-w-900px w-full">
-                <!-- <div id="searchResult" class="w-full"></div> -->
+                <div id="searchResult" class="search-result w-full"></div>
                 <div class="my-20px w-full flex flex-col flex-wrap">
                     <div class="my-2 pl-2 color-gray-5">Web Results</div>
                     <div class="flex flex-col gap-8px sm-gap-0">
                         <div
                             v-for="item in searchArticleList"
                             :key="item.uid"
-                            class="relative overflow-hidden b-1 b-gray-1 bg-[white]"
+                            class="relative overflow-hidden b-b-1 b-color1 bg-black"
                         >
                             <a
                                 class="t-image flex items-center gap-25px p-10px md-gap-5 xs-p-30px"
@@ -129,12 +229,14 @@ const { isMobile } = useDevice()
 
                                 <div class="w-full flex flex-col justify-between gap-4px sm-gap-12px">
                                     <div
-                                        class="line-clamp-1 w-full text-16px font-bold color-color1 md-text-20px sm-text-18px hover:italic hover:color-color6"
+                                        class="line-clamp-1 w-full text-16px font-bold color-#cccccc md-line-clamp-2 md-text-20px sm-text-18px hover:italic hover:color-#ffd751"
                                     >
                                         {{ item.title }}
                                     </div>
 
-                                    <p class="line-clamp-3 max-w-600px text-14px color-#4d5156">
+                                    <p class="color-#cccccc">{{ frontUrl }}/article/{{ item.uid }}</p>
+
+                                    <p class="line-clamp-2 max-w-600px text-14px color-#cccccc">
                                         {{ item.description }}
                                     </p>
                                 </div>

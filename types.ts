@@ -20,6 +20,28 @@ interface Article {
     updateTime: string
     description: string
 }
+
+interface StyleId {
+    termsStyleId: string
+    resultsStyleId: string
+    channelId: string
+}
+
+interface SearchArticle {
+    uid: string
+    title: string
+    description: string
+    content: string
+}
+
+interface SearchAd {
+    uid: string
+    terms: string
+    termsStyleId: string
+    resultsStyleId: string
+    channelId: string
+}
+
 interface IndexPageType {
     trendingArticleList: Article[]
     allArticleList: Article[]
@@ -27,6 +49,7 @@ interface IndexPageType {
 interface QPageType {
     tagList: [string[]]
     searchArticleList: Article[]
+    styleIdInfo: StyleId
 }
 interface RelatedArticlePageType {
     relatedArticle: Article
@@ -48,3 +71,9 @@ interface BlueArticleType {
 interface RainArticlePageType {
     rainArticleList: Article[]
 }
+interface SearchAdPageType {
+    searchAdInfo: SearchAd
+    searchArticle: SearchArticle
+}
+
+declare module 'uuid'

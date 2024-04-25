@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { number, searchText } = defineProps({
+const props = defineProps({
     number: {
         type: Number,
         default: 6,
@@ -7,6 +7,27 @@ const { number, searchText } = defineProps({
     searchText: {
         type: String,
         default: 'flowers',
+    },
+    terms: {
+        type: String,
+        default: '',
+    },
+    styleId: {
+        type: String,
+        default: '8773662877',
+    },
+    channelId: {
+        type: String,
+        default: '4565027358',
+    },
+    trackParams: {
+        type: Object,
+        default: () => ({}),
+    },
+    // 手动加载广告，需要在父组件中调用 loadAd 方法
+    manualLoad: {
+        type: Boolean,
+        default: true,
     },
 })
 useHead({
@@ -31,31 +52,74 @@ useHead({
     ],
 })
 
-const relatedSearchBlock = {
-    container: 'relatedSearch',
-    relatedSearches: number,
-}
-
 const {
     public: { frontUrl, adsenseSearchId },
 } = useRuntimeConfig()
 
-onMounted(() => {
-    const searchOptions = {
-        // pubId: 'pub-9616389000213823',
+interface searchOptions {
+    pubId: string
+    relatedSearchTargeting: string
+    styleId: string
+    adsafe: string
+    query?: string
+    resultsPageBaseUrl: string
+    resultsPageQueryParam: string
+    channel?: string
+    terms?: string
+}
+
+const emit = defineEmits(['adLoadedCallback'])
+
+const loadAd = () => {
+    const relatedSearchBlock = {
+        container: 'relatedSearch',
+        relatedSearches: props.number,
+        adLoadedCallback: () => {
+            emit('adLoadedCallback')
+        },
+    }
+    // 将 trackParams 参数拼接到 URL 参数中，传递到搜索结果页
+    const resultsPageBaseUrlParmas = new URLSearchParams(props.trackParams).toString()
+
+    // for (const [key, value] of Object.entries(props.trackParams)) {
+    //     resultsPageBaseUrlParmas.append(key, value)
+    // }
+    const resultsPageBaseUrl = `${frontUrl}/q?${resultsPageBaseUrlParmas}`
+
+    const searchOptions: searchOptions = {
         pubId: adsenseSearchId,
         relatedSearchTargeting: 'content',
-        styleId: '9537452044',
-        adsafe: 'medium',
-        query: searchText,
-        resultsPageBaseUrl: `${frontUrl}/q?`, // Enter the base URL for your results page
-        resultsPageQueryParam: 'q', // (Default to 'q') Matches the param denoting the query on the search page
+        styleId: props.styleId,
+        adsafe: 'low',
+        resultsPageBaseUrl,
+        resultsPageQueryParam: 'q',
+    }
+
+    if (props.terms) {
+        searchOptions.terms = props.terms
+    } else {
+        searchOptions.query = props.searchText
+    }
+
+    if (props.channelId) {
+        searchOptions.channel = props.channelId
     }
     // @ts-ignore
-    _googCsa('ads', searchOptions, relatedSearchBlock)
+    _googCsa('relatedsearch', searchOptions, relatedSearchBlock)
+}
+
+onMounted(() => {
+    // loadAd()
+    if (!props.manualLoad) {
+        loadAd()
+    }
+})
+
+defineExpose({
+    loadAd,
 })
 </script>
 
 <template>
-    <div id="relatedSearch" class="w-full flex-shrink-0 bg-theme px-10px py-20px"></div>
+    <div id="relatedSearch" class="related-search w-full"></div>
 </template>

@@ -26,16 +26,7 @@ export default defineNuxtConfig({
             imgBaseUrl: process.env.NUXT_PUBLIC_IMG_BASE_URL,
             adSenseClientId: process.env.NUXT_PUBLIC_ADSENSE_CLIENT_ID,
             adsenseSearchId: process.env.NUXT_ADSENSE_SEARCH_ID,
-            adIndex1: process.env.NUXT_PUBLIC_AD_INDEX_1,
-            adIndex2: process.env.NUXT_PUBLIC_AD_INDEX_2,
-            adArticle1: process.env.NUXT_PUBLIC_AD_ARTICLE_1,
-            adArticle2: process.env.NUXT_PUBLIC_AD_ARTICLE_2,
-            adQ1: process.env.NUXT_PUBLIC_AD_Q_1,
-            adC1: process.env.NUXT_PUBLIC_AD_CATEGORY_1,
-            adhome1: process.env.NUXT_PUBLIC_AD_HOME_1,
-            adhealth1: process.env.NUXT_PUBLIC_AD_HEALTH_1,
-            adBlue1: process.env.NUXT_PUBLIC_AD_BLUE_1,
-            adRain1: process.env.NUXT_PUBLIC_AD_RAIN_1,
+            baseTrackUrl: process.env.NUXT_PUBLIC_BASE_TRACK_URL,
         },
     },
 
@@ -131,7 +122,7 @@ export default defineNuxtConfig({
                         : false
                     : 172800,
             }, // 单位 s
-            '/*/**': {
+            '/Content/**': {
                 swr: process.env.NUXT_CONFIG_CACHE_TTL
                     ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
                         ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
@@ -152,28 +143,7 @@ export default defineNuxtConfig({
                         : false
                     : 172800,
             },
-            '/love': {
-                swr: process.env.NUXT_CONFIG_CACHE_TTL
-                    ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
-                        ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
-                        : false
-                    : 172800,
-            },
             '/q': {
-                swr: process.env.NUXT_CONFIG_CACHE_TTL
-                    ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
-                        ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
-                        : false
-                    : 172800,
-            },
-            '/rain': {
-                swr: process.env.NUXT_CONFIG_CACHE_TTL
-                    ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
-                        ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
-                        : false
-                    : 172800,
-            },
-            '/blue': {
                 swr: process.env.NUXT_CONFIG_CACHE_TTL
                     ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
                         ? Number(process.env.NUXT_CONFIG_CACHE_TTL)

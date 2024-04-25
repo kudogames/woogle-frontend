@@ -3,10 +3,6 @@ const {
     params: { uid },
 } = useRoute('article-uid')
 
-const {
-    public: { adArticle1, adArticle2 },
-} = useRuntimeConfig()
-
 const { data, error } = await useFetch<APIResponseType<ArticlePageType>>(`/api/v1/article/page/article/${uid}`, {
     headers: { accept: 'application/json' },
 })

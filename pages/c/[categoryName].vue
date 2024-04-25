@@ -6,9 +6,6 @@ const {
 const { data, error } = await useFetch<APIResponseType<CategoryPageType>>(`/api/v1/article/page/c/${category}`, {
     headers: { accept: 'application/json' },
 })
-const {
-    public: { adC1 },
-} = useRuntimeConfig()
 
 const categoryMap: Record<string, string> = {
     'vehicle-donation': 'Vehicle Donation',

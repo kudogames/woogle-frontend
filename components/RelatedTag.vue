@@ -29,7 +29,7 @@ defineProps({
 
 <template>
     <div>
-        <div class="my-10px text-18px font-bold">{{ category }}</div>
+        <div class="my-10px text-18px font-bold" :style="{ color: color3 }">{{ category }}</div>
         <div class="flex flex-wrap gap-10px">
             <a
                 v-for="(item, index) in tagList"

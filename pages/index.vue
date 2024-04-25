@@ -2,9 +2,6 @@
 const { data, error } = await useFetch<APIResponseType<IndexPageType>>('/api/v1/article/page/index', {
     headers: { accept: 'application/json' },
 })
-const {
-    public: { adIndex1, adIndex2 },
-} = useRuntimeConfig()
 
 const { trendingArticleList, allArticleList } = data.value?.data ?? {}
 const dataLoading = ref(false)
@@ -13,6 +10,7 @@ loadingMoreData<Article>({
     oldDataList: allArticleList,
     size: 24,
     dataLoading,
+    page: ref(2),
 })
 </script>
 
