@@ -23,7 +23,6 @@ const { searchArticleList, tagList = [], styleIdInfo } = data.value?.data ?? ({}
 if (!styleIdInfo.resultsStyleId) {
     styleIdInfo.resultsStyleId = '8773662877'
 }
-
 const {
     public: { baseTrackUrl, frontUrl, adsenseSearchId },
 } = useRuntimeConfig()
@@ -33,6 +32,7 @@ interface ServerTrackEventParams {
     campaignId: string
     adGroupId: string
     adId: string
+    siteId: string
     channelId: string
     keyword: string
     resultsStyleId: string
@@ -53,10 +53,11 @@ const serverTrackEvent = (params: ServerTrackEventParams) => {
     trackUrlParams.set('campaignId', params.campaignId)
     trackUrlParams.set('adGroupId', params.adGroupId)
     trackUrlParams.set('adId', params.adId)
+    trackUrlParams.set('siteId', params.siteId)
     trackUrlParams.set('channelId', params.channelId)
     trackUrlParams.set('keyword', params.keyword)
-    trackUrlParams.set('parentStyleId', params.termsStyleId)
-    trackUrlParams.set('styleId', params.resultsStyleId)
+    trackUrlParams.set('termsStyleId', params.termsStyleId)
+    trackUrlParams.set('resultsStyleId', params.resultsStyleId)
 
     trackUrl.search = trackUrlParams.toString()
     img.src = trackUrl.toString()
@@ -78,6 +79,7 @@ const trackSearch = () => {
                     searchAdIsTrack = true
                     // 传服务器 Track埋点
                     serverTrackEvent({
+                        siteId: '32',
                         clickId,
                         campaignId,
                         adGroupId,
@@ -197,78 +199,71 @@ const relatedTag = ref([
 ])
 </script>
 <template>
-    <div class="mt-70px min-h-[calc(100vh-100px)] w-full bg-black px-10px">
-        <SearchBar v-model:search-text="searchText" class="mx-auto max-w-900px w-full px-10px pb-10px pt-20px" />
-        <div class="flex flex-col justify-center gap-20px md-flex-row">
-            <div class="max-w-900px w-full">
-                <div id="searchResult" class="search-result w-full"></div>
-                <div class="my-20px w-full flex flex-col flex-wrap">
-                    <div class="my-2 pl-2 color-gray-5">Web Results</div>
-                    <div class="flex flex-col gap-8px sm-gap-0">
-                        <div
-                            v-for="item in searchArticleList"
-                            :key="item.uid"
-                            class="relative overflow-hidden b-b-1 b-color1 bg-black"
-                        >
-                            <a
-                                class="t-image flex items-center gap-25px p-10px md-gap-5 xs-p-30px"
-                                :href="`/article/${item.uid}`"
+    <div>
+        <div class="mt-70px min-h-[calc(100vh-100px)] w-full bg-black px-10px">
+            <SearchBar v-model:search-text="searchText" class="mx-auto max-w-900px w-full px-10px pb-10px pt-20px" />
+            <div class="w-full flex flex-col justify-center gap-20px md-flex-row">
+                <div class="max-w-900px w-full">
+                    <div id="searchResult" class="search-result w-full"></div>
+                    <div class="my-20px w-full flex flex-col flex-wrap">
+                        <div class="my-2 pl-2 color-gray-5">Web Results</div>
+                        <div class="flex flex-col gap-8px sm-gap-0">
+                            <div
+                                v-for="item in searchArticleList"
+                                :key="item.uid"
+                                class="relative overflow-hidden b-b-1 b-color1 bg-black"
                             >
-                                <div
-                                    class="h-100px w-100px flex flex-center flex-shrink-0 items-center overflow-hidden b-2 b-color5 rd-10px sm-h-140px sm-w-140px"
+                                <a
+                                    class="t-image flex items-center gap-25px p-10px md-gap-5 xs-p-30px"
+                                    :href="`/article/${item.uid}`"
                                 >
-                                    <!-- <div class="h-60px w-60px flex-center flex-shrink-0 sm-h-100px sm-w-100px"> -->
-                                    <img
-                                        v-lazy="item.coverImg"
-                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                                        class="h-full w-full object-contain"
-                                        :alt="item.title"
-                                    />
-                                    <!-- </div> -->
-                                </div>
-
-                                <div class="w-full flex flex-col justify-between gap-4px sm-gap-12px">
                                     <div
-                                        class="line-clamp-1 w-full text-16px font-bold color-#cccccc md-line-clamp-2 md-text-20px sm-text-18px hover:italic hover:color-#ffd751"
+                                        class="h-100px w-100px flex flex-center flex-shrink-0 items-center overflow-hidden b-2 b-color5 rd-10px sm-h-140px sm-w-140px"
                                     >
-                                        {{ item.title }}
+                                        <!-- <div class="h-60px w-60px flex-center flex-shrink-0 sm-h-100px sm-w-100px"> -->
+                                        <img
+                                            v-lazy="item.coverImg"
+                                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                            class="h-full w-full object-contain"
+                                            :alt="item.title"
+                                        />
+                                        <!-- </div> -->
                                     </div>
 
-                                    <p class="color-#cccccc">{{ frontUrl }}/article/{{ item.uid }}</p>
+                                    <div class="w-full flex flex-col justify-between gap-4px sm-gap-12px">
+                                        <div
+                                            class="line-clamp-1 w-full text-16px font-bold color-#cccccc md-line-clamp-2 md-text-20px sm-text-18px hover:italic hover:color-#ffd751"
+                                        >
+                                            {{ item.title }}
+                                        </div>
 
-                                    <p class="line-clamp-2 max-w-600px text-14px color-#cccccc">
-                                        {{ item.description }}
-                                    </p>
-                                </div>
-                            </a>
+                                        <div class="hidden color-#cccccc sm-block">
+                                            {{ frontUrl }}/article/{{ item.uid }}
+                                        </div>
+
+                                        <p class="line-clamp-2 max-w-600px text-14px color-#cccccc">
+                                            {{ item.description }}
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="hidden w-full flex-shrink-0 md-block md-w-300px">
-                <div v-for="(item, index) in relatedTag" :key="index">
-                    <RelatedTag
-                        :tag-list="tagList[index]"
-                        :category="item.name"
-                        :color1="item.color1"
-                        :color2="item.color2"
-                        :color3="item.color3"
-                        :svg="item.svg"
-                    />
-
-                    <!-- <AdSenseBlock
-                        v-if="index === 0"
-                        class="mt-20px w-full"
-                        ins-style="display: block; width: 300px; height:
-                    300px;"
-                        data-ad-format="none"
-                        data-full-width-responsive="false"
-                        :data-ad-slot="adQ1"
-                        :screen-width-range="[768, -1]"
-                    /> -->
+                <div class="hidden w-300px flex-shrink-0 md-block">
+                    <div v-for="(item, index) in relatedTag" :key="index">
+                        <RelatedTag
+                            :tag-list="tagList[index]"
+                            :category="item.name"
+                            :color1="item.color1"
+                            :color2="item.color2"
+                            :color3="item.color3"
+                            :svg="item.svg"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
+        <LoadingAnim :visible="dataLoading" />
     </div>
-    <LoadingAnim :visible="dataLoading" />
 </template>

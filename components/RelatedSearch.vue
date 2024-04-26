@@ -18,7 +18,7 @@ const props = defineProps({
     },
     channelId: {
         type: String,
-        default: '4565027358',
+        default: '',
     },
     trackParams: {
         type: Object,

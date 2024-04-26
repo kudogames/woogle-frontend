@@ -14,7 +14,7 @@ defineProps({
             <a
                 v-for="(item, index) in articles"
                 :key="index"
-                class="flex flex-center flex-basis-100% flex-col md-flex-basis-100% xs-flex-basis-[calc((100%-10px)/2)]"
+                class="t-image flex flex-center flex-basis-100% flex-col md-flex-basis-100% xs-flex-basis-[calc((100%-10px)/2)]"
                 :href="`/article/${item.uid}`"
             >
                 <div class="group relative h-full w-full flex flex-col">

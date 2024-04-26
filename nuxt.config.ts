@@ -23,7 +23,6 @@ export default defineNuxtConfig({
             baseUrl: process.env.NUXT_PUBLIC_BASE_URL,
             baseApi: process.env.NUXT_PUBLIC_BASE_API,
             subdomain: process.env.NUXT_PUBLIC_SUBDOMAIN,
-            imgBaseUrl: process.env.NUXT_PUBLIC_IMG_BASE_URL,
             adSenseClientId: process.env.NUXT_PUBLIC_ADSENSE_CLIENT_ID,
             adsenseSearchId: process.env.NUXT_ADSENSE_SEARCH_ID,
             baseTrackUrl: process.env.NUXT_PUBLIC_BASE_TRACK_URL,
@@ -39,7 +38,6 @@ export default defineNuxtConfig({
                 { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
                 { rel: 'icon', type: 'image/svg+xml', href: '/favicon.ico' },
                 { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
-                { rel: 'stylesheet', type: 'text/css', href: 'https://unpkg.com/swiper@8/swiper-bundle.css' },
             ],
             meta: [
                 {
@@ -54,10 +52,6 @@ export default defineNuxtConfig({
                 },
             ],
             script: [
-                {
-                    type: 'text/javascript',
-                    src: 'https://unpkg.com/swiper@8/swiper-bundle.js',
-                },
                 {
                     innerHTML:
                         'window.adsbygoogle = window.adsbygoogle || [];let adBreak = adConfig = function (o) {adsbygoogle.push(o);}',
@@ -303,6 +297,6 @@ export default defineNuxtConfig({
         excludeAppSources: ['nuxt:pages'],
         cacheMaxAgeSeconds: 60 * 60 * 24, // 1 day
         sources: ['/api/v1/system/page/sitemap'],
-        exclude: ['/contactus', '/legalterms', '/privacy', '/rain', '/blue', '/offers', '/popular'],
+        exclude: ['/contactus', '/legalterms', '/privacy'],
     },
 })

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { title } from '~/constants'
+
 const {
     params: { categoryName: category },
 } = useRoute('c-categoryName')
@@ -13,6 +15,10 @@ const categoryMap: Record<string, string> = {
     'motor-vehicles': 'Motor Vehicles',
     repair: 'Repair',
 }
+
+useHead({
+    title: ` ${categoryMap[category]} - ${title}`,
+})
 
 const { latestPostsList, categoryArticleList } = data.value?.data ?? {}
 

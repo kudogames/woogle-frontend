@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import { v4 as uuidv4 } from 'uuid'
+definePageMeta({
+    layout: 'article-detail-layout',
+})
+
 const {
     params: { uid },
 } = useRoute('article-uid')
@@ -7,64 +12,92 @@ const { data, error } = await useFetch<APIResponseType<ArticlePageType>>(`/api/v
     headers: { accept: 'application/json' },
 })
 const { currentArticle, relatedArticleList } = data.value?.data ?? {}
+useHead({
+    title: currentArticle?.title,
+})
+// relatedSearch 组件
+const relatedSearch = ref()
+
+// Ad 加载完成
+const adLoadComplete = ref(false)
+
+// Ad 加载完成回调
+const adLoadedCallback = () => {
+    adLoadComplete.value = true
+}
+
+onMounted(() => {
+    const e = new URLSearchParams(window.location.search)
+    e.set('pgttl', uuidv4())
+    window.history.replaceState(null, '', '?' + e.toString())
+    relatedSearch.value.loadAd()
+})
 </script>
 
 <template>
-    <div class="pt-70px">
-        <div class="mx-auto max-w-1200px">
-            <SearchBar class="mx-auto max-w-900px w-full px-10px py-50px" />
-            <div class="flex flex-col md-flex-row">
-                <div class="w-full px-10px md-w-[calc(100%-300px)]">
-                    <!-- 页面导航 -->
-                    <div class="line-clamp-1 text-12px color-gray-4">
-                        <a class="hover:color-color1" href="/">Home</a> > {{ currentArticle?.title }}
-                    </div>
+    <div>
+        <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
+            <base-header />
+        </div>
+        <div class="pt-70px">
+            <div class="mx-auto max-w-1200px">
+                <SearchBar
+                    :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"
+                    class="mx-auto max-w-900px w-full px-10px py-50px"
+                />
+                <div class="flex flex-col md-flex-row">
+                    <div class="w-full px-10px md-w-[calc(100%-300px)]">
+                        <!-- 页面导航 -->
+                        <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
+                            <div class="line-clamp-1 text-12px color-gray-4">
+                                <a class="hover:color-color1" href="/">Home</a> > {{ currentArticle?.title }}
+                            </div>
 
-                    <!-- 文章标题与简介 -->
-                    <div class="py-10px">
-                        <h1 class="py-10px text-24px font-bold">{{ currentArticle?.title }}</h1>
-                        <p class="text-14px color-#4d5156">{{ currentArticle?.description }}</p>
-                    </div>
-                    <!-- 相关搜索 -->
-                    <!-- <RelatedSearch /> -->
-                    <!-- 图片 -->
-                    <div class="relative w-full flex flex-shrink-0 overflow-hidden b-2 border-#efdcca rd-lg pt-52.12%">
-                        <img
-                            v-lazy="currentArticle?.coverImg"
-                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                            class="absolute left-0 top-0 h-full w-full object-contain"
-                            :alt="currentArticle?.title"
+                            <!-- 文章标题与简介 -->
+                            <div class="py-10px">
+                                <h1 class="py-10px text-24px font-bold">{{ currentArticle?.title }}</h1>
+                                <p class="text-14px color-#4d5156">{{ currentArticle?.description }}</p>
+                            </div>
+                        </div>
+
+                        <!-- 相关搜索 -->
+                        <RelatedSearch
+                            ref="relatedSearch"
+                            class="w-full"
+                            style-id="2112166669"
+                            :search-text="currentArticle?.title"
+                            @ad-loaded-callback="adLoadedCallback"
                         />
-                    </div>
-                    <!-- 文章内容 -->
-                    <!-- <div>
-                        <p
-                            v-for="(paragraph, index) in currentArticle?.content.split('\n')"
-                            :key="index"
-                            style="white-space: pre-wrap"
-                        >
-                            {{ paragraph }}
-                        </p>
-                    </div> -->
-                    <div id="articleContent" class="py-10px" v-html="currentArticle?.content"></div>
-                    <!-- <p style="white-space: pre-wrap">{{ currentArticle?.content }}</p> -->
-                    <!-- 广告 -->
-                    <!-- <AdSenseBlock :data-ad-slot="adArticle1" /> -->
-                </div>
-                <div class="w-full flex-shrink-0 md-w-300px">
-                    <!-- 广告 -->
+                        <!-- 图片 -->
+                        <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
+                            <div
+                                class="relative w-full flex flex-shrink-0 overflow-hidden b-2 border-#efdcca rd-lg pt-52.12%"
+                            >
+                                <img
+                                    v-lazy="currentArticle?.coverImg"
+                                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    class="absolute left-0 top-0 h-full w-full object-contain"
+                                    :alt="currentArticle?.title"
+                                />
+                            </div>
 
-                    <!-- <AdSenseBlock
-                        class="w-full"
-                        ins-style="display: block; width: 100%; height: 300px;"
-                        data-ad-format="none"
-                        data-full-width-responsive="false"
-                        :data-ad-slot="adArticle2"
-                    /> -->
-                    <!-- 相关文章 -->
-                    <RelatedArticles class="mb-60px" :articles="relatedArticleList" />
+                            <div id="articleContent" class="py-10px" v-html="currentArticle?.content"></div>
+                        </div>
+                    </div>
+
+                    <div
+                        :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"
+                        class="w-full flex-shrink-0 md-w-300px"
+                    >
+                        <RelatedArticles class="mb-60px" :articles="relatedArticleList" />
+                    </div>
                 </div>
             </div>
+        </div>
+        <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
+            <base-footer />
+            <back-top />
+            <cookie-consent />
         </div>
     </div>
 </template>

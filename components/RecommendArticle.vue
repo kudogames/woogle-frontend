@@ -17,7 +17,7 @@ const { articles, category } = defineProps({
             <a
                 v-for="(item, index) in articles"
                 :key="index"
-                class="flex flex-center flex-basis-100% flex-col pb-10px md-flex-basis-[calc((100%-60*2px)/3)] xs-flex-basis-[calc((100%-30px)/2)]"
+                class="t-image flex flex-center flex-basis-100% flex-col pb-10px md-flex-basis-[calc((100%-60*2px)/3)] xs-flex-basis-[calc((100%-30px)/2)]"
                 :href="`/article/${item.uid}`"
             >
                 <div class="relative w-full flex flex-shrink-0 overflow-hidden b-2 border-color5 rd-lg pt-51.8%">
