@@ -40,10 +40,10 @@ export default defineNuxtConfig({
                 { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
             ],
             meta: [
-                {
-                    name: 'viewport',
-                    content: 'width=device-width, initial-scale=1',
-                },
+                // {
+                //     name: 'viewport',
+                //     content: 'width=device-width, initial-scale=1',
+                // },
                 { name: 'description', content: appDescription },
                 { name: 'keywords', content: keyWords },
                 {

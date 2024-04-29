@@ -35,7 +35,7 @@ useHead({
                         </div>
 
                         <!-- 相关搜索 -->
-                        <RelatedSearch2 ref="relatedSearch" class="w-full" style-id="2112166669" />
+                        <RelatedSearch2 ref="relatedSearch" class="w-full" style-id="7535686260" />
                         <!-- 图片 -->
                         <div>
                             <div
