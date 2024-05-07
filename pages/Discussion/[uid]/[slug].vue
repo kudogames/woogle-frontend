@@ -95,6 +95,7 @@ const shareNowList = [
         :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"
         class="mx-auto max-w-660px min-h-100vh bg-#01074B"
     >
+        <div class="i-svg-logo absolute right-20px top-20px hidden h-24px w-112px lg-block"></div>
         <div class="w-full">
             <img
                 :src="searchArticle.coverImg"
@@ -117,7 +118,7 @@ const shareNowList = [
                 <h1 class="my-10px text-left text-16px font-bold">
                     {{ searchArticle.title }}
                 </h1>
-                <div class="text-16px">
+                <div class="pt-15px text-16px">
                     {{ searchArticle.description }}
                 </div>
             </header>
@@ -134,7 +135,7 @@ const shareNowList = [
             />
 
             <div class="w-full">
-                <div class="pt-10px text-start text-12px" :style="{ display: readMore ? 'none' : 'block' }">
+                <div class="text-start text-15px" :style="{ display: readMore ? 'none' : 'block' }">
                     <div class="cursor-pointer" @click="readMoreClick">Show More...</div>
                 </div>
 
@@ -151,7 +152,7 @@ const shareNowList = [
                         display: readMore ? 'flex' : 'none',
                     }"
                     href="https://woogle.info/Content/WtqWLWuU/veterans-car-charity-compare-car-donation-charities"
-                    class="flex items-center justify-between b-b-1px b-t-1px b-color3 py-10px"
+                    class="mt-16px flex items-center justify-between b-b-1px b-t-1px b-color3 py-10px"
                 >
                     <div>
                         <span>Continue reading this article:</span>
@@ -165,7 +166,7 @@ const shareNowList = [
                 </a>
             </div>
 
-            <div class="flex flex-center flex-col gap-16px py-30px">
+            <div class="flex flex-center flex-col gap-16px py-26px">
                 <div class="h-48px w-48px">
                     <img
                         :src="searchArticle.coverImg"
@@ -178,8 +179,8 @@ const shareNowList = [
                     <div>Powered by woogle.info</div>
                 </div>
             </div>
-            <div class="flex flex-center flex-col gap-10px">
-                <div>Share now!</div>
+            <div class="flex flex-center flex-col gap-10px pb-20px">
+                <div class="text-16px">Share now!</div>
 
                 <div class="flex gap-10px">
                     <div
@@ -193,7 +194,11 @@ const shareNowList = [
                     </div>
                 </div>
             </div>
-            <p class="py-20px text-center text-14px">
+            <div class="w-full flex flex-center pt-24px md-hidden">
+                <div class="i-svg-logo h-24px w-112px"></div>
+            </div>
+
+            <p class="py-24px text-center text-14px">
                 The information on this site is of a general nature only and is not intended to address the specific
                 circumstances of any particular individual or entity. It is not intended or implied to be a substitute
                 for professional advice.
@@ -212,23 +217,15 @@ const shareNowList = [
     h1 {
         display: block;
         font-size: 2em;
-        margin-block-start: 0.67em;
-        margin-block-end: 0.67em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
+
         font-weight: bold;
-        unicode-bidi: isolate;
     }
 
     h2 {
         display: block;
-        font-size: 1.5em;
-        margin-block-start: 0.83em;
-        margin-block-end: 0.83em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
+        font-size: 20px;
+        padding-top: 15px;
         font-weight: bold;
-        unicode-bidi: isolate;
     }
 
     h3 {
@@ -254,11 +251,7 @@ const shareNowList = [
 
     p {
         display: block;
-        margin-block-start: 1em;
-        margin-block-end: 1em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
-        unicode-bidi: isolate;
+        padding-top: 15px;
     }
 
     em {
