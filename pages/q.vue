@@ -1,8 +1,21 @@
 <script setup lang="ts">
 const {
-    query: { saiId, q: searchText, clickId, campaignId, adGroupId, adId },
+    query: { saiId, q: searchText, clickId, campaignId, adGroupId, adId, tmpl },
 } = useRoute() as unknown as {
-    query: { saiId: string; q: string; clickId: string; campaignId: string; adGroupId: string; adId: string }
+    query: {
+        saiId: string
+        q: string
+        clickId: string
+        campaignId: string
+        adGroupId: string
+        adId: string
+        tmpl: string
+    }
+}
+
+const bgColorMap: Record<string, string> = {
+    Content: '#000000',
+    Discussion: '#01074B',
 }
 
 let saiIdObj = {}
@@ -200,7 +213,7 @@ const relatedTag = ref([
 </script>
 <template>
     <div>
-        <div class="mt-70px min-h-[calc(100vh-100px)] w-full bg-black px-10px">
+        <div :class="`bg-${bgColorMap[tmpl] ?? '#000'} `" class="mt-70px min-h-[calc(100vh-100px)] w-full px-10px">
             <SearchBar v-model:search-text="searchText" class="mx-auto max-w-900px w-full px-10px pb-10px pt-20px" />
             <div class="w-full flex flex-col justify-center gap-20px md-flex-row">
                 <div class="max-w-900px w-full">
@@ -211,7 +224,7 @@ const relatedTag = ref([
                             <div
                                 v-for="item in searchArticleList"
                                 :key="item.uid"
-                                class="relative overflow-hidden b-b-1 b-color1 bg-black"
+                                class="relative overflow-hidden b-b-1 b-color1"
                             >
                                 <a
                                     class="t-image flex items-center gap-25px p-10px md-gap-5 xs-p-30px"

@@ -61,6 +61,8 @@ export default defineConfig({
             xxxl: '1920px',
         },
         colors: {
+            bg1: '#000',
+            bg2: '#01074B',
             color1: '#194574',
             color2: '#f1f9ff',
             color3: '#ffffff',

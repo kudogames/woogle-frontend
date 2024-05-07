@@ -62,6 +62,7 @@ interface searchOptions {
     styleId: string
     adsafe: string
     query?: string
+    hl: string
     resultsPageBaseUrl: string
     resultsPageQueryParam: string
     channel?: string
@@ -90,6 +91,7 @@ const loadAd = () => {
         pubId: adsenseSearchId,
         relatedSearchTargeting: 'content',
         styleId: props.styleId,
+        hl: 'en',
         adsafe: 'low',
         resultsPageBaseUrl,
         resultsPageQueryParam: 'q',

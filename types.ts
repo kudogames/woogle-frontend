@@ -30,6 +30,7 @@ interface StyleId {
 interface SearchArticle {
     uid: string
     title: string
+    coverImg: string
     description: string
     content: string
 }

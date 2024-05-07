@@ -40,6 +40,7 @@ interface TrackParams {
     adGroupId: string
     adId: string
     saiId: string
+    tmpl: string
 }
 
 // 跟踪参数，带到下一页
@@ -49,6 +50,7 @@ const trackParams: TrackParams = {
     campaignId,
     adGroupId,
     adId,
+    tmpl: 'Content',
 }
 
 // relatedSearch 组件
