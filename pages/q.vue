@@ -14,7 +14,7 @@ const {
 }
 
 const bgColorMap: Record<string, string> = {
-    Content: '#000000',
+    Content: '#000',
     Discussion: '#01074B',
 }
 
@@ -121,6 +121,7 @@ interface searchOptions {
     styleId: string
     adsafe: string
     query: string
+    hl: string
     referrerAdCreative?: string
     resultsPageBaseUrl: string
     resultsPageQueryParam: string
@@ -133,6 +134,7 @@ onMounted(() => {
         relatedSearchTargeting: 'content',
         styleId: styleIdInfo.resultsStyleId,
         adsafe: 'low',
+        hl: 'en',
         query: searchText,
         resultsPageBaseUrl: `${frontUrl}/q`,
         resultsPageQueryParam: 'q',
