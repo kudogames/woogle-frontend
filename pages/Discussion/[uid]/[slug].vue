@@ -150,7 +150,7 @@ const shareNowList = [
                     :style="{
                         display: readMore ? 'flex' : 'none',
                     }"
-                    href="https://woogle.info/Content/WtqWLWuU/veterans-car-charity-compare-car-donation-charities"
+                    href="https://woogle.info/Discussion/WtqWLWuU/veterans-car-charity-compare-car-donation-charities"
                     class="mt-16px flex items-center justify-between b-b-1px b-t-1px b-color3 py-10px"
                 >
                     <div>
