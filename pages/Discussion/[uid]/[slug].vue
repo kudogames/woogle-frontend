@@ -38,13 +38,12 @@ interface TrackParams {
     campaignId: string
     adGroupId: string
     adId: string
-    saiId: string
+    channelId: string
     tmpl: string
 }
-
 // 跟踪参数，带到下一页
 const trackParams: TrackParams = {
-    saiId: searchAdInfo.uid,
+    channelId: searchAdInfo.channelId,
     clickId,
     campaignId,
     adGroupId,
@@ -129,7 +128,7 @@ const shareNowList = [
                 search-text="keyword"
                 :terms="searchAdInfo.terms"
                 :channel-id="searchAdInfo.channelId"
-                :style-id="searchAdInfo.termsStyleId"
+                style-id="7970436399"
                 :track-params="trackParams"
                 @ad-loaded-callback="adLoadedCallback"
             />

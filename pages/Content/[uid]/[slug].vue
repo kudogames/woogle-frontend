@@ -28,24 +28,18 @@ const readMoreClick = () => {
 const keys = ['utm_campaign', 'utm_content', 'utm_medium', 'utm_source']
 const [clickId, campaignId, adGroupId, adId] = keys.map((key) => (query[key] as string) ?? '')
 
-// // 需传至搜索页的参数
-// const clickId = (query.utm_campaign as string) ?? ''
-// const campaignId = (query.utm_content as string) ?? ''
-// const adGroupId = (query.utm_medium as string) ?? ''
-// const adId = (query.utm_source as string) ?? ''
-
 interface TrackParams {
     clickId: string
     campaignId: string
     adGroupId: string
     adId: string
-    saiId: string
+    channelId: string
     tmpl: string
 }
 
 // 跟踪参数，带到下一页
 const trackParams: TrackParams = {
-    saiId: searchAdInfo.uid,
+    channelId: searchAdInfo.channelId,
     clickId,
     campaignId,
     adGroupId,
@@ -94,7 +88,7 @@ onMounted(() => {
                 search-text="keyword"
                 :terms="searchAdInfo.terms"
                 :channel-id="searchAdInfo.channelId"
-                :style-id="searchAdInfo.termsStyleId"
+                style-id="8773662877"
                 :track-params="trackParams"
                 @ad-loaded-callback="adLoadedCallback"
             />

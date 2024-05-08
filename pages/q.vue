@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const {
-    query: { saiId, q: searchText, clickId, campaignId, adGroupId, adId, tmpl },
+    query: { channelId, q: searchText, clickId, campaignId, adGroupId, adId, tmpl },
 } = useRoute() as unknown as {
     query: {
-        saiId: string
+        channelId: string
         q: string
         clickId: string
         campaignId: string
@@ -13,29 +13,30 @@ const {
     }
 }
 
-const bgColorMap: Record<string, string> = {
-    Content: '#000',
-    Discussion: '#01074B',
+const defaultColorMap = {
+    bgColor: '#000',
+    styleId: '8773662877',
 }
 
-let saiIdObj = {}
-if (saiId) {
-    saiIdObj = {
-        saiId,
-    }
+const bgColorMap: Record<string, typeof defaultColorMap> = {
+    Content: {
+        bgColor: '#000',
+        styleId: '8773662877',
+    },
+    Discussion: {
+        bgColor: '#01074B',
+        styleId: '7970436399',
+    },
 }
 
-const params = new URLSearchParams({
-    q: searchText,
-    ...saiIdObj,
-}).toString()
-const { data, error } = await useFetch<APIResponseType<QPageType>>(`/api/v1/article/page/q?${params}`, {
+const tmplInfo = bgColorMap[tmpl] ?? defaultColorMap
+
+const { data, error } = await useFetch<APIResponseType<QPageType>>(`/api/v1/article/page/q`, {
+    params: { q: searchText },
     headers: { accept: 'application/json' },
 })
-const { searchArticleList, tagList = [], styleIdInfo } = data.value?.data ?? ({} as QPageType)
-if (!styleIdInfo.resultsStyleId) {
-    styleIdInfo.resultsStyleId = '8773662877'
-}
+const { searchArticleList, tagList = [] } = data.value?.data ?? ({} as QPageType)
+
 const {
     public: { baseTrackUrl, frontUrl, adsenseSearchId },
 } = useRuntimeConfig()
@@ -97,10 +98,10 @@ const trackSearch = () => {
                         campaignId,
                         adGroupId,
                         adId,
-                        channelId: styleIdInfo.channelId,
+                        channelId,
                         keyword: searchText,
-                        resultsStyleId: styleIdInfo.resultsStyleId,
-                        termsStyleId: styleIdInfo.termsStyleId,
+                        resultsStyleId: tmplInfo.styleId,
+                        termsStyleId: tmplInfo.styleId,
                     })
                 }
             } else {
@@ -132,7 +133,7 @@ onMounted(() => {
         // pubId: 'pub-9616389000213823',
         pubId: adsenseSearchId,
         relatedSearchTargeting: 'content',
-        styleId: styleIdInfo.resultsStyleId,
+        styleId: tmplInfo.styleId,
         adsafe: 'low',
         hl: 'en',
         query: searchText,
@@ -140,8 +141,8 @@ onMounted(() => {
         resultsPageQueryParam: 'q',
     }
 
-    if (styleIdInfo.channelId) {
-        searchOptions.channel = styleIdInfo.channelId
+    if (channelId) {
+        searchOptions.channel = channelId
     }
     // @ts-ignore
     _googCsa('ads', searchOptions, searchResultBlock)
@@ -215,7 +216,7 @@ const relatedTag = ref([
 </script>
 <template>
     <div>
-        <div :class="`bg-${bgColorMap[tmpl] ?? '#000'} `" class="mt-70px min-h-[calc(100vh-100px)] w-full px-10px">
+        <div :class="`bg-${tmplInfo.bgColor} `" class="mt-70px min-h-[calc(100vh-100px)] w-full px-10px">
             <SearchBar v-model:search-text="searchText" class="mx-auto max-w-900px w-full px-10px pb-10px pt-20px" />
             <div class="w-full flex flex-col justify-center gap-20px md-flex-row">
                 <div class="max-w-900px w-full">
@@ -265,7 +266,7 @@ const relatedTag = ref([
                         </div>
                     </div>
                 </div>
-                <div class="hidden w-300px flex-shrink-0 md-block">
+                <div v-if="tmpl != 'Discussion'" class="hidden w-300px flex-shrink-0 md-block">
                     <div v-for="(item, index) in relatedTag" :key="index">
                         <RelatedTag
                             :tag-list="tagList[index]"

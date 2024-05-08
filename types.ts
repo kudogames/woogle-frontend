@@ -20,13 +20,6 @@ interface Article {
     updateTime: string
     description: string
 }
-
-interface StyleId {
-    termsStyleId: string
-    resultsStyleId: string
-    channelId: string
-}
-
 interface SearchArticle {
     uid: string
     title: string
@@ -38,8 +31,6 @@ interface SearchArticle {
 interface SearchAd {
     uid: string
     terms: string
-    termsStyleId: string
-    resultsStyleId: string
     channelId: string
 }
 
@@ -50,7 +41,6 @@ interface IndexPageType {
 interface QPageType {
     tagList: [string[]]
     searchArticleList: Article[]
-    styleIdInfo: StyleId
 }
 interface RelatedArticlePageType {
     relatedArticle: Article
