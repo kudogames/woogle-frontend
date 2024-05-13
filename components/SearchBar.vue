@@ -5,20 +5,33 @@ const { searchText } = defineProps({
         default: '',
     },
 })
+
+const newSearchText = ref(searchText)
+
+const handleSubmit = (e: Event) => {
+    if (!newSearchText.value) {
+        e.preventDefault()
+    }
+}
 </script>
 <template>
-    <div>
-        <form action="/q" class="relative h-40px overflow-hidden b-2px border-color5 rd-40px focus:border-color5">
-            <input
-                :value="searchText"
-                type="text"
-                name="q"
-                placeholder="Search and hit enter..."
-                class="h-full w-full rd-40px pl-3 text-14px color-gray-5 outline-none hover:color-black"
-            />
-            <button aria-label="Search" type="submit" class="absolute right-6px top-0 cursor-pointer">
-                <div class="i-svg-search h-36px w-36px"></div>
-            </button>
-        </form>
-    </div>
+    <form
+        action="/q"
+        class="h-40px flex justify-between overflow-hidden b-2px border-color5 bg-white focus:border-color5"
+        @submit="handleSubmit"
+    >
+        <input
+            v-model.trim="newSearchText"
+            type="text"
+            name="q"
+            placeholder="Search and hit enter..."
+            class="h-full w-full pl-3 text-14px color-gray-5 outline-none hover:color-black"
+        />
+
+        <button aria-label="Search" type="submit" class="relative h-full w-46px flex-shrink-0 cursor-pointer">
+            <div class="absolute top-0 h-36px w-36px">
+                <div class="i-svg-search h-full w-full"></div>
+            </div>
+        </button>
+    </form>
 </template>

@@ -36,7 +36,10 @@ loadingMoreData<Article>({
 
 <template>
     <div class="mx-auto max-w-1400px min-h-100vh w-full flex-center flex-col px-20px pt-70px">
-        <SearchBar class="max-w-900px w-full px-10px py-50px" />
+        <div class="w-full px-10px py-50px">
+            <SearchBar class="mx-auto max-w-900px w-full rd-40px" />
+        </div>
+
         <h1 class="my-20px text-20px color-color6">{{ categoryMap[category] }}</h1>
         <div class="max-w-1400px w-full flex flex-col gap-120px py-10px lg-flex-row">
             <CategoryArticle

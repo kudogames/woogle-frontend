@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({
+    layout: 'search-ad-layout',
+})
 const {
     query: { channelId, q: searchText, clickId, campaignId, adGroupId, adId, tmpl },
 } = useRoute() as unknown as {
@@ -30,6 +33,27 @@ const bgColorMap: Record<string, typeof defaultColorMap> = {
 }
 
 const tmplInfo = bgColorMap[tmpl] ?? defaultColorMap
+
+useHead({
+    meta: [
+        {
+            name: 'theme-color',
+            content: tmplInfo.bgColor,
+        },
+        {
+            name: 'msapplication-navbutton-color',
+            content: tmplInfo.bgColor,
+        },
+        {
+            name: 'apple-mobile-web-app-capable',
+            content: tmplInfo.bgColor,
+        },
+        {
+            name: 'apple-mobile-web-app-status-bar-style',
+            content: tmplInfo.bgColor,
+        },
+    ],
+})
 
 const { data, error } = await useFetch<APIResponseType<QPageType>>(`/api/v1/article/page/q`, {
     params: { q: searchText },
@@ -111,10 +135,8 @@ const trackSearch = () => {
     }, 200)
 }
 
-const searchResultBlock = {
-    container: 'searchResult',
-    number: 3,
-}
+// Ad 加载完成
+const adLoadComplete = ref(false)
 
 interface searchOptions {
     pubId: string
@@ -129,6 +151,14 @@ interface searchOptions {
     channel?: string
 }
 onMounted(() => {
+    const searchResultBlock = {
+        container: 'searchResult',
+        number: 3,
+        adLoadedCallback: () => {
+            adLoadComplete.value = true
+        },
+    }
+
     const searchOptions: searchOptions = {
         // pubId: 'pub-9616389000213823',
         pubId: adsenseSearchId,
@@ -214,12 +244,19 @@ const relatedTag = ref([
     },
 ])
 </script>
+
 <template>
-    <div>
-        <div :class="`bg-${tmplInfo.bgColor} `" class="mt-70px min-h-[calc(100vh-100px)] w-full px-10px">
-            <SearchBar v-model:search-text="searchText" class="mx-auto max-w-900px w-full px-10px pb-10px pt-20px" />
-            <div class="w-full flex flex-col justify-center gap-20px md-flex-row">
-                <div class="max-w-900px w-full">
+    <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
+        <QHeader :class="`bg-${tmplInfo.bgColor} `">
+            <template #search>
+                <SearchBar :search-text="searchText" class="w-full rd-40px xl-w-600px xl-rd-10px" />
+            </template>
+        </QHeader>
+    </div>
+    <div :class="`bg-${tmplInfo.bgColor} `" :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
+        <div class="mx-auto max-w-1200px min-h-[calc(100vh-100px)] w-full px-10px">
+            <div class="w-full flex flex-col gap-20px md-flex-row">
+                <div class="w-full md-w-[calc(100%-320px)]">
                     <div id="searchResult" class="search-result w-full"></div>
                     <div class="my-20px w-full flex flex-col flex-wrap">
                         <div class="my-2 pl-2 color-gray-5">Web Results</div>
@@ -230,7 +267,7 @@ const relatedTag = ref([
                                 class="relative overflow-hidden b-b-1 b-color1"
                             >
                                 <a
-                                    class="t-image flex items-center gap-25px p-10px md-gap-5 xs-p-30px"
+                                    class="t-image flex items-center gap-25px px-20px pb-10px pt-20px md-gap-5 md-pb-30px md-pt-15px"
                                     :href="`/article/${item.uid}`"
                                 >
                                     <div
@@ -281,5 +318,10 @@ const relatedTag = ref([
             </div>
         </div>
         <LoadingAnim :visible="dataLoading" />
+    </div>
+    <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
+        <base-footer />
+        <back-top />
+        <cookie-consent />
     </div>
 </template>

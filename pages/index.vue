@@ -18,8 +18,9 @@ loadingMoreData<Article>({
     <div class="mt-90px w-full bg-color2">
         <div class="mx-auto max-w-[1200px] w-full">
             <!-- <AdSenseBlock :data-ad-slot="adIndex1" /> -->
-
-            <SearchBar class="mx-auto max-w-900px px-10px py-30px" />
+            <div class="px-10px py-30px">
+                <SearchBar class="mx-auto max-w-900px rd-40px" />
+            </div>
 
             <RecommendArticle class="pt-50px" :articles="trendingArticleList" category="Trending" :size="6" />
             <!-- <AdSenseBlock :data-ad-slot="adIndex2" /> -->

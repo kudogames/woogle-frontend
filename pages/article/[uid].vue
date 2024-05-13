@@ -41,10 +41,13 @@ onMounted(() => {
         </div>
         <div class="pt-70px">
             <div class="mx-auto max-w-1200px">
-                <SearchBar
-                    :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"
-                    class="mx-auto max-w-900px w-full px-10px py-50px"
-                />
+                <div class="py-50px">
+                    <SearchBar
+                        :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"
+                        class="mx-auto max-w-900px w-full rd-40px px-10px"
+                    />
+                </div>
+
                 <div class="flex flex-col md-flex-row">
                     <div class="w-full px-10px md-w-[calc(100%-300px)]">
                         <!-- 页面导航 -->

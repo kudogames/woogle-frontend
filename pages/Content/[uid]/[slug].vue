@@ -69,10 +69,14 @@ onMounted(() => {
 <template>
     <div>
         <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
-            <base-header />
+            <QHeader class="bg-#000">
+                <template #search>
+                    <SearchBar :search-text="searchText" class="w-full rd-40px xl-w-600px xl-rd-10px" />
+                </template>
+            </QHeader>
         </div>
 
-        <div class="mx-auto max-w-1200px min-h-100vh px-10px pt-70px">
+        <div class="mx-auto max-w-1200px min-h-100vh px-10px">
             <header :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }" class="py-20px">
                 <h1 class="my-10px text-left text-16px font-bold lg-text-24px md-text-20px sm-text-18px">
                     {{ searchArticle.title }}
