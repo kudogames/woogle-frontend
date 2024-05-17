@@ -67,6 +67,8 @@ interface searchOptions {
     resultsPageQueryParam: string
     channel?: string
     terms?: string
+    ignoredPageParams: string
+    referrerAdCreative: string
 }
 
 const emit = defineEmits(['adLoadedCallback'])
@@ -95,6 +97,8 @@ const loadAd = () => {
         adsafe: 'low',
         resultsPageBaseUrl,
         resultsPageQueryParam: 'q',
+        ignoredPageParams: 'utm_source,utm_medium,utm_campaign,utm_content,pgttl',
+        referrerAdCreative: '',
     }
 
     if (props.terms) {
