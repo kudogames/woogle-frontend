@@ -69,6 +69,7 @@ onMounted(() => {
                             class="w-full"
                             style-id="2112166669"
                             :search-text="currentArticle?.title"
+                            :referrer-ad-creative="currentArticle?.referrerAdCreative"
                             @ad-loaded-callback="adLoadedCallback"
                         />
                         <!-- 图片 -->

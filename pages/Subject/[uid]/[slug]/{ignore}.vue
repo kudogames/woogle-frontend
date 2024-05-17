@@ -89,6 +89,7 @@ onMounted(() => {
                 search-text="keyword"
                 :terms="searchAdInfo.terms"
                 :channel-id="searchAdInfo.channelId"
+                :referrer-ad-creative="searchArticle.referrerAdCreative"
                 style-id="8773662877"
                 :track-params="trackParams"
                 @ad-loaded-callback="adLoadedCallback"

@@ -93,6 +93,7 @@ onMounted(() => {
                 :terms="searchAdInfo.terms"
                 :channel-id="searchAdInfo.channelId"
                 style-id="8773662877"
+                :referrer-ad-creative="searchArticle.referrerAdCreative"
                 :track-params="trackParams"
                 @ad-loaded-callback="adLoadedCallback"
             />

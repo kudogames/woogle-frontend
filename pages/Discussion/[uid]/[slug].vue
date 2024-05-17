@@ -128,6 +128,7 @@ const shareNowList = [
                 search-text="keyword"
                 :terms="searchAdInfo.terms"
                 :channel-id="searchAdInfo.channelId"
+                :referrer-ad-creative="searchArticle.referrerAdCreative"
                 style-id="7970436399"
                 :track-params="trackParams"
                 @ad-loaded-callback="adLoadedCallback"

@@ -20,6 +20,10 @@ const props = defineProps({
         type: String,
         default: '',
     },
+    referrerAdCreative: {
+        type: String,
+        default: '',
+    },
     trackParams: {
         type: Object,
         default: () => ({}),
@@ -99,7 +103,7 @@ const loadAd = () => {
         resultsPageQueryParam: 'q',
         ignoredPageParams:
             'layout,utm_content,campaign_id,cfgKey,utm_content,utm_campaign,arb_direct,styleID,ad_group_id,arb_campaign_id,utm_medium,utm_source,cpc,ad_id,utm_campaign,click_id,_ckttl,network,section_id,utm_source,subDomain,account,pgttl',
-        referrerAdCreative: '',
+        referrerAdCreative: props.referrerAdCreative,
     }
 
     if (props.terms) {

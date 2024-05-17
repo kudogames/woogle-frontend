@@ -19,6 +19,7 @@ interface Article {
     createTime: string
     updateTime: string
     description: string
+    referrerAdCreative: string
 }
 interface SearchArticle {
     uid: string
@@ -26,6 +27,7 @@ interface SearchArticle {
     coverImg: string
     description: string
     content: string
+    referrerAdCreative: string
 }
 
 interface SearchAd {
