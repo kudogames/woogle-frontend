@@ -135,18 +135,19 @@ const shareNowList = [
             />
 
             <div class="w-full">
-                <div class="text-start text-15px" :style="{ display: readMore ? 'none' : 'block' }">
+                <!-- <div class="text-start text-15px" :style="{ display: readMore ? 'none' : 'block' }">
                     <div class="cursor-pointer" @click="readMoreClick">Show More...</div>
-                </div>
+                </div> -->
 
-                <article
+                <!-- <article
                     id="articleContent"
                     class="py-10px"
                     :style="{
                         display: readMore ? 'block' : 'none',
                     }"
                     v-html="searchArticle.content"
-                ></article>
+                ></article> -->
+                <article id="articleContent" class="py-10px" v-html="searchArticle.content"></article>
                 <a
                     :style="{
                         display: readMore ? 'flex' : 'none',

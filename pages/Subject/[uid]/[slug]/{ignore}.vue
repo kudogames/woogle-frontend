@@ -96,18 +96,19 @@ onMounted(() => {
             />
 
             <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }" class="w-full">
-                <div class="pb-200px pt-10px text-center text-12px" :style="{ display: readMore ? 'none' : 'block' }">
+                <!-- <div class="pb-200px pt-10px text-center text-12px" :style="{ display: readMore ? 'none' : 'block' }">
                     <div class="cursor-pointer" @click="readMoreClick">Read More</div>
-                </div>
+                </div> -->
 
-                <article
+                <!-- <article
                     id="articleContent"
                     class="py-10px"
                     :style="{
                         display: readMore ? 'block' : 'none',
                     }"
                     v-html="searchArticle.content"
-                ></article>
+                ></article> -->
+                <article id="articleContent" class="py-10px" v-html="searchArticle.content"></article>
             </div>
         </div>
         <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
