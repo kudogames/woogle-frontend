@@ -2,7 +2,7 @@
 import { v4 as uuidv4 } from 'uuid'
 
 definePageMeta({
-    layout: 'search-ad-layout',
+    layout: 'topic-ad-layout',
 })
 
 const {
@@ -18,12 +18,6 @@ const { data, error } = await useFetch<APIResponseType<SearchAdPageType>>(
 )
 
 const { searchAdInfo, searchArticle } = data.value?.data ?? ({} as SearchAdPageType)
-
-const readMore = ref(false)
-
-const readMoreClick = () => {
-    readMore.value = true
-}
 
 const keys = ['utm_campaign', 'utm_content', 'utm_medium', 'utm_source']
 const [clickId, campaignId, adGroupId, adId] = keys.map((key) => (query[key] as string) ?? '')
@@ -44,81 +38,87 @@ const trackParams: TrackParams = {
     campaignId,
     adGroupId,
     adId,
-    tmpl: 'Content',
+    tmpl: 'Topic',
 }
 
 // relatedSearch 组件
-const relatedSearch = ref()
-
+const relatedSearch1 = ref()
+const relatedSearch2 = ref()
 // Ad 加载完成
-const adLoadComplete = ref(false)
-
+const adLoadComplete1 = ref(false)
+const adLoadComplete2 = ref(false)
 // Ad 加载完成回调
-const adLoadedCallback = () => {
-    adLoadComplete.value = true
+const adLoadedCallback1 = () => {
+    adLoadComplete1.value = true
 }
-
+const adLoadedCallback2 = () => {
+    adLoadComplete2.value = true
+}
+const { isMobile } = useDevice()
 onMounted(() => {
     const e = new URLSearchParams(window.location.search)
     e.set('pgttl', uuidv4())
     window.history.replaceState(null, '', '?' + e.toString())
-    relatedSearch.value.loadAd()
+    relatedSearch1.value.loadAd()
+    relatedSearch2.value.loadAd()
+    if (isMobile) window.scrollTo({ top: 60, behavior: 'smooth' })
 })
 </script>
 
 <template>
-    <div>
-        <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
-            <QHeader class="bg-#000">
-                <template #search>
-                    <SearchBar :search-text="slug" class="w-full rd-40px xl-w-600px xl-rd-10px" />
-                </template>
-            </QHeader>
-        </div>
+    <div class="bg-white" :style="{ visibility: adLoadComplete1 && adLoadComplete2 ? 'visible' : 'hidden' }">
+        <TopicHeader>
+            <template #search>
+                <TopicSearchBar class="w-full border-#296cd4 rd-15px bg-#e7ebf5 xl-w-400px" />
+            </template>
+        </TopicHeader>
 
-        <div class="mx-auto max-w-1200px min-h-100vh px-10px">
-            <header :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }" class="py-20px">
-                <h1 class="my-10px text-left text-16px font-bold lg-text-24px md-text-20px sm-text-18px">
+        <div class="mx-auto max-w-1060px w-full px-20px pb-20px">
+            <div class="pt-14px md-pt-40px">
+                <h1 class="text-left text-23.36px font-bold font-exo lg-text-25.6px md-text-24px xl-text-32px">
                     {{ searchArticle.title }}
                 </h1>
-                <div class="line-clamp-2 text-12px sm-text-14px">
-                    {{ searchArticle.description }}
-                </div>
-            </header>
+                <!-- eslint-disable-next-line vue/no-v-html -->
+                <p class="mb-20px text-16px font-exo lg-mb-30px">{{ searchArticle.description }}</p>
+            </div>
 
             <RelatedSearch
-                ref="relatedSearch"
+                v-show="adLoadComplete1 && adLoadComplete2"
+                ref="relatedSearch1"
                 class="w-full"
                 search-text="keyword"
                 :terms="searchAdInfo.terms"
                 :channel-id="searchAdInfo.channelId"
-                style-id="8773662877"
+                style-id="3736261853"
                 :referrer-ad-creative="searchArticle.referrerAdCreative"
                 :track-params="trackParams"
-                @ad-loaded-callback="adLoadedCallback"
+                @ad-loaded-callback="adLoadedCallback1"
             />
-
-            <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }" class="w-full">
-                <!-- <div class="pb-200px pt-10px text-center text-12px" :style="{ display: readMore ? 'none' : 'block' }">
-                    <div class="cursor-pointer" @click="readMoreClick">Read More</div>
-                </div> -->
-
-                <!-- <article
-                    id="articleContent"
-                    class="py-10px"
-                    :style="{
-                        display: readMore ? 'block' : 'none',
-                    }"
-                    v-html="searchArticle.content"
-                ></article> -->
-                <article id="articleContent" class="py-10px" v-html="searchArticle.content"></article>
+            <div class="relative mb-25px mt-40px w-full flex-center flex-shrink-0 overflow-hidden rd-15px pt-66.7%">
+                <img
+                    v-lazy="searchArticle.coverImg"
+                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                    class="absolute left-0 top-0 h-full w-full object-cover"
+                    :alt="searchArticle.title"
+                />
             </div>
+
+            <article id="articleContent" class="font-exo" v-html="searchArticle.content"></article>
+            <TopicRelatedSearch
+                v-show="adLoadComplete1 && adLoadComplete2"
+                ref="relatedSearch2"
+                class="w-full"
+                :search-text="searchArticle.title"
+                :channel-id="searchAdInfo.channelId"
+                style-id="3736261853"
+                :referrer-ad-creative="searchArticle.referrerAdCreative"
+                :track-params="trackParams"
+                @ad-loaded-callback="adLoadedCallback2"
+            />
         </div>
-        <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
-            <base-footer />
-            <back-top />
-            <cookie-consent />
-        </div>
+        <TopicFooter />
+        <back-top />
+        <cookie-consent />
     </div>
 </template>
 
@@ -136,14 +136,7 @@ onMounted(() => {
     }
 
     h2 {
-        display: block;
-        font-size: 1.5em;
-        margin-block-start: 0.83em;
-        margin-block-end: 0.83em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
-        font-weight: bold;
-        unicode-bidi: isolate;
+        @apply text-25px mt-30px mb-25px;
     }
 
     h3 {
@@ -168,12 +161,7 @@ onMounted(() => {
     }
 
     p {
-        display: block;
-        margin-block-start: 1em;
-        margin-block-end: 1em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
-        unicode-bidi: isolate;
+        @apply text-13px mb-30px;
     }
 
     em {

@@ -33,6 +33,7 @@ interface TrackParams {
     adGroupId: string
     adId: string
     channelId: string
+    tmpl: string
 }
 
 // 跟踪参数，带到下一页
@@ -42,6 +43,7 @@ const trackParams: TrackParams = {
     campaignId,
     adGroupId,
     adId,
+    tmpl: 'Subject',
 }
 
 // relatedSearch 组件
@@ -68,7 +70,7 @@ onMounted(() => {
         <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
             <QHeader class="bg-#000">
                 <template #search>
-                    <SearchBar :search-text="searchText" class="w-full rd-40px xl-w-600px xl-rd-10px" />
+                    <SearchBar :search-text="slug" class="w-full rd-40px xl-w-600px xl-rd-10px" />
                 </template>
             </QHeader>
         </div>

@@ -69,4 +69,23 @@ interface SearchAdPageType {
     searchArticle: SearchArticle
 }
 
+interface tmplInfoType {
+    mobileTopColor: string
+    headerBgColor: string
+    bgColor: string
+    boderColor: string
+    titleColor: string
+    descriptionColor: string
+    styleId: string
+    template: Component
+}
+
+interface RelatedTag {
+    name: string
+    svg: string
+    color1: string
+    color2: string
+    color3: string
+}
+
 declare module 'uuid'

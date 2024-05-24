@@ -3,32 +3,25 @@ useHead({
     meta: [
         {
             name: 'theme-color',
-            content: '#f1f9ff',
+            content: '#fff',
         },
         {
             name: 'msapplication-navbutton-color',
-            content: '#f1f9ff',
+            content: '#fff',
         },
         {
             name: 'apple-mobile-web-app-capable',
-            content: '#f1f9ff',
+            content: '#fff',
         },
         {
             name: 'apple-mobile-web-app-status-bar-style',
-            content: '#f1f9ff',
+            content: '#fff',
         },
     ],
 })
 </script>
-
 <template>
-    <div class="bg-color2">
-        <base-header />
+    <div class="bg-white">
         <slot />
-        <base-footer class="bg-color1" />
-        <back-top />
-        <cookie-consent />
     </div>
 </template>
-
-<style scoped lang="scss"></style>

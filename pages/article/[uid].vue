@@ -99,7 +99,7 @@ onMounted(() => {
             </div>
         </div>
         <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
-            <base-footer />
+            <base-footer class="bg-color1" />
             <back-top />
             <cookie-consent />
         </div>

@@ -18,7 +18,7 @@ const data = ref([
 
 <template>
     <footer class="w-full">
-        <div class="relative h-[30px] flex justify-center gap-[20px] flex-items-center bg-color1">
+        <div class="relative h-[30px] flex justify-center gap-[20px] flex-items-center">
             <a
                 v-for="(item, index) in data"
                 :key="index"

@@ -203,7 +203,7 @@ const shareNowList = [
                 The information on this site is of a general nature only and is not intended to address the specific
                 circumstances of any particular individual or entity. It is not intended or implied to be a substitute
                 for professional advice.
-                <a href="/provacy"> Read more. </a>
+                <a href="/privacy"> Read more. </a>
             </p>
         </div>
     </div>

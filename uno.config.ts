@@ -22,20 +22,13 @@ export default defineConfig({
             },
         }),
         presetTypography(),
-        // presetWebFonts({
-        //     fonts: {
-        //         rubik: {
-        //             name: 'Rubik Spray Paint',
-        //             weights: [400],
-        //             provider: 'none',
-        //         },
-        //         n: {
-        //             name: 'Nunito Sans',
-        //             weights: [400],
-        //             provider: 'none',
-        //         },
-        //     },
-        // }),
+        presetWebFonts({
+            fonts: {
+                exo: {
+                    name: 'Exo',
+                },
+            },
+        }),
     ],
     transformers: [transformerDirectives(), transformerVariantGroup(), transformerCompileClass()],
     shortcuts: [

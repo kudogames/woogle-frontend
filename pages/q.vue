@@ -1,6 +1,10 @@
 <script setup lang="ts">
+import QPageCommon from '~/components/QPage/Common.vue'
+import QPageTopic from '~/components/QPage/Topic.vue'
+import QPageContent from '~/components/QPage/Content.vue'
+import QPageDiscussion from '~/components/QPage/Discussion.vue'
 definePageMeta({
-    layout: 'search-ad-layout',
+    layout: 'q-layout',
 })
 const {
     query: { channelId, q: searchText, clickId, campaignId, adGroupId, adId, tmpl },
@@ -16,41 +20,77 @@ const {
     }
 }
 
-const defaultColorMap = {
-    bgColor: '#000',
-    styleId: '8773662877',
-}
-
-const bgColorMap: Record<string, typeof defaultColorMap> = {
-    Content: {
-        bgColor: '#000',
+const bgColorMap: Record<string, tmplInfoType> = {
+    default: {
+        mobileTopColor: '#000',
+        headerBgColor: 'bg-#000',
+        bgColor: 'bg-#000',
+        titleColor: 'color-#ccc',
+        descriptionColor: 'color-#cccc',
+        boderColor: 'b-color1',
         styleId: '8773662877',
+        template: QPageCommon,
+    },
+    Content: {
+        mobileTopColor: '#000',
+        headerBgColor: 'bg-#000',
+        bgColor: 'bg-#000',
+        titleColor: 'color-#ccc',
+        descriptionColor: 'color-#cccc',
+        boderColor: 'b-color1',
+        styleId: '8773662877',
+        template: QPageContent,
+    },
+    Subject: {
+        mobileTopColor: '#000',
+        headerBgColor: 'bg-#000',
+        bgColor: 'bg-#000',
+        titleColor: 'color-#ccc',
+        descriptionColor: 'color-#cccc',
+        boderColor: 'b-color1',
+        styleId: '8773662877',
+        template: QPageContent,
     },
     Discussion: {
-        bgColor: '#01074B',
+        mobileTopColor: '#01074B',
+        headerBgColor: 'bg-#01074B',
+        bgColor: 'bg-#01074B',
+        titleColor: 'color-#ccc',
+        descriptionColor: 'color-#ccc',
+        boderColor: 'b-#162B5C',
         styleId: '7970436399',
+        template: QPageDiscussion,
+    },
+    Topic: {
+        mobileTopColor: '#0d1938',
+        headerBgColor: 'bg-#0d1938 ',
+        bgColor: 'bg-#0c1d45',
+        titleColor: 'color-#ffffff',
+        descriptionColor: 'color-#ffffff',
+        boderColor: 'b-#162B5C',
+        styleId: '3736261853',
+        template: QPageTopic,
     },
 }
 
-const tmplInfo = bgColorMap[tmpl] ?? defaultColorMap
-
+const tmplInfo = bgColorMap[tmpl] ?? bgColorMap.default
 useHead({
     meta: [
         {
             name: 'theme-color',
-            content: tmplInfo.bgColor,
+            content: tmplInfo.mobileTopColor,
         },
         {
             name: 'msapplication-navbutton-color',
-            content: tmplInfo.bgColor,
+            content: tmplInfo.mobileTopColor,
         },
         {
             name: 'apple-mobile-web-app-capable',
-            content: tmplInfo.bgColor,
+            content: tmplInfo.mobileTopColor,
         },
         {
             name: 'apple-mobile-web-app-status-bar-style',
-            content: tmplInfo.bgColor,
+            content: tmplInfo.mobileTopColor,
         },
     ],
 })
@@ -150,6 +190,7 @@ interface searchOptions {
     resultsPageQueryParam: string
     channel?: string
 }
+
 onMounted(() => {
     const searchResultBlock = {
         container: 'searchResult',
@@ -212,7 +253,8 @@ useHead({
         },
     ],
 })
-const relatedTag = ref([
+
+const relatedTag: RelatedTag[] = [
     {
         name: 'Vehicle Donation',
         svg: 'i-svg-donation',
@@ -242,86 +284,21 @@ const relatedTag = ref([
         color2: '#f9eeea',
         color3: '#bf6d6d',
     },
-])
+]
 </script>
 
 <template>
-    <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
-        <QHeader :class="`bg-${tmplInfo.bgColor} `">
-            <template #search>
-                <SearchBar :search-text="searchText" class="w-full rd-40px xl-w-600px xl-rd-10px" />
-            </template>
-        </QHeader>
-    </div>
-    <div :class="`bg-${tmplInfo.bgColor} `" :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
-        <div class="mx-auto max-w-1200px min-h-[calc(100vh-100px)] w-full px-10px">
-            <div class="w-full flex flex-col gap-20px md-flex-row">
-                <div class="w-full md-w-[calc(100%-320px)]">
-                    <div id="searchResult" class="search-result w-full"></div>
-                    <div class="my-20px w-full flex flex-col flex-wrap">
-                        <div class="my-2 pl-2 color-gray-5">Web Results</div>
-                        <div class="flex flex-col gap-8px sm-gap-0">
-                            <div
-                                v-for="item in searchArticleList"
-                                :key="item.uid"
-                                class="relative overflow-hidden b-b-1 b-color1"
-                            >
-                                <a
-                                    class="t-image flex items-center gap-25px px-20px pb-10px pt-20px md-gap-5 md-pb-30px md-pt-15px"
-                                    :href="`/article/${item.uid}`"
-                                >
-                                    <div
-                                        class="h-100px w-100px flex flex-center flex-shrink-0 items-center overflow-hidden b-2 b-color5 rd-10px sm-h-140px sm-w-140px"
-                                    >
-                                        <!-- <div class="h-60px w-60px flex-center flex-shrink-0 sm-h-100px sm-w-100px"> -->
-                                        <img
-                                            v-lazy="item.coverImg"
-                                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                                            class="h-full w-full object-contain"
-                                            :alt="item.title"
-                                        />
-                                        <!-- </div> -->
-                                    </div>
-
-                                    <div class="w-full flex flex-col justify-between gap-4px sm-gap-12px">
-                                        <div
-                                            class="line-clamp-1 w-full text-16px font-bold color-#cccccc md-line-clamp-2 md-text-20px sm-text-18px hover:italic hover:color-#ffd751"
-                                        >
-                                            {{ item.title }}
-                                        </div>
-
-                                        <div class="hidden color-#cccccc sm-block">
-                                            {{ frontUrl }}/article/{{ item.uid }}
-                                        </div>
-
-                                        <p class="line-clamp-2 max-w-600px text-14px color-#cccccc">
-                                            {{ item.description }}
-                                        </p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div v-if="tmpl != 'Discussion'" class="hidden w-300px flex-shrink-0 md-block">
-                    <div v-for="(item, index) in relatedTag" :key="index">
-                        <RelatedTag
-                            :tag-list="tagList[index]"
-                            :category="item.name"
-                            :color1="item.color1"
-                            :color2="item.color2"
-                            :color3="item.color3"
-                            :svg="item.svg"
-                        />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <LoadingAnim :visible="dataLoading" />
-    </div>
-    <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
-        <base-footer />
-        <back-top />
-        <cookie-consent />
-    </div>
+    <component
+        :is="tmplInfo.template"
+        :search-article-list="searchArticleList"
+        :tmpl-info="tmplInfo"
+        :search-text="searchText"
+        :tag-list="tagList"
+        :related-tag="relatedTag"
+    >
+        <template #ad>
+            <div id="searchResult" class="search-result w-full"></div>
+        </template>
+    </component>
+    <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"></div>
 </template>
