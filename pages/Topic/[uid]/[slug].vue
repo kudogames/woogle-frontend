@@ -117,7 +117,6 @@ onMounted(() => {
             />
         </div>
         <TopicFooter />
-        <back-top />
         <cookie-consent />
     </div>
 </template>
