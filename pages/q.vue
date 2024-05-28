@@ -288,17 +288,18 @@ const relatedTag: RelatedTag[] = [
 </script>
 
 <template>
-    <component
-        :is="tmplInfo.template"
-        :search-article-list="searchArticleList"
-        :tmpl-info="tmplInfo"
-        :search-text="searchText"
-        :tag-list="tagList"
-        :related-tag="relatedTag"
-    >
-        <template #ad>
-            <div id="searchResult" class="search-result w-full"></div>
-        </template>
-    </component>
-    <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"></div>
+    <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
+        <component
+            :is="tmplInfo.template"
+            :search-article-list="searchArticleList"
+            :tmpl-info="tmplInfo"
+            :search-text="searchText"
+            :tag-list="tagList"
+            :related-tag="relatedTag"
+        >
+            <template #ad>
+                <div id="searchResult" class="search-result w-full"></div>
+            </template>
+        </component>
+    </div>
 </template>

@@ -116,13 +116,6 @@ export default defineNuxtConfig({
                         : false
                     : 172800,
             }, // 单位 s
-            '/Content/**': {
-                swr: process.env.NUXT_CONFIG_CACHE_TTL
-                    ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
-                        ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
-                        : false
-                    : 172800,
-            },
             '/article/**': {
                 swr: process.env.NUXT_CONFIG_CACHE_TTL
                     ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
@@ -171,13 +164,20 @@ export default defineNuxtConfig({
             '/site_api/**': {
                 proxy: process.env.NUXT_PUBLIC_BASE_API + '/site_api/**',
             },
+            '/*/*/**': {
+                swr: process.env.NUXT_CONFIG_CACHE_TTL
+                    ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
+                        ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
+                        : false
+                    : 172800,
+            },
         },
         storage: {
             cache: {
                 driver: 'redis',
                 host: 'localhost',
                 port: 6379,
-                db: 3,
+                db: 12,
             },
         },
         devStorage: {
@@ -185,7 +185,7 @@ export default defineNuxtConfig({
                 driver: 'redis',
                 host: 'localhost',
                 port: 6379,
-                db: 3,
+                db: 12,
             },
         },
         externals: {

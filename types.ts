@@ -87,5 +87,12 @@ interface RelatedTag {
     color2: string
     color3: string
 }
-
+interface TrackParams {
+    clickId: string
+    campaignId: string
+    adGroupId: string
+    adId: string
+    channelId: string
+    tmpl: string
+}
 declare module 'uuid'
