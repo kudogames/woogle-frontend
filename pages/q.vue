@@ -3,6 +3,9 @@ import QPageCommon from '~/components/QPage/Common.vue'
 import QPageTopic from '~/components/QPage/Topic.vue'
 import QPageContent from '~/components/QPage/Content.vue'
 import QPageDiscussion from '~/components/QPage/Discussion.vue'
+
+import { relatedDiscussionStyleId } from '@/constants/config'
+
 definePageMeta({
     layout: 'q-layout',
 })
@@ -54,11 +57,11 @@ const bgColorMap: Record<string, tmplInfoType> = {
     Discussion: {
         mobileTopColor: '#01074B',
         headerBgColor: 'bg-#01074B',
-        bgColor: 'bg-#01074B',
+        bgColor: 'bg-#0c1d45',
         titleColor: 'color-#ccc',
         descriptionColor: 'color-#ccc',
         boderColor: 'b-#162B5C',
-        styleId: '7970436399',
+        styleId: relatedDiscussionStyleId,
         template: QPageDiscussion,
     },
     Topic: {

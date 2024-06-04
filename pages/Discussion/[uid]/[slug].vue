@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { v4 as uuidv4 } from 'uuid'
 
+import { relatedDiscussionStyleId } from '@/constants/config'
+
 definePageMeta({
     layout: 'discussion-ad-layout',
 })
@@ -92,32 +94,32 @@ const shareNowList = [
 <template>
     <div
         :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"
-        class="mx-auto max-w-660px min-h-100vh bg-#01074B"
+        class="mx-auto max-w-[660px] min-h-[100vh] bg-[#01074B]"
     >
-        <div class="i-svg-logo absolute right-20px top-20px hidden h-24px w-112px lg-block"></div>
+        <div class="i-svg-logo absolute right-[20px] top-[20px] hidden h-[24px] w-[112px] lg-block"></div>
         <div class="w-full">
             <img
                 :src="searchArticle.coverImg"
                 alt="searchAdInfo.title"
-                class="h-100px w-full object-cover"
+                class="h-[100px] w-full object-cover"
                 :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"
             />
         </div>
-        <div class="px-15px">
-            <header class="py-10px">
-                <div class="w-full flex items-center justify-between text-12px">
-                    <div class="h-18px flex flex-center gap-4px">
-                        <a href="/"><div class="i-svg-home h-14px w-14px"></div></a>
+        <div class="px-[15px]">
+            <header class="py-[10px]">
+                <div class="w-full flex items-center justify-between text-[12px]">
+                    <div class="h-[18px] flex items-center justify-center gap-[4px]">
+                        <a href="/"><div class="i-svg-home h-[14px] w-[14px]"></div></a>
 
                         Published on May 7, 2024
                     </div>
 
                     <span>4 min read</span>
                 </div>
-                <h1 class="my-10px text-left text-16px font-bold">
+                <h1 class="my-[10px] text-left text-[16px] font-bold">
                     {{ searchArticle.title }}
                 </h1>
-                <div class="pt-15px text-16px">
+                <div class="pt-[15px] text-[16px]">
                     {{ searchArticle.description }}
                 </div>
             </header>
@@ -129,7 +131,7 @@ const shareNowList = [
                 :terms="searchAdInfo.terms"
                 :channel-id="searchAdInfo.channelId"
                 :referrer-ad-creative="searchArticle.referrerAdCreative"
-                style-id="7970436399"
+                :style-id="relatedDiscussionStyleId"
                 :track-params="trackParams"
                 @ad-loaded-callback="adLoadedCallback"
             />
@@ -147,59 +149,59 @@ const shareNowList = [
                     }"
                     v-html="searchArticle.content"
                 ></article> -->
-                <article id="articleContent" class="py-10px" v-html="searchArticle.content"></article>
+                <article id="articleContent" class="py-[10px]" v-html="searchArticle.content"></article>
                 <a
                     :style="{
                         display: readMore ? 'flex' : 'none',
                     }"
                     href="https://woogle.info/Discussion/WtqWLWuU/veterans-car-charity-compare-car-donation-charities"
-                    class="mt-16px flex items-center justify-between b-b-1px b-t-1px b-color3 py-10px"
+                    class="mt-[16px] flex items-center justify-between b-b-[1px] b-t-[1px] b-color3 py-[10px]"
                 >
                     <div>
                         <span>Continue reading this article:</span>
-                        <strong class="block text-20px font-bold"
+                        <strong class="block text-[20px] font-bold"
                             >Veterans Car Charity - Compare Car Donation Charities</strong
                         >
                     </div>
-                    <div class="h-48px w-40px flex flex-center rd-lg bg-#00EBFF">
-                        <div class="i-svg-arrow h-30px w-full"></div>
+                    <div class="h-[48px] w-[40px] flex items-center justify-center rd-lg bg-[#00EBFF]">
+                        <div class="i-svg-arrow h-[30px] w-full"></div>
                     </div>
                 </a>
             </div>
 
-            <div class="flex flex-center flex-col gap-16px py-26px">
-                <div class="h-48px w-48px">
+            <div class="flex flex-col items-center justify-center gap-[16px] py-[26px]">
+                <div class="h-[48px] w-[48px]">
                     <img
                         :src="searchArticle.coverImg"
                         class="h-full w-full rd-md object-cover"
                         :alt="searchArticle.title"
                     />
                 </div>
-                <div class="text-center text-14px">
+                <div class="text-center text-[14px]">
                     <div>Published on May 7, 2024</div>
                     <div>Powered by woogle.info</div>
                 </div>
             </div>
-            <div class="flex flex-center flex-col gap-10px pb-20px">
-                <div class="text-16px">Share now!</div>
+            <div class="flex flex-col items-center justify-center gap-[10px] pb-[20px]">
+                <div class="text-[16px]">Share now!</div>
 
-                <div class="flex gap-10px">
+                <div class="flex gap-[10px]">
                     <div
                         v-for="item in shareNowList"
                         :key="item.link"
-                        class="h-32px w-32px flex flex-center rd-md bg-#fff"
+                        class="h-[32px] w-[32px] flex items-center justify-center rd-md bg-[#fff]"
                     >
                         <a :href="item.link" target="_blank">
-                            <img :src="item.img" class="h-16px w-16px" :alt="item.link" />
+                            <img :src="item.img" class="h-[16px] w-[16px]" :alt="item.link" />
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="w-full flex flex-center pt-24px md-hidden">
-                <div class="i-svg-logo h-24px w-112px"></div>
+            <div class="w-full flex items-center justify-center pt-[24px] md-hidden">
+                <div class="i-svg-logo h-[24px] w-[112px]"></div>
             </div>
 
-            <p class="py-24px text-center text-14px">
+            <p class="py-[24px] text-center text-[14px]">
                 The information on this site is of a general nature only and is not intended to address the specific
                 circumstances of any particular individual or entity. It is not intended or implied to be a substitute
                 for professional advice.

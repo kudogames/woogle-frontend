@@ -39,27 +39,27 @@ onMounted(() => {
         <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
             <base-header />
         </div>
-        <div class="pt-70px">
-            <div class="mx-auto max-w-1200px">
-                <div class="py-50px">
+        <div class="pt-[70px]">
+            <div class="mx-auto max-w-[1200px]">
+                <div class="py-[50px]">
                     <SearchBar
                         :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"
-                        class="mx-auto max-w-900px w-full rd-40px px-10px"
+                        class="mx-auto max-w-[900px] w-full rd-[40px] px-[10px]"
                     />
                 </div>
 
                 <div class="flex flex-col md-flex-row">
-                    <div class="w-full px-10px md-w-[calc(100%-300px)]">
+                    <div class="w-full px-[10px] md-w-[calc(100%-300px)]">
                         <!-- 页面导航 -->
                         <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
-                            <div class="line-clamp-1 text-12px color-gray-4">
+                            <div class="line-clamp-1 text-[12px] color-gray-4">
                                 <a class="hover:color-color1" href="/">Home</a> > {{ currentArticle?.title }}
                             </div>
 
                             <!-- 文章标题与简介 -->
-                            <div class="py-10px">
-                                <h1 class="py-10px text-24px font-bold">{{ currentArticle?.title }}</h1>
-                                <p class="text-14px color-#4d5156">{{ currentArticle?.description }}</p>
+                            <div class="py-[10px]">
+                                <h1 class="py-[10px] text-[24px] font-bold">{{ currentArticle?.title }}</h1>
+                                <p class="text-[14px] color-[#4d5156]">{{ currentArticle?.description }}</p>
                             </div>
                         </div>
 
@@ -75,7 +75,7 @@ onMounted(() => {
                         <!-- 图片 -->
                         <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
                             <div
-                                class="relative w-full flex flex-shrink-0 overflow-hidden b-2 border-#efdcca rd-lg pt-52.12%"
+                                class="relative w-full flex flex-shrink-0 overflow-hidden border-2 border-[#efdcca] rd-lg pt-52.12%"
                             >
                                 <img
                                     v-lazy="currentArticle?.coverImg"
@@ -85,15 +85,15 @@ onMounted(() => {
                                 />
                             </div>
 
-                            <div id="articleContent" class="py-10px" v-html="currentArticle?.content"></div>
+                            <div id="articleContent" class="py-[10px]" v-html="currentArticle?.content"></div>
                         </div>
                     </div>
 
                     <div
                         :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"
-                        class="w-full flex-shrink-0 md-w-300px"
+                        class="w-full flex-shrink-0 md-w-[300px]"
                     >
-                        <RelatedArticles class="mb-60px" :articles="relatedArticleList" />
+                        <RelatedArticles class="mb-[60px]" :articles="relatedArticleList" />
                     </div>
                 </div>
             </div>
