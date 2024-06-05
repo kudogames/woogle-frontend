@@ -8,7 +8,7 @@ definePageMeta({
 const {
     params: { uid, slug },
     query,
-} = useRoute('Content-uid-slug')
+} = useRoute('Topic-uid-slug')
 
 const { data, error } = await useFetch<APIResponseType<SearchAdPageType>>(
     `/api/v1/article/page/Content/${uid}/${slug}`,
@@ -97,7 +97,6 @@ onMounted(() => {
             <div class="relative mb-25px mt-40px w-full flex-center flex-shrink-0 overflow-hidden rd-15px pt-66.7%">
                 <img
                     v-lazy="searchArticle.coverImg"
-                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                     class="absolute left-0 top-0 h-full w-full object-cover"
                     :alt="searchArticle.title"
                 />

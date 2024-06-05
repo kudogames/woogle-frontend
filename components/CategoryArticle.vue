@@ -24,7 +24,6 @@ const { articles } = defineProps({
                     <div class="relative w-full overflow-hidden pt-51.8% shadow-lg">
                         <img
                             v-lazy="item.coverImg"
-                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                             class="absolute left-0 top-0 h-full w-full object-contain"
                             :alt="item.title"
                         />

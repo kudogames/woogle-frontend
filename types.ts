@@ -10,6 +10,7 @@ interface Category {
 }
 interface Article {
     uid: string
+    slug: string
     title: string
     coverImg: string
     category: Category
@@ -67,6 +68,13 @@ interface RainArticlePageType {
 interface SearchAdPageType {
     searchAdInfo: SearchAd
     searchArticle: SearchArticle
+}
+
+interface DiscussionPageType extends SearchAdPageType {
+    shareArticleList: {
+        uid: string
+        article: Article
+    }[]
 }
 
 interface tmplInfoType {

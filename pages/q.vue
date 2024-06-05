@@ -55,11 +55,11 @@ const bgColorMap: Record<string, tmplInfoType> = {
         template: QPageContent,
     },
     Discussion: {
-        mobileTopColor: '#01074B',
-        headerBgColor: 'bg-#01074B',
+        mobileTopColor: '#0d1938',
+        headerBgColor: 'bg-#0d1938 ',
         bgColor: 'bg-#0c1d45',
-        titleColor: 'color-#ccc',
-        descriptionColor: 'color-#ccc',
+        titleColor: 'color-#ffffff',
+        descriptionColor: 'color-#ffffff',
         boderColor: 'b-#162B5C',
         styleId: relatedDiscussionStyleId,
         template: QPageDiscussion,
@@ -291,17 +291,18 @@ const relatedTag: RelatedTag[] = [
 </script>
 
 <template>
-    <component
-        :is="tmplInfo.template"
-        :search-article-list="searchArticleList"
-        :tmpl-info="tmplInfo"
-        :search-text="searchText"
-        :tag-list="tagList"
-        :related-tag="relatedTag"
-    >
-        <template #ad>
-            <div id="searchResult" class="search-result w-full"></div>
-        </template>
-    </component>
-    <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"></div>
+    <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
+        <component
+            :is="tmplInfo.template"
+            :search-article-list="searchArticleList"
+            :tmpl-info="tmplInfo"
+            :search-text="searchText"
+            :tag-list="tagList"
+            :related-tag="relatedTag"
+        >
+            <template #ad>
+                <div id="searchResult" class="search-result w-full"></div>
+            </template>
+        </component>
+    </div>
 </template>

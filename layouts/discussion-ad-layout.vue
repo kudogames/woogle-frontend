@@ -3,27 +3,25 @@ useHead({
     meta: [
         {
             name: 'theme-color',
-            content: '#01074B',
+            content: '#fff',
         },
         {
             name: 'msapplication-navbutton-color',
-            content: '#01074B',
+            content: '#fff',
         },
         {
             name: 'apple-mobile-web-app-capable',
-            content: '#01074B',
+            content: '#fff',
         },
         {
             name: 'apple-mobile-web-app-status-bar-style',
-            content: '#01074B',
+            content: '#fff',
         },
     ],
 })
 </script>
 <template>
-    <div class="bg-#00EBFF pt-4px">
-        <div class="bg-#01074B color-#fff">
-            <slot />
-        </div>
+    <div class="bg-white">
+        <slot />
     </div>
 </template>

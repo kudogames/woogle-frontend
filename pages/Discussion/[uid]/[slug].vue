@@ -17,20 +17,14 @@ const {
     public: { frontUrl },
 } = useRuntimeConfig()
 
-const { data, error } = await useFetch<APIResponseType<SearchAdPageType>>(
-    `/api/v1/article/page/Content/${uid}/${slug}`,
+const { data, error } = await useFetch<APIResponseType<DiscussionPageType>>(
+    `/api/v1/article/page/Discussion/${uid}/${slug}`,
     {
         headers: { accept: 'application/json' },
     }
 )
 
-const { searchAdInfo, searchArticle } = data.value?.data ?? ({} as SearchAdPageType)
-
-const readMore = ref(false)
-
-const readMoreClick = () => {
-    readMore.value = true
-}
+const { searchAdInfo, searchArticle, shareArticleList } = data.value?.data ?? ({} as DiscussionPageType)
 
 const keys = ['utm_campaign', 'utm_content', 'utm_medium', 'utm_source']
 const [clickId, campaignId, adGroupId, adId] = keys.map((key) => (query[key] as string) ?? '')
@@ -43,6 +37,7 @@ interface TrackParams {
     channelId: string
     tmpl: string
 }
+
 // 跟踪参数，带到下一页
 const trackParams: TrackParams = {
     channelId: searchAdInfo.channelId,
@@ -54,164 +49,186 @@ const trackParams: TrackParams = {
 }
 
 // relatedSearch 组件
-const relatedSearch = ref()
-
+const relatedSearch1 = ref()
+const relatedSearch2 = ref()
 // Ad 加载完成
-const adLoadComplete = ref(false)
-
+const adLoadComplete1 = ref(false)
+const adLoadComplete2 = ref(false)
 // Ad 加载完成回调
-const adLoadedCallback = () => {
-    adLoadComplete.value = true
+const adLoadedCallback1 = () => {
+    adLoadComplete1.value = true
 }
-
+const adLoadedCallback2 = () => {
+    adLoadComplete2.value = true
+}
+const { isMobile } = useDevice()
 onMounted(() => {
     const e = new URLSearchParams(window.location.search)
     e.set('pgttl', uuidv4())
     window.history.replaceState(null, '', '?' + e.toString())
-    relatedSearch.value.loadAd()
+    relatedSearch1.value.loadAd()
+    relatedSearch2.value.loadAd()
+    if (isMobile) window.scrollTo({ top: 60, behavior: 'smooth' })
 })
-
+const showTip = ref(false)
 const shareNowList = [
     {
-        img: (await import('@/assets/img/facebook.png')).default,
-        link: `https://www.facebook.com/sharer.php?u=${frontUrl}${fullPath}`,
+        name: 'Facebook',
+        img: (await import('@/assets/img/f.png')).default,
+        clickFn: () => {
+            window.open(
+                `https://www.facebook.com/sharer.php?u=${frontUrl}${fullPath}`,
+                '_blank',
+                'width=580,height=315'
+            )
+        },
     },
     {
-        img: (await import('@/assets/img/X.png')).default,
-        link: `https://twitter.com/intent/tweet?url=${frontUrl}${fullPath}`,
+        name: 'Twitter',
+        img: (await import('@/assets/img/t.png')).default,
+        clickFn: () => {
+            window.open(
+                `https://twitter.com/share?url=${frontUrl}${fullPath}&text=${searchArticle.title}&via=twitter_handle`,
+                '_blank'
+            )
+        },
     },
     {
-        img: (await import('@/assets/img/whatsapp.png')).default,
-        link: `https://api.whatsapp.com/send?text=${frontUrl}${fullPath}`,
+        name: 'WhatsApp',
+        img: (await import('@/assets/img/w.png')).default,
+        clickFn: () => {
+            window.open(
+                `https://api.whatsapp.com/send?text=${searchArticle.title}%20${frontUrl}${fullPath}`,
+                '_blank',
+                'width=600,height=400'
+            )
+        },
     },
     {
-        img: (await import('@/assets/img/email.png')).default,
-        link: `mailto:?subject=Car rental services&body=${frontUrl}${fullPath}`,
+        name: 'Reddit',
+        img: (await import('@/assets/img/r.png')).default,
+        clickFn: () => {
+            window.open(
+                `https://www.reddit.com/submit?url=${frontUrl}${fullPath}&title=${searchArticle.title}`,
+                '_blank',
+                'width=600,height=400'
+            )
+        },
+    },
+    {
+        name: 'Copy link',
+        img: (await import('@/assets/img/l.png')).default,
+        clickFn: () => {
+            navigator.clipboard.writeText(`${frontUrl}${fullPath}`)
+            showTip.value = true
+            setTimeout(() => {
+                showTip.value = false
+            }, 500)
+        },
     },
 ]
 </script>
 
 <template>
-    <div
-        :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"
-        class="mx-auto max-w-[660px] min-h-[100vh] bg-[#01074B]"
-    >
-        <div class="i-svg-logo absolute right-[20px] top-[20px] hidden h-[24px] w-[112px] lg-block"></div>
-        <div class="w-full">
-            <img
-                :src="searchArticle.coverImg"
-                alt="searchAdInfo.title"
-                class="h-[100px] w-full object-cover"
-                :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"
-            />
-        </div>
-        <div class="px-[15px]">
-            <header class="py-[10px]">
-                <div class="w-full flex items-center justify-between text-[12px]">
-                    <div class="h-[18px] flex items-center justify-center gap-[4px]">
-                        <a href="/"><div class="i-svg-home h-[14px] w-[14px]"></div></a>
+    <div class="bg-white" :style="{ visibility: adLoadComplete1 && adLoadComplete2 ? 'visible' : 'hidden' }">
+        <TopicHeader>
+            <template #search>
+                <TopicSearchBar class="w-full border-#296cd4 rd-15px bg-#e7ebf5 xl-w-400px" />
+            </template>
+        </TopicHeader>
 
-                        Published on May 7, 2024
-                    </div>
-
-                    <span>4 min read</span>
-                </div>
-                <h1 class="my-[10px] text-left text-[16px] font-bold">
+        <div class="mx-auto max-w-1060px w-full px-20px pb-20px">
+            <div class="pt-14px md-pt-40px">
+                <h1 class="text-left text-23.36px font-bold font-exo lg-text-25.6px md-text-24px xl-text-32px">
                     {{ searchArticle.title }}
                 </h1>
-                <div class="pt-[15px] text-[16px]">
-                    {{ searchArticle.description }}
-                </div>
-            </header>
+                <!-- eslint-disable-next-line vue/no-v-html -->
+                <p class="mb-20px text-16px font-exo lg-mb-30px">{{ searchArticle.description }}</p>
+            </div>
 
             <RelatedSearch
-                ref="relatedSearch"
+                v-show="adLoadComplete1 && adLoadComplete2"
+                ref="relatedSearch1"
                 class="w-full"
                 search-text="keyword"
                 :terms="searchAdInfo.terms"
                 :channel-id="searchAdInfo.channelId"
-                :referrer-ad-creative="searchArticle.referrerAdCreative"
                 :style-id="relatedDiscussionStyleId"
+                :referrer-ad-creative="searchArticle.referrerAdCreative"
                 :track-params="trackParams"
-                @ad-loaded-callback="adLoadedCallback"
+                @ad-loaded-callback="adLoadedCallback1"
             />
+            <div class="relative mb-25px mt-40px w-full flex-center flex-shrink-0 overflow-hidden rd-15px pt-66.7%">
+                <img
+                    v-lazy="searchArticle.coverImg"
+                    class="absolute left-0 top-0 h-full w-full object-cover"
+                    :alt="searchArticle.title"
+                />
+            </div>
 
-            <div class="w-full">
-                <!-- <div class="text-start text-15px" :style="{ display: readMore ? 'none' : 'block' }">
-                    <div class="cursor-pointer" @click="readMoreClick">Show More...</div>
-                </div> -->
-
-                <!-- <article
-                    id="articleContent"
-                    class="py-10px"
-                    :style="{
-                        display: readMore ? 'block' : 'none',
-                    }"
-                    v-html="searchArticle.content"
-                ></article> -->
-                <article id="articleContent" class="py-[10px]" v-html="searchArticle.content"></article>
+            <article id="articleContent" class="font-exo" v-html="searchArticle.content"></article>
+            <TopicRelatedSearch
+                v-show="adLoadComplete1 && adLoadComplete2"
+                ref="relatedSearch2"
+                class="w-full"
+                :search-text="searchArticle.title"
+                :channel-id="searchAdInfo.channelId"
+                :style-id="relatedDiscussionStyleId"
+                :referrer-ad-creative="searchArticle.referrerAdCreative"
+                :track-params="trackParams"
+                @ad-loaded-callback="adLoadedCallback2"
+            />
+            <div
+                lt-xs="flex-col justify-center"
+                class="relative my-20px h-50px w-full flex items-center justify-between bg-#14cccc"
+            >
+                <div
+                    class="absolute left-0 h-0 w-0 border-b-1px border-b-24px border-l-12px border-t-28px border-b-transparent border-l-#fff border-t-transparent border-solid"
+                ></div>
+                <div
+                    class="absolute right-0 h-0 w-0 border-b-24px border-r-12px border-t-28px border-b-transparent border-r-#fff border-t-transparent border-solid"
+                ></div>
+                <div class="text-12px font-bold xs-ml-32px sm-text-16px">Share this article</div>
+                <div class="flex gap-[10px] xs-mr-22px">
+                    <div
+                        v-for="(item, index) in shareNowList"
+                        :key="index"
+                        class="h-30px w-30px flex items-center justify-center rd-30px bg-[#fff]"
+                    >
+                        <img
+                            :src="item.img"
+                            class="h-full w-full hover:cursor-pointer"
+                            :alt="item.name"
+                            @click="item.clickFn"
+                        />
+                    </div>
+                    <span
+                        v-if="showTip"
+                        class="absolute left-1/2 top-1/2 translate-x-[-50%] transform rounded-md bg-black p-2 text-sm text-white"
+                        >Copied</span
+                    >
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-20px py-20px md-gap-40px">
                 <a
-                    :style="{
-                        display: readMore ? 'flex' : 'none',
-                    }"
-                    href="https://woogle.info/Discussion/WtqWLWuU/veterans-car-charity-compare-car-donation-charities"
-                    class="mt-[16px] flex items-center justify-between b-b-[1px] b-t-[1px] b-color3 py-[10px]"
+                    v-for="(item, index) in shareArticleList"
+                    :key="index"
+                    :href="`/Discussion/${item.uid}/${item.article.slug}`"
+                    class="flex-basis-100% md-flex-basis-[calc((100%-40px*2)/3)] sm-flex-basis-[calc((100%-20px)/2)]"
                 >
-                    <div>
-                        <span>Continue reading this article:</span>
-                        <strong class="block text-[20px] font-bold"
-                            >Veterans Car Charity - Compare Car Donation Charities</strong
-                        >
+                    <div class="relative w-full overflow-hidden rd-20px pt-213px">
+                        <img
+                            v-lazy="item.article.coverImg"
+                            class="absolute left-0 top-0 h-full w-full object-cover"
+                            :alt="item.article.title"
+                        />
                     </div>
-                    <div class="h-[48px] w-[40px] flex items-center justify-center rd-lg bg-[#00EBFF]">
-                        <div class="i-svg-arrow h-[30px] w-full"></div>
-                    </div>
+                    <p class="line-clamp-2 text-17px font-bold font-exo">{{ item.article.title }}</p>
                 </a>
             </div>
-
-            <div class="flex flex-col items-center justify-center gap-[16px] py-[26px]">
-                <div class="h-[48px] w-[48px]">
-                    <img
-                        :src="searchArticle.coverImg"
-                        class="h-full w-full rd-md object-cover"
-                        :alt="searchArticle.title"
-                    />
-                </div>
-                <div class="text-center text-[14px]">
-                    <div>Published on May 7, 2024</div>
-                    <div>Powered by woogle.info</div>
-                </div>
-            </div>
-            <div class="flex flex-col items-center justify-center gap-[10px] pb-[20px]">
-                <div class="text-[16px]">Share now!</div>
-
-                <div class="flex gap-[10px]">
-                    <div
-                        v-for="item in shareNowList"
-                        :key="item.link"
-                        class="h-[32px] w-[32px] flex items-center justify-center rd-md bg-[#fff]"
-                    >
-                        <a :href="item.link" target="_blank">
-                            <img :src="item.img" class="h-[16px] w-[16px]" :alt="item.link" />
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="w-full flex items-center justify-center pt-[24px] md-hidden">
-                <div class="i-svg-logo h-[24px] w-[112px]"></div>
-            </div>
-
-            <p class="py-[24px] text-center text-[14px]">
-                The information on this site is of a general nature only and is not intended to address the specific
-                circumstances of any particular individual or entity. It is not intended or implied to be a substitute
-                for professional advice.
-                <a href="/privacy"> Read more. </a>
-            </p>
         </div>
-    </div>
-    <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
-        <DiscussionBackTop />
-        <DiscussionFooter />
+        <TopicFooter />
+        <cookie-consent />
     </div>
 </template>
 
@@ -220,15 +237,16 @@ const shareNowList = [
     h1 {
         display: block;
         font-size: 2em;
-
+        margin-block-start: 0.67em;
+        margin-block-end: 0.67em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
         font-weight: bold;
+        unicode-bidi: isolate;
     }
 
     h2 {
-        display: block;
-        font-size: 20px;
-        padding-top: 15px;
-        font-weight: bold;
+        @apply text-25px mt-30px mb-25px;
     }
 
     h3 {
@@ -253,8 +271,7 @@ const shareNowList = [
     }
 
     p {
-        display: block;
-        padding-top: 15px;
+        @apply text-13px mb-30px;
     }
 
     em {

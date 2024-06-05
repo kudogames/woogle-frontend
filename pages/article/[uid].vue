@@ -79,7 +79,6 @@ onMounted(() => {
                             >
                                 <img
                                     v-lazy="currentArticle?.coverImg"
-                                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                                     class="absolute left-0 top-0 h-full w-full object-contain"
                                     :alt="currentArticle?.title"
                                 />

@@ -23,7 +23,6 @@ const { articles, category } = defineProps({
                 <div class="relative w-full flex flex-shrink-0 overflow-hidden b-2 border-color8 rd-lg pt-51.8%">
                     <img
                         v-lazy="item.coverImg"
-                        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                         class="absolute left-0 top-0 h-full w-full object-contain"
                         :alt="item.title"
                     />

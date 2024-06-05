@@ -52,7 +52,6 @@ const {
                                         <!-- <div class="h-60px w-60px flex-center flex-shrink-0 sm-h-100px sm-w-100px"> -->
                                         <img
                                             v-lazy="item.coverImg"
-                                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                                             class="h-full w-full object-contain"
                                             :alt="item.title"
                                         />

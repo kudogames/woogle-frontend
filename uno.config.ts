@@ -42,6 +42,10 @@ export default defineConfig({
                 'text-shadow': '#000 1px 0 0, #000 0 1px 0, #000 -1px 0 0, #000 0 -1px 0',
             },
         ],
+        [
+            /^pt-calc\[(\d+),(\d+)(,(\d+(\.\d+)?))?\]$/,
+            ([, w, h, , rate = '100']) => ({ 'padding-top': `calc(${h} / ${w} * ${rate}%)` }),
+        ],
     ],
     theme: {
         breakpoints: {

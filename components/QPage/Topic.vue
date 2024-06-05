@@ -54,7 +54,6 @@ const { isMobile } = useDevice()
                                     <div class="flex-center flex-shrink-0">
                                         <img
                                             v-lazy="item.coverImg"
-                                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                                             class="h-full w-full object-contain"
                                             :alt="item.title"
                                         />

@@ -26,7 +26,6 @@ const dataLoading = ref(false)
                     <div class="relative w-full flex-shrink-0 pt-51.18% shadow-lg">
                         <img
                             v-lazy="item.coverImg"
-                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                             class="absolute left-0 top-0 h-full w-full object-contain"
                             :alt="item.title"
                         />
