@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { serverTrackClickEvent } from '@/utils/search-ad-track'
+
 import QPageCommon from '~/components/QPage/Common.vue'
 import QPageTopic from '~/components/QPage/Topic.vue'
 import QPageContent from '~/components/QPage/Content.vue'
@@ -108,42 +110,6 @@ const {
     public: { baseTrackUrl, frontUrl, adsenseSearchId },
 } = useRuntimeConfig()
 
-interface ServerTrackEventParams {
-    clickId: string
-    campaignId: string
-    adGroupId: string
-    adId: string
-    siteId: string
-    channelId: string
-    keyword: string
-    resultsStyleId: string
-    termsStyleId: string
-}
-
-// 服务器 Track埋点
-const serverTrackEvent = (params: ServerTrackEventParams) => {
-    const img = new Image()
-    img.width = 0
-    img.height = 0
-    img.crossOrigin = 'anonymous'
-
-    const trackUrl = new URL(baseTrackUrl)
-    const trackUrlParams = new URLSearchParams()
-
-    trackUrlParams.set('clickId', params.clickId)
-    trackUrlParams.set('campaignId', params.campaignId)
-    trackUrlParams.set('adGroupId', params.adGroupId)
-    trackUrlParams.set('adId', params.adId)
-    trackUrlParams.set('siteId', params.siteId)
-    trackUrlParams.set('channelId', params.channelId)
-    trackUrlParams.set('keyword', params.keyword)
-    trackUrlParams.set('termsStyleId', params.termsStyleId)
-    trackUrlParams.set('resultsStyleId', params.resultsStyleId)
-
-    trackUrl.search = trackUrlParams.toString()
-    img.src = trackUrl.toString()
-}
-
 // 点击搜索广告触发
 const trackSearch = () => {
     let searchAdIsTrack = false
@@ -159,7 +125,7 @@ const trackSearch = () => {
                 if (!searchAdIsTrack) {
                     searchAdIsTrack = true
                     // 传服务器 Track埋点
-                    serverTrackEvent({
+                    serverTrackClickEvent({
                         siteId: '32',
                         clickId,
                         campaignId,

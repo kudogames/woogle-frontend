@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { v4 as uuidv4 } from 'uuid'
-
+import { serverTrackImpressionEvent } from '@/utils/search-ad-track'
 import { relatedDiscussionStyleId } from '@/constants/config'
 
 definePageMeta({
@@ -57,9 +57,25 @@ const adLoadComplete2 = ref(false)
 // Ad 加载完成回调
 const adLoadedCallback1 = () => {
     adLoadComplete1.value = true
+    // 曝光埋点
+    serverTrackImpressionEvent({
+        siteId: '32',
+        campaignId,
+        adGroupId,
+        adId,
+        channelId: searchAdInfo.channelId,
+    })
 }
 const adLoadedCallback2 = () => {
     adLoadComplete2.value = true
+    // 曝光埋点
+    serverTrackImpressionEvent({
+        siteId: '32',
+        campaignId,
+        adGroupId,
+        adId,
+        channelId: searchAdInfo.channelId,
+    })
 }
 const { isMobile } = useDevice()
 onMounted(() => {

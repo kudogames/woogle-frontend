@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { v4 as uuidv4 } from 'uuid'
-
+import { serverTrackImpressionEvent } from '@/utils/search-ad-track'
 const {
     params: { uid, slug },
     query,
@@ -55,6 +55,14 @@ const adLoadComplete = ref(false)
 // Ad 加载完成回调
 const adLoadedCallback = () => {
     adLoadComplete.value = true
+    // 曝光埋点
+    serverTrackImpressionEvent({
+        siteId: '32',
+        campaignId,
+        adGroupId,
+        adId,
+        channelId: searchAdInfo.channelId,
+    })
 }
 
 onMounted(() => {
