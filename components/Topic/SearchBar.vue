@@ -4,6 +4,18 @@ const { searchText } = defineProps({
         type: String,
         default: '',
     },
+    inputClass: {
+        type: String,
+        default: '',
+    },
+    buttonClass: {
+        type: String,
+        default: '',
+    },
+    placeholder: {
+        type: String,
+        default: 'Search and hit enter...',
+    },
 })
 
 const newSearchText = ref(searchText)
@@ -20,11 +32,17 @@ const handleSubmit = (e: Event) => {
             v-model.trim="newSearchText"
             type="text"
             name="q"
-            placeholder="Search and hit enter..."
+            :placeholder="placeholder"
             class="h-full w-full bg-inherit pl-3 text-14px color-gray-5 outline-none hover:color-black"
+            :class="inputClass"
         />
 
-        <button aria-label="Search" type="submit" class="relative h-full w-46px flex-shrink-0 cursor-pointer">
+        <button
+            aria-label="Search"
+            type="submit"
+            class="relative h-full w-46px flex flex-center flex-shrink-0 cursor-pointer"
+            :class="buttonClass"
+        >
             <div class="absolute top-0 h-36px w-36px">
                 <div class="i-svg-search h-full w-full"></div>
             </div>

@@ -27,6 +27,9 @@ export default defineConfig({
                 exo: {
                     name: 'Exo',
                 },
+                sora: {
+                    name: 'Sora',
+                },
             },
         }),
     ],
@@ -50,6 +53,7 @@ export default defineConfig({
     theme: {
         breakpoints: {
             xs: '320px',
+            xss: '500px',
             sm: '640px',
             md: '768px',
             lg: '1024px',

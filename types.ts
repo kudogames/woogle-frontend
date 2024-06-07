@@ -38,8 +38,10 @@ interface SearchAd {
 }
 
 interface IndexPageType {
+    swiperArticleList: Article[]
     trendingArticleList: Article[]
-    allArticleList: Article[]
+    latestArticleList: Article[]
+    editorsArticleList: Article[]
 }
 interface QPageType {
     tagList: [string[]]
@@ -59,12 +61,6 @@ interface ArticlePageType {
     relatedArticleList: Article[]
 }
 
-interface BlueArticleType {
-    blueArticleList: Article[]
-}
-interface RainArticlePageType {
-    rainArticleList: Article[]
-}
 interface SearchAdPageType {
     searchAdInfo: SearchAd
     searchArticle: SearchArticle
