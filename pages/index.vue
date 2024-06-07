@@ -122,7 +122,7 @@ const categoryImgList = [
                     class="flex-shrink-0 flex-basis-[calc((100%-3*10px)/4)] lt-md-flex-basis-[calc((100%-10px)/2)]"
                 >
                     <a :href="`/c/${item.slug}`" class="flex flex-center">
-                        <div class="group xss-w-180px w-full">
+                        <div class="group w-full xss-w-180px">
                             <div
                                 group-hover="shadow-md duration-500  scale-105"
                                 class="rd-lt-rb relative w-full overflow-hidden bg-gray-2 pt-calc[1200,628]"

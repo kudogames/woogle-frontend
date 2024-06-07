@@ -9,18 +9,23 @@ withDefaults(
 )
 const headImgList = [
     {
+        name: 'Olivia',
         img: (await import('@/assets/img/index/head/1.webp')).default,
     },
     {
+        name: 'Ethan',
         img: (await import('@/assets/img/index/head/2.webp')).default,
     },
     {
+        name: 'Charlotte',
         img: (await import('@/assets/img/index/head/3.webp')).default,
     },
     {
+        name: 'Jack',
         img: (await import('@/assets/img/index/head/4.webp')).default,
     },
     {
+        name: 'Emily',
         img: (await import('@/assets/img/index/head/5.webp')).default,
     },
 ]
@@ -67,7 +72,11 @@ const headImgList = [
                     </div>
                 </div>
                 <div class="w-full flex items-center justify-between">
-                    <p class="line-clamp-1 w-[calc(100%-20px)] color-#0155ff">Rachel , Phoebe , Ross...likes</p>
+                    <p class="line-clamp-1 w-[calc(100%-20px)] color-#0155ff">
+                        {{ headImgList[index % headImgList.length].name }} ,
+                        {{ headImgList[(index + 1) % headImgList.length].name }} ,
+                        {{ headImgList[(index + 3) % headImgList.length].name }} ...likes
+                    </p>
                     <div class="i-svg-ph--heart-fill h-20px w-20px bg-#ff627f"></div>
                 </div>
             </div>
