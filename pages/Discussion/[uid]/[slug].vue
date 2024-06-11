@@ -26,14 +26,37 @@ const { data, error } = await useFetch<APIResponseType<DiscussionPageType>>(
 
 const { searchAdInfo, searchArticle, shareArticleList } = data.value?.data ?? ({} as DiscussionPageType)
 
-const keys = ['utm_campaign', 'utm_content', 'utm_medium', 'utm_source']
-const [clickId, campaignId, adGroupId, adId] = keys.map((key) => (query[key] as string) ?? '')
+const adKeysMap = {
+    utm_campaign: 'clickId',
+    utm_content: 'campaignId',
+    utm_medium: 'adGroupId',
+    utm_source: 'adId',
+}
+
+const keys = Object.keys(adKeysMap)
+const adInfo: Record<string, string> = keys.every((key) => !query[key])
+    ? {}
+    : {
+          clickId: query.utm_campaign as string,
+          campaignId: query.utm_content as string,
+          adGroupId: query.utm_medium as string,
+          adId: query.utm_source as string,
+      }
+const originAdInfo: Record<string, string> = keys.every((key) => !query[key])
+    ? {}
+    : {
+          utm_campaign: query.utm_campaign as string,
+          utm_content: query.utm_content as string,
+          utm_medium: query.utm_medium as string,
+          utm_source: query.utm_source as string,
+      }
+// const [clickId, campaignId, adGroupId, adId] = keys.map((key) => (query[key] as string) ?? '')
 
 interface TrackParams {
-    clickId: string
-    campaignId: string
-    adGroupId: string
-    adId: string
+    clickId?: string
+    campaignId?: string
+    adGroupId?: string
+    adId?: string
     channelId: string
     tmpl: string
 }
@@ -41,10 +64,7 @@ interface TrackParams {
 // 跟踪参数，带到下一页
 const trackParams: TrackParams = {
     channelId: searchAdInfo.channelId,
-    clickId,
-    campaignId,
-    adGroupId,
-    adId,
+    ...adInfo,
     tmpl: 'Discussion',
 }
 
@@ -54,6 +74,9 @@ const relatedSearch2 = ref()
 // Ad 加载完成
 const adLoadComplete1 = ref(false)
 const adLoadComplete2 = ref(false)
+
+const { campaignId = '', adGroupId = '', adId = '' } = adInfo
+
 // Ad 加载完成回调
 const adLoadedCallback1 = () => {
     adLoadComplete1.value = true
@@ -143,6 +166,11 @@ const shareNowList = [
         },
     },
 ]
+
+const shareArticleUrl = (uid: string, slug: string) => {
+    const params = Object.keys(adInfo).length > 0 ? `?${new URLSearchParams(originAdInfo).toString()}` : ''
+    return `/Discussion/${uid}/${slug}${params}`
+}
 </script>
 
 <template>
@@ -229,7 +257,7 @@ const shareNowList = [
                 <a
                     v-for="(item, index) in shareArticleList"
                     :key="index"
-                    :href="`/Discussion/${item.uid}/${item.article.slug}`"
+                    :href="shareArticleUrl(item.uid, item.article.slug)"
                     class="flex-basis-100% md-flex-basis-[calc((100%-40px*2)/3)] sm-flex-basis-[calc((100%-20px)/2)]"
                 >
                     <div class="relative w-full overflow-hidden rd-20px pt-213px">

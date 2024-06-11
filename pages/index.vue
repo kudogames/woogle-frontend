@@ -48,7 +48,7 @@ const categoryImgList = [
     <div class="font-sora">
         <div class="bg-#fff px-10px py-30px">
             <div class="mx-auto max-w-[1200px]">
-                <div class="flex gap-30px lt-md-flex-col">
+                <div class="flex gap-10px lt-md-flex-col lg-gap-30px">
                     <div class="w-full lg-w-600px md-w-440px">
                         <ClientOnly>
                             <swiper
@@ -64,18 +64,18 @@ const categoryImgList = [
                                 <swiper-slide
                                     v-for="(item, index) in swiperArticleList"
                                     :key="index"
+                                    class="w-full"
                                     :lazy="true"
-                                    class="flex-basis-100%"
                                 >
-                                    <a class="flex flex-center flex-col" :href="`/c/${item.slug}`">
+                                    <a :href="`/article/${item.uid}`">
                                         <!-- img -->
                                         <div
-                                            class="relative w-full flex flex-shrink-0 overflow-hidden rd-md bg-gray-2 pt-calc[1200,628]"
+                                            class="relative w-full flex overflow-hidden rd-md bg-gray-2 pt-calc[600,314]"
                                         >
                                             <img
                                                 loading="lazy"
                                                 :src="item.coverImg"
-                                                class="swiper-lazy absolute left-0 top-0 h-full w-full flex-shrink-0 bg-gray-1"
+                                                class="swiper-lazy absolute left-0 top-0 h-full w-full bg-gray-1 object-contain"
                                                 :alt="item.title"
                                             />
                                         </div>
@@ -85,12 +85,12 @@ const categoryImgList = [
                         </ClientOnly>
                     </div>
                     <div
-                        class="w-full flex flex-col justify-between gap-6px px-10px lg-w-[calc(100%-630px)] md-w-[calc(100%-390px)]"
+                        class="w-full flex flex-col justify-between gap-6px px-10px lg-w-[calc(100%-630px)] md-w-[calc(100%-450px)]"
                     >
                         <div v-for="(item, index) in swiperArticleList" :key="index" class="flex flex-col gap-6px">
                             <a
                                 :href="`/article/${item.uid}`"
-                                class="group flex flex-col justify-between"
+                                class="group flex flex-col justify-between px-10px"
                                 hover="bg-#00000010"
                                 :class="slideActiveIndex === index ? 'bg-#00000010 scale-104' : ''"
                             >
@@ -109,7 +109,8 @@ const categoryImgList = [
                 <TopicSearchBar
                     :placeholder="' '"
                     :button-class="' px-40px bg-#193774'"
-                    class="my-10px w-full b-1px b-#193774 rd-md lg-w-600px"
+                    :svg="`i-svg-bold-search-bar bg-#aecdff`"
+                    class="my-10px w-full b-3px b-#193774 rd-md lg-w-600px"
                 />
             </div>
         </div>

@@ -13,7 +13,7 @@ withDefaults(
     <div class="flex gap-20px bg-#fff p-10px lt-md-flex-col lg-gap-70px">
         <div class="w-full flex flex-col gap-10px lg-w-[calc(100%-610px)] md-w-[calc(100%-420px)]">
             <div v-for="(item, index) in articleList.slice(0, 3)" :key="index" class="group flex flex-col gap-10px">
-                <a :href="`/article/${item.uid}`" class="lt-xss-flex-col flex gap-10px" hover="bg-#00000010">
+                <a :href="`/article/${item.uid}`" class="flex gap-10px rd-l-md lt-xss-flex-col" hover="bg-#00000010">
                     <div
                         xl="pt-120px w-224px"
                         xss="pt-90px w-174px"
@@ -25,7 +25,7 @@ withDefaults(
                             :alt="item.title"
                         />
                     </div>
-                    <div class="xss-w-[calc(100%-184px)] flex flex-col justify-between xl-w-[calc(100%-234px)]">
+                    <div class="flex flex-col justify-between xl-w-[calc(100%-234px)] xss-w-[calc(100%-184px)]">
                         <span class="text-16px font-bold color-#d83e2d">Trending Article</span>
                         <h2 class="line-clamp-2 text-18px font-bold line-height-24px group-hover:color-#0155ff">
                             {{ item.title }}

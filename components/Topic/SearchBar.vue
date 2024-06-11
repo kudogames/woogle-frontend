@@ -16,6 +16,10 @@ const { searchText } = defineProps({
         type: String,
         default: 'Search and hit enter...',
     },
+    svg: {
+        type: String,
+        default: 'i-svg-search ',
+    },
 })
 
 const newSearchText = ref(searchText)
@@ -43,8 +47,8 @@ const handleSubmit = (e: Event) => {
             class="relative h-full w-46px flex flex-center flex-shrink-0 cursor-pointer"
             :class="buttonClass"
         >
-            <div class="absolute top-0 h-36px w-36px">
-                <div class="i-svg-search h-full w-full"></div>
+            <div class="absolute top-0 h-30px w-30px">
+                <div :class="svg" class="h-full w-full"></div>
             </div>
         </button>
     </form>
