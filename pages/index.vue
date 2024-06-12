@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Autoplay } from 'swiper/modules'
+import { Autoplay, Pagination } from 'swiper/modules'
 
 definePageMeta({
     layout: 'index-layout',
@@ -53,7 +53,8 @@ const categoryImgList = [
                         <ClientOnly>
                             <swiper
                                 class="swiper"
-                                :modules="[Autoplay]"
+                                :modules="[Autoplay, Pagination]"
+                                :pagination="{ clickable: true }"
                                 :loop="true"
                                 :autoplay="{
                                     delay: 5000,
@@ -85,7 +86,7 @@ const categoryImgList = [
                         </ClientOnly>
                     </div>
                     <div
-                        class="w-full flex flex-col justify-between gap-6px px-10px lg-w-[calc(100%-630px)] md-w-[calc(100%-450px)]"
+                        class="w-full flex flex-col justify-between gap-6px px-10px py-6px lg-w-[calc(100%-630px)] md-w-[calc(100%-450px)]"
                     >
                         <div v-for="(item, index) in swiperArticleList" :key="index" class="flex flex-col gap-6px">
                             <a
