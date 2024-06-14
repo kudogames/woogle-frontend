@@ -147,7 +147,7 @@ const categoryImgList = [
             <IndexTrending class="mx-10px" :article-list="trendingArticleList" />
             <div class="px-10px py-20px text-24px font-bold">Latest Articles</div>
             <IndexLatest :article-list="latestArticleList" />
-            <div class="px-10px py-20px text-24px font-bold">Trending Articles</div>
+            <div class="px-10px py-20px text-24px font-bold">Editor's Picks</div>
 
             <IndexEditors class="mb-30px px-10px" :article-list="editorsArticleList" />
         </div>

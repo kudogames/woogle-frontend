@@ -26,7 +26,9 @@ withDefaults(
                         />
                     </div>
                     <div class="flex flex-col justify-between xl-w-[calc(100%-234px)] xss-w-[calc(100%-184px)]">
-                        <span class="text-16px font-bold color-#d83e2d">Trending Article</span>
+                        <span class="text-16px font-bold color-#d83e2d">{{
+                            item.category.name || 'Trending Article'
+                        }}</span>
                         <h2 class="line-clamp-2 text-18px font-bold line-height-24px group-hover:color-#0155ff">
                             {{ item.title }}
                         </h2>
@@ -48,7 +50,9 @@ withDefaults(
                 />
             </div>
             <div class="w-full flex flex-col gap-6px bg-#fff6ac px-20px py-14px">
-                <span class="text-12px font-bold color-#d83e2d">Trending Article</span>
+                <span class="text-12px font-bold color-#d83e2d">{{
+                    articleList.slice(3)[0].category.name || 'Trending Article'
+                }}</span>
                 <h2 class="line-clamp-2 text-16px font-bold line-height-24px group-hover:color-#0155ff">
                     {{ articleList.slice(3)[0].title }}
                 </h2>

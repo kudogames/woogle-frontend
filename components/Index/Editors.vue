@@ -25,7 +25,7 @@ withDefaults(
                 />
             </div>
             <div class="flex flex-col gap-10px sm-py-10px">
-                <span class="text-16px font-bold color-#d83e2d">Trending Article</span>
+                <span class="text-16px font-bold color-#d83e2d">{{ item.category.name || 'Trending Article' }}</span>
                 <h2 class="line-clamp-2 text-18px font-bold line-height-24px group-hover:color-#0155ff">
                     {{ item.title }}
                 </h2>
