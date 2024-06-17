@@ -114,56 +114,77 @@ export default defineNuxtConfig({
                     ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
                         ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
                         : false
-                    : 172800,
+                    : 7200,
             }, // 单位 s
             '/Content/**': {
                 swr: process.env.NUXT_CONFIG_CACHE_TTL
                     ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
                         ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
                         : false
-                    : 172800,
+                    : 7200,
+            },
+            '/Topic/**': {
+                swr: process.env.NUXT_CONFIG_CACHE_TTL
+                    ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
+                        ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
+                        : false
+                    : 7200,
+            },
+            '/Subject/**': {
+                swr: process.env.NUXT_CONFIG_CACHE_TTL
+                    ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
+                        ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
+                        : false
+                    : 7200,
+            },
+            '/Discussion/**': {
+                swr: process.env.NUXT_CONFIG_CACHE_TTL
+                    ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
+                        ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
+                        : false
+                    : 7200,
             },
             '/article/**': {
                 swr: process.env.NUXT_CONFIG_CACHE_TTL
                     ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
                         ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
                         : false
-                    : 172800,
+                    : 7200,
             },
             '/c/**': {
                 swr: process.env.NUXT_CONFIG_CACHE_TTL
                     ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
                         ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
                         : false
-                    : 172800,
+                    : 7200,
             },
             '/q': {
                 swr: process.env.NUXT_CONFIG_CACHE_TTL
                     ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
                         ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
                         : false
-                    : 172800,
+                    : 7200,
             },
             '/contactus': {
                 swr: process.env.NUXT_CONFIG_CACHE_TTL
                     ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
                         ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
                         : false
-                    : 172800,
+                    : 7200,
             },
             '/privacy': {
                 swr: process.env.NUXT_CONFIG_CACHE_TTL
                     ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
                         ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
                         : false
-                    : 172800,
+                    : 7200,
             },
             '/legalterms': {
                 swr: process.env.NUXT_CONFIG_CACHE_TTL
                     ? Number(process.env.NUXT_CONFIG_CACHE_TTL) > 0
                         ? Number(process.env.NUXT_CONFIG_CACHE_TTL)
                         : false
-                    : 172800,
+                    : 7200,
             },
             '/api/**': {
                 proxy: process.env.NUXT_PUBLIC_BASE_API + '/api/**',

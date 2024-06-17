@@ -1,5 +1,9 @@
 <script setup lang="ts">
 const props = defineProps({
+    eleId: {
+        type: String,
+        default: 'relatedSearch',
+    },
     number: {
         type: Number,
         default: 6,
@@ -84,7 +88,7 @@ const emit = defineEmits(['adLoadedCallback'])
 
 const loadAd = () => {
     const relatedSearchBlock = {
-        container: 'relatedSearch',
+        container: props.eleId,
         relatedSearches: props.number,
         adLoadedCallback: () => {
             emit('adLoadedCallback')
@@ -136,5 +140,5 @@ defineExpose({
 </script>
 
 <template>
-    <div id="relatedSearch" class="related-search w-full"></div>
+    <div :id="eleId" class="related-search w-full"></div>
 </template>

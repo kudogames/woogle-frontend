@@ -68,6 +68,11 @@ const trackParams: TrackParams = {
     tmpl: 'Discussion',
 }
 
+const ignoredPageParams =
+    Math.random() < 0.1
+        ? 'layout,utm_content,campaign_id,cfgKey,utm_content,utm_campaign,arb_direct,styleID,ad_group_id,arb_campaign_id,utm_medium,utm_source,cpc,ad_id,utm_campaign,click_id,_ckttl,network,section_id,utm_source,subDomain,account,pgttl'
+        : 'layout,utm_content,campaign_id,cfgKey,utm_content,utm_campaign,arb_direct,styleID,ad_group_id,arb_campaign_id,utm_medium,utm_source,cpc,ad_id,utm_campaign,click_id,_ckttl,network,section_id,utm_source,subDomain,account'
+
 // relatedSearch 组件
 const relatedSearch1 = ref()
 const relatedSearch2 = ref()
@@ -195,8 +200,10 @@ const shareArticleUrl = (uid: string, slug: string) => {
                 ref="relatedSearch1"
                 class="w-full"
                 search-text="keyword"
+                :ele-id="'relatedSearch1'"
                 :terms="searchAdInfo.terms"
                 :channel-id="searchAdInfo.channelId"
+                :ignored-page-params="ignoredPageParams"
                 :style-id="relatedDiscussionStyleId"
                 :referrer-ad-creative="searchArticle.referrerAdCreative"
                 :track-params="trackParams"
@@ -211,13 +218,15 @@ const shareArticleUrl = (uid: string, slug: string) => {
             </div>
 
             <article id="articleContent" class="font-exo" v-html="searchArticle.content"></article>
-            <TopicRelatedSearch
+            <RelatedSearch
                 v-show="adLoadComplete1 && adLoadComplete2"
                 ref="relatedSearch2"
                 class="w-full"
+                :ele-id="'relatedSearch2'"
                 :search-text="searchArticle.title"
                 :channel-id="searchAdInfo.channelId"
                 :style-id="relatedDiscussionStyleId"
+                :ignored-page-params="ignoredPageParams"
                 :referrer-ad-creative="searchArticle.referrerAdCreative"
                 :track-params="trackParams"
                 @ad-loaded-callback="adLoadedCallback2"

@@ -40,6 +40,10 @@ const trackParams: TrackParams = {
     adId,
     tmpl: 'Topic',
 }
+const ignoredPageParams =
+    Math.random() < 0.1
+        ? 'layout,utm_content,campaign_id,cfgKey,utm_content,utm_campaign,arb_direct,styleID,ad_group_id,arb_campaign_id,utm_medium,utm_source,cpc,ad_id,utm_campaign,click_id,_ckttl,network,section_id,utm_source,subDomain,account,pgttl'
+        : 'layout,utm_content,campaign_id,cfgKey,utm_content,utm_campaign,arb_direct,styleID,ad_group_id,arb_campaign_id,utm_medium,utm_source,cpc,ad_id,utm_campaign,click_id,_ckttl,network,section_id,utm_source,subDomain,account'
 
 // relatedSearch 组件
 const relatedSearch1 = ref()
@@ -101,11 +105,13 @@ onMounted(() => {
             <RelatedSearch
                 v-show="adLoadComplete1 && adLoadComplete2"
                 ref="relatedSearch1"
+                :ele-id="'relatedSearch1'"
                 class="w-full"
                 search-text="keyword"
                 :terms="searchAdInfo.terms"
                 :channel-id="searchAdInfo.channelId"
                 style-id="3736261853"
+                :ignored-page-params="ignoredPageParams"
                 :referrer-ad-creative="searchArticle.referrerAdCreative"
                 :track-params="trackParams"
                 @ad-loaded-callback="adLoadedCallback1"
@@ -119,13 +125,15 @@ onMounted(() => {
             </div>
 
             <article id="articleContent" class="font-exo" v-html="searchArticle.content"></article>
-            <TopicRelatedSearch
+            <RelatedSearch
                 v-show="adLoadComplete1 && adLoadComplete2"
                 ref="relatedSearch2"
                 class="w-full"
                 :search-text="searchArticle.title"
                 :channel-id="searchAdInfo.channelId"
+                :ele-id="'relatedSearch2'"
                 style-id="3736261853"
+                :ignored-page-params="ignoredPageParams"
                 :referrer-ad-creative="searchArticle.referrerAdCreative"
                 :track-params="trackParams"
                 @ad-loaded-callback="adLoadedCallback2"
