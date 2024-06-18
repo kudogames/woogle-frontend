@@ -55,7 +55,12 @@ const relatedSearch = ref()
 const adLoadComplete = ref(false)
 
 // Ad 加载完成回调
-const adLoadedCallback = () => {
+const adLoadedCallback = (
+    containerName: string,
+    adsLoaded: boolean,
+    isExperimentVariant: boolean,
+    callbackOptions: Object
+) => {
     adLoadComplete.value = true
     // 曝光埋点
     serverTrackImpressionEvent({
@@ -74,19 +79,19 @@ const adLoadedCallback = () => {
 //         : 'layout,utm_content,campaign_id,cfgKey,utm_content,utm_campaign,arb_direct,styleID,ad_group_id,arb_campaign_id,utm_medium,utm_source,cpc,ad_id,utm_campaign,click_id,_ckttl,network,section_id,utm_source,subDomain,account'
 
 const ignoredPageParams =
-    'layout,utm_content,campaign_id,cfgKey,utm_content,utm_campaign,arb_direct,styleID,ad_group_id,arb_campaign_id,utm_medium,utm_source,cpc,ad_id,utm_campaign,click_id,_ckttl,network,section_id,utm_source,subDomain,account'
+    'layout,utm_content,campaign_id,cfgKey,utm_content,utm_campaign,arb_direct,styleID,ad_group_id,arb_campaign_id,utm_medium,utm_source,cpc,ad_id,utm_campaign,click_id,_ckttl,network,section_id,utm_source,subDomain,account,pgttl'
 
 onMounted(() => {
-    const e = new URLSearchParams(window.location.search)
-    e.set('pgttl', uuidv4())
-    window.history.replaceState(null, '', '?' + e.toString())
+    // const e = new URLSearchParams(window.location.search)
+    // e.set('pgttl', uuidv4())
+    // window.history.replaceState(null, '', '?' + e.toString())
     relatedSearch.value.loadAd()
 })
 </script>
 
 <template>
     <div>
-        <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
+        <div>
             <QHeader class="bg-#000">
                 <template #search>
                     <SearchBar :search-text="slug" class="w-full rd-40px xl-w-600px xl-rd-10px" />
@@ -95,7 +100,7 @@ onMounted(() => {
         </div>
 
         <div class="mx-auto max-w-1200px min-h-100vh px-10px">
-            <header :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }" class="py-20px">
+            <header class="py-20px">
                 <h1 class="my-10px text-left text-16px font-bold lg-text-24px md-text-20px sm-text-18px">
                     {{ searchArticle.title }}
                 </h1>
@@ -114,10 +119,11 @@ onMounted(() => {
                 :referrer-ad-creative="searchArticle.referrerAdCreative"
                 :ignored-page-params="ignoredPageParams"
                 :track-params="trackParams"
+                :manual-load="false"
                 @ad-loaded-callback="adLoadedCallback"
             />
 
-            <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }" class="w-full">
+            <div class="w-full">
                 <!-- <div class="pb-200px pt-10px text-center text-12px" :style="{ display: readMore ? 'none' : 'block' }">
                     <div class="cursor-pointer" @click="readMoreClick">Read More</div>
                 </div> -->
@@ -133,7 +139,7 @@ onMounted(() => {
                 <article id="articleContent" class="py-10px" v-html="searchArticle.content"></article>
             </div>
         </div>
-        <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
+        <div>
             <base-footer />
             <back-top />
             <cookie-consent />
