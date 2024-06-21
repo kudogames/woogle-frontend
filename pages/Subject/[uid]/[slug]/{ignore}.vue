@@ -18,12 +18,6 @@ const { data, error } = await useFetch<APIResponseType<SearchAdPageType>>(
 
 const { searchAdInfo, searchArticle } = data.value?.data ?? ({} as SearchAdPageType)
 
-const readMore = ref(false)
-
-const readMoreClick = () => {
-    readMore.value = true
-}
-
 const keys = ['utm_campaign', 'utm_content', 'utm_medium', 'utm_source']
 const [clickId, campaignId, adGroupId, adId] = keys.map((key) => (query[key] as string) ?? '')
 
@@ -34,6 +28,7 @@ interface TrackParams {
     adId: string
     channelId: string
     tmpl: string
+    saiId?: string
 }
 
 // 跟踪参数，带到下一页
@@ -44,6 +39,7 @@ const trackParams: TrackParams = {
     adGroupId,
     adId,
     tmpl: 'Subject',
+    saiId: searchAdInfo.uid,
 }
 
 // relatedSearch 组件

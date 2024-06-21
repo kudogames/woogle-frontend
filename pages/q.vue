@@ -12,7 +12,7 @@ definePageMeta({
     layout: 'q-layout',
 })
 const {
-    query: { channelId, q: searchText, clickId, campaignId, adGroupId, adId, tmpl },
+    query: { channelId, q: searchText, clickId, campaignId, adGroupId, adId, tmpl, saiId },
 } = useRoute() as unknown as {
     query: {
         channelId: string
@@ -22,6 +22,7 @@ const {
         adGroupId: string
         adId: string
         tmpl: string
+        saiId: string
     }
 }
 
@@ -101,10 +102,10 @@ useHead({
 })
 
 const { data, error } = await useFetch<APIResponseType<QPageType>>(`/api/v1/article/page/q`, {
-    params: { q: searchText },
+    params: { saiId, q: searchText },
     headers: { accept: 'application/json' },
 })
-const { searchArticleList, tagList = [] } = data.value?.data ?? ({} as QPageType)
+const { isOwn, searchArticleList, tagList = [] } = data.value?.data ?? ({} as QPageType)
 
 const {
     public: { baseTrackUrl, frontUrl, adsenseSearchId },
@@ -133,6 +134,7 @@ const trackSearch = () => {
                         adId,
                         channelId,
                         keyword: searchText,
+                        isOwn,
                         resultsStyleId: tmplInfo.styleId,
                         termsStyleId: tmplInfo.styleId,
                     })
@@ -196,6 +198,7 @@ loadingMoreData<Article>({
     url: `/api/v1/article/page/q`,
     oldDataList: searchArticleList,
     size: 36,
+    page: ref(2),
     dataLoading,
     query: {
         q: searchText,

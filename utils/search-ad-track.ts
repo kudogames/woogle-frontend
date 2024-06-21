@@ -9,6 +9,7 @@ interface ServerTrackClickEventParams {
     keyword: string
     resultsStyleId: string
     termsStyleId: string
+    isOwn: boolean
 }
 
 interface ServerTrackImpressionEventParams {
@@ -44,6 +45,7 @@ export const serverTrackClickEvent = (params: ServerTrackClickEventParams) => {
     trackUrlParams.set('keyword', params.keyword)
     trackUrlParams.set('termsStyleId', params.termsStyleId)
     trackUrlParams.set('resultsStyleId', params.resultsStyleId)
+    trackUrlParams.set('isOwn', params.isOwn.toString())
 
     trackUrl.search = trackUrlParams.toString()
     sendTrackRequest(trackUrl.toString())

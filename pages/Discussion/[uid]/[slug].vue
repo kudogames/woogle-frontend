@@ -59,6 +59,7 @@ interface TrackParams {
     adId?: string
     channelId: string
     tmpl: string
+    saiId?: string
 }
 
 // 跟踪参数，带到下一页
@@ -66,6 +67,7 @@ const trackParams: TrackParams = {
     channelId: searchAdInfo.channelId,
     ...adInfo,
     tmpl: 'Discussion',
+    saiId: searchAdInfo.uid,
 }
 
 const ignoredPageParams =

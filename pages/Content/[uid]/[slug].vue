@@ -36,6 +36,7 @@ interface TrackParams {
     adId: string
     channelId: string
     tmpl: string
+    saiId?: string
 }
 
 // 跟踪参数，带到下一页
@@ -46,6 +47,7 @@ const trackParams: TrackParams = {
     adGroupId,
     adId,
     tmpl: 'Content',
+    saiId: searchAdInfo.uid,
 }
 
 // relatedSearch 组件

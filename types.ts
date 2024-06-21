@@ -45,6 +45,7 @@ interface IndexPageType {
     editorsArticleList: Article[]
 }
 interface QPageType {
+    isOwn: boolean
     tagList: [string[]]
     searchArticleList: Article[]
 }
