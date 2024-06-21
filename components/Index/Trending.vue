@@ -55,15 +55,15 @@ const headImgList = [
             <p class="line-clamp-1 text-14px color-#6e6e6e">{{ item.description }}</p>
 
             <div class="flex items-center">
-                <div class="w-80px flex flex-shrink-0">
-                    <div class="relative w-full overflow-hidden rd-40px bg-gray-2 pt-40px">
+                <div class="w-60px flex flex-shrink-0">
+                    <div class="relative w-30px overflow-hidden rd-30px bg-gray-2 pt-30px">
                         <img
                             v-lazy="headImgList[index % headImgList.length].img"
                             class="absolute left-0 top-0 h-full w-full object-contain"
                             :alt="item.title"
                         />
                     </div>
-                    <div class="relative left--10px w-full overflow-hidden rd-40px bg-gray-2 pt-40px">
+                    <div class="relative left--10px w-30px overflow-hidden rd-30px bg-gray-2 pt-30px">
                         <img
                             v-lazy="headImgList[(index + 1) % headImgList.length].img"
                             class="absolute left-0 top-0 h-full w-full object-contain"
