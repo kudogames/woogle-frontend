@@ -46,26 +46,32 @@ const headImgList = [
                     :alt="item.title"
                 />
             </div>
-            <span class="pt-8px text-12px color-#6e6e6e90 lt-md-block lt-lg-hidden">{{
-                formattedDate(item.updateTime)
-            }}</span>
-            <h2 class="line-clamp-1 text-20px font-bold group-hover:color-#0155ff">
-                {{ item.title }}
-            </h2>
+            <div class="flex justify-between pt-8px text-12px color-#6e6e6e90">
+                <span class="text-12px color-#6e6e6e90">{{ formattedDate(item.updateTime) }}</span>
+                <span class="">5 min read </span>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <h2 class="line-clamp-1 text-20px font-bold group-hover:color-#0155ff">
+                    {{ item.title }}
+                </h2>
+                <div class="i-svg-arrow h-30px w-30px flex-shrink-0 bg-#0155ff"></div>
+            </div>
+
             <p class="line-clamp-1 text-14px color-#6e6e6e">{{ item.description }}</p>
 
             <div class="flex items-center">
                 <div class="w-80px flex flex-shrink-0">
                     <div class="relative w-full overflow-hidden rd-40px bg-gray-2 pt-40px">
                         <img
-                            v-lazy="headImgList[index % headImgList.length].img"
+                            v-lazy="headImgList[(index + 2) % headImgList.length].img"
                             class="absolute left-0 top-0 h-full w-full object-contain"
                             :alt="item.title"
                         />
                     </div>
                     <div class="relative left--10px w-full overflow-hidden rd-40px bg-gray-2 pt-40px">
                         <img
-                            v-lazy="headImgList[(index + 1) % headImgList.length].img"
+                            v-lazy="headImgList[(index + 4) % headImgList.length].img"
                             class="absolute left-0 top-0 h-full w-full object-contain"
                             :alt="item.title"
                         />
@@ -73,9 +79,9 @@ const headImgList = [
                 </div>
                 <div class="w-full flex items-center justify-between">
                     <p class="line-clamp-1 w-[calc(100%-20px)] color-#0155ff">
-                        {{ headImgList[index % headImgList.length].name }} ,
-                        {{ headImgList[(index + 1) % headImgList.length].name }} ,
-                        {{ headImgList[(index + 3) % headImgList.length].name }} ...likes
+                        {{ headImgList[(index + 2) % headImgList.length].name }} ,
+                        {{ headImgList[(index + 4) % headImgList.length].name }} ,
+                        {{ headImgList[(index + 1) % headImgList.length].name }} ...likes
                     </p>
                     <div class="i-svg-ph--heart-fill h-20px w-20px bg-#ff627f"></div>
                 </div>

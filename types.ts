@@ -52,9 +52,9 @@ interface RelatedArticlePageType {
     recommendArticleList: Article[]
 }
 interface CategoryPageType {
-    currentCategory: Category
-    categoryArticleList: Article[]
-    latestPostsList: Article[]
+    topArticle: Article
+    trendingArticleList: Article[]
+    recentArticleList: Article[]
 }
 interface ArticlePageType {
     currentArticle: Article
