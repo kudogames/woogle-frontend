@@ -52,7 +52,7 @@ const { topArticle, trendingArticleList, recentArticleList } = data.value?.data 
                         />
                         <span
                             class="absolute left-10px top-10px rd-29px bg-#e86187 px-16px py-4px text-14px font-bold color-white opacity-80"
-                            >{{ topArticle.category.name }}</span
+                            >{{ categoryMap[category] }}</span
                         >
                     </div>
                     <div class="w-full flex flex-col justify-between px-10px sm-w-[calc(50%-20px)]">

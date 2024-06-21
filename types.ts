@@ -14,6 +14,7 @@ interface Article {
     title: string
     coverImg: string
     category: Category
+    readTime?: number
     tag: string[]
     rank: number
     content: string

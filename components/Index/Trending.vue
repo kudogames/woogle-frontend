@@ -72,7 +72,7 @@ const headImgList = [
                     </div>
                 </div>
                 <div class="w-full flex items-center justify-between">
-                    <p class="line-clamp-1 w-[calc(100%-20px)] color-#0155ff">
+                    <p class="line-clamp-1 w-[calc(100%-20px)] text-14px color-#0155ff">
                         {{ headImgList[index % headImgList.length].name }} ,
                         {{ headImgList[(index + 1) % headImgList.length].name }} ,
                         {{ headImgList[(index + 3) % headImgList.length].name }} ...likes

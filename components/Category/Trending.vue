@@ -48,14 +48,14 @@ const headImgList = [
             </div>
             <div class="flex justify-between pt-8px text-12px color-#6e6e6e90">
                 <span class="text-12px color-#6e6e6e90">{{ formattedDate(item.updateTime) }}</span>
-                <span class="">5 min read </span>
+                <span class="">{{ item.readTime }} min read </span>
             </div>
 
             <div class="flex items-center justify-between">
                 <h2 class="line-clamp-1 text-20px font-bold group-hover:color-#0155ff">
                     {{ item.title }}
                 </h2>
-                <div class="i-svg-arrow h-30px w-30px flex-shrink-0 bg-#0155ff"></div>
+                <div class="i-svg-ic-arrow h-24px w-24px flex-shrink-0 bg-#0155ff"></div>
             </div>
 
             <p class="line-clamp-1 text-14px color-#6e6e6e">{{ item.description }}</p>
