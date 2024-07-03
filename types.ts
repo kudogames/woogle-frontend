@@ -60,7 +60,7 @@ interface CategoryPageType {
 }
 interface ArticlePageType {
     currentArticle: Article
-    relatedArticleList: Article[]
+    popularArticleList: Article[]
 }
 
 interface SearchAdPageType {

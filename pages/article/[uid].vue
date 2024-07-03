@@ -11,7 +11,7 @@ const {
 const { data, error } = await useFetch<APIResponseType<ArticlePageType>>(`/api/v1/article/page/article/${uid}`, {
     headers: { accept: 'application/json' },
 })
-const { currentArticle, relatedArticleList } = data.value?.data ?? {}
+const { currentArticle, popularArticleList } = data.value?.data ?? ({} as ArticlePageType)
 useHead({
     title: currentArticle?.title,
 })
@@ -35,32 +35,56 @@ onMounted(() => {
 </script>
 
 <template>
-    <div>
-        <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
-            <base-header />
-        </div>
-        <div class="pt-[70px]">
+    <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
+        <IndexHeader />
+
+        <div class="bg-#fff pt-[50px]">
             <div class="mx-auto max-w-[1200px]">
-                <div class="py-[50px]">
-                    <SearchBar
-                        :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"
-                        class="mx-auto max-w-[900px] w-full rd-[40px] px-[10px]"
-                    />
-                </div>
+                <TopicSearchBar
+                    :placeholder="' '"
+                    :button-class="' px-60px bg-#193774'"
+                    :svg="`i-svg-bold-search-bar bg-#fff`"
+                    class="mx-auto my-30px w-full b-2px b-#193774 rd-10px lg-w-800px"
+                />
 
-                <div class="flex flex-col md-flex-row">
-                    <div class="w-full px-[10px] md-w-[calc(100%-300px)]">
+                <div class="flex flex-col gap-10px md-flex-row">
+                    <div class="w-full px-[10px] md-w-[calc(100%-310px)]">
                         <!-- 页面导航 -->
-                        <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
-                            <div class="line-clamp-1 text-[12px] color-gray-4">
-                                <a class="hover:color-color1" href="/">Home</a> > {{ currentArticle?.title }}
-                            </div>
 
-                            <!-- 文章标题与简介 -->
-                            <div class="py-[10px]">
-                                <h1 class="py-[10px] text-[24px] font-bold">{{ currentArticle?.title }}</h1>
-                                <p class="text-[14px] color-[#4d5156]">{{ currentArticle?.description }}</p>
+                        <div
+                            class="line-clamp-1 w-full flex items-center justify-between gap-10px text-[12px] color-gray-4"
+                        >
+                            <div class="flex items-center">
+                                <a href="/">
+                                    <div class="i-svg-article-home h-18px w-18px flex-shrink-0 color-#193774"></div>
+                                </a>
+                                <div class="i-svg-arrow h-18px w-18px flex-shrink-0 color-#193774"></div>
+
+                                <p :title="currentArticle.title" class="line-clamp-1 color-#0155ff">
+                                    {{ currentArticle.title }}
+                                </p>
                             </div>
+                            <div class="flex flex-shrink-0 gap-50px">
+                                <span>{{ 'Published on ' + formattedDate(currentArticle.updateTime) }}</span>
+                                <span>{{ currentArticle.readTime }} min read </span>
+                            </div>
+                        </div>
+
+                        <!-- 文章标题与简介 -->
+                        <div class="font-roboto-bold">
+                            <h1 class="py-[10px] text-26px font-bold">{{ currentArticle.title }}</h1>
+                            <p class="text-[14px] color-#193774">{{ currentArticle.description }}</p>
+                        </div>
+                        <!-- 图片 -->
+
+                        <div
+                            class="relative my-20px w-full flex flex-shrink-0 overflow-hidden pt-calc[1200,628] lg-w-45% lg-pt-calc[1200,628,45]"
+                        >
+                            <img
+                                v-lazy="currentArticle?.coverImg"
+                                class="absolute left-0 top-0 h-full w-full object-contain"
+                                :alt="currentArticle?.title"
+                            />
                         </div>
 
                         <!-- 相关搜索 -->
@@ -72,36 +96,25 @@ onMounted(() => {
                             :referrer-ad-creative="currentArticle?.referrerAdCreative"
                             @ad-loaded-callback="adLoadedCallback"
                         />
-                        <!-- 图片 -->
-                        <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
-                            <div
-                                class="relative w-full flex flex-shrink-0 overflow-hidden border-2 border-[#efdcca] rd-lg pt-52.12%"
-                            >
-                                <img
-                                    v-lazy="currentArticle?.coverImg"
-                                    class="absolute left-0 top-0 h-full w-full object-contain"
-                                    :alt="currentArticle?.title"
-                                />
-                            </div>
 
-                            <div id="articleContent" class="py-[10px]" v-html="currentArticle?.content"></div>
-                        </div>
+                        <div
+                            id="articleContent"
+                            class="font-roboto-bold py-[10px]"
+                            v-html="currentArticle?.content"
+                        ></div>
                     </div>
 
-                    <div
-                        :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }"
-                        class="w-full flex-shrink-0 md-w-[300px]"
-                    >
-                        <RelatedArticles class="mb-[60px]" :articles="relatedArticleList" />
+                    <div class="w-full flex-shrink-0 px-10px md-w-[300px]">
+                        <div class="text-20px font-bold leading-20px">Popular Articles</div>
+                        <PopularArticles class="py-16px" :article-list="popularArticleList" />
                     </div>
                 </div>
             </div>
         </div>
-        <div :style="{ visibility: adLoadComplete ? 'visible' : 'hidden' }">
-            <base-footer class="bg-color1" />
-            <back-top />
-            <cookie-consent />
-        </div>
+
+        <base-footer class="bg-color1" />
+        <back-top />
+        <cookie-consent />
     </div>
 </template>
 
@@ -120,7 +133,7 @@ onMounted(() => {
 
     h2 {
         display: block;
-        font-size: 1.5em;
+        font-size: 20px;
         margin-block-start: 0.83em;
         margin-block-end: 0.83em;
         margin-inline-start: 0px;

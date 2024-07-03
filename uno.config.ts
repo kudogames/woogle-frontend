@@ -19,6 +19,7 @@ export default defineConfig({
             scale: 1.2,
             collections: {
                 svg: FileSystemIconLoader('./assets/svg'),
+                'svg-article': FileSystemIconLoader('./assets/svg/article'),
             },
         }),
         presetTypography(),
@@ -29,6 +30,10 @@ export default defineConfig({
                 },
                 sora: {
                     name: 'Sora',
+                },
+                'roboto-bold': {
+                    name: 'Roboto',
+                    weights: [700],
                 },
             },
         }),
