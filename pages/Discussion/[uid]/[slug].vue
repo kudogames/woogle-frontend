@@ -25,7 +25,32 @@ const { data, error } = await useFetch<APIResponseType<DiscussionPageType>>(
 )
 
 const { searchAdInfo, searchArticle, shareArticleList } = data.value?.data ?? ({} as DiscussionPageType)
+useHead({
+    title: searchArticle?.title,
 
+    meta: [
+        {
+            name: 'description',
+            content: searchArticle?.description,
+        },
+        {
+            property: 'og:title',
+            content: searchArticle?.title,
+        },
+        {
+            property: 'og:description',
+            content: searchArticle?.description,
+        },
+        {
+            name: 'twitter:title',
+            content: searchArticle?.title,
+        },
+        {
+            name: 'twitter:description',
+            content: searchArticle?.description,
+        },
+    ],
+})
 const adKeysMap = {
     utm_campaign: 'clickId',
     utm_content: 'campaignId',

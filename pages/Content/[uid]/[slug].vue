@@ -19,7 +19,32 @@ const { data, error } = await useFetch<APIResponseType<SearchAdPageType>>(
 )
 
 const { searchAdInfo, searchArticle } = data.value?.data ?? ({} as SearchAdPageType)
+useHead({
+    title: searchArticle?.title,
 
+    meta: [
+        {
+            name: 'description',
+            content: searchArticle?.description,
+        },
+        {
+            property: 'og:title',
+            content: searchArticle?.title,
+        },
+        {
+            property: 'og:description',
+            content: searchArticle?.description,
+        },
+        {
+            name: 'twitter:title',
+            content: searchArticle?.title,
+        },
+        {
+            name: 'twitter:description',
+            content: searchArticle?.description,
+        },
+    ],
+})
 const readMore = ref(false)
 
 const readMoreClick = () => {

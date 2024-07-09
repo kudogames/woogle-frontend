@@ -18,7 +18,32 @@ const { data, error } = await useFetch<APIResponseType<SearchAdPageType>>(
 )
 
 const { searchAdInfo, searchArticle } = data.value?.data ?? ({} as SearchAdPageType)
+useHead({
+    title: searchArticle?.title,
 
+    meta: [
+        {
+            name: 'description',
+            content: searchArticle?.description,
+        },
+        {
+            property: 'og:title',
+            content: searchArticle?.title,
+        },
+        {
+            property: 'og:description',
+            content: searchArticle?.description,
+        },
+        {
+            name: 'twitter:title',
+            content: searchArticle?.title,
+        },
+        {
+            name: 'twitter:description',
+            content: searchArticle?.description,
+        },
+    ],
+})
 const keys = ['utm_campaign', 'utm_content', 'utm_medium', 'utm_source']
 const [clickId, campaignId, adGroupId, adId] = keys.map((key) => (query[key] as string) ?? '')
 

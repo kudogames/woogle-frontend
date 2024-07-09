@@ -14,6 +14,29 @@ const { data, error } = await useFetch<APIResponseType<ArticlePageType>>(`/api/v
 const { currentArticle, popularArticleList } = data.value?.data ?? ({} as ArticlePageType)
 useHead({
     title: currentArticle?.title,
+
+    meta: [
+        {
+            name: 'description',
+            content: currentArticle?.description,
+        },
+        {
+            property: 'og:title',
+            content: currentArticle?.title,
+        },
+        {
+            property: 'og:description',
+            content: currentArticle?.description,
+        },
+        {
+            name: 'twitter:title',
+            content: currentArticle?.title,
+        },
+        {
+            name: 'twitter:description',
+            content: currentArticle?.description,
+        },
+    ],
 })
 // relatedSearch 组件
 const relatedSearch = ref()
@@ -99,7 +122,7 @@ onMounted(() => {
 
                         <div
                             id="articleContent"
-                            class="font-roboto-bold py-[10px]"
+                            class="py-[10px] font-roboto-bold"
                             v-html="currentArticle?.content"
                         ></div>
                     </div>
