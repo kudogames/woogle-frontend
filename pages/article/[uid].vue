@@ -7,10 +7,13 @@ definePageMeta({
 const {
     params: { uid },
 } = useRoute('article-uid')
-
-const { data, error } = await useFetch<APIResponseType<ArticlePageType>>(`/api/v1/article/page/article/${uid}`, {
+const url = `/api/v1/article/page/article/${uid}`
+const { data, error } = await useFetch<APIResponseType<ArticlePageType>>(url, {
     headers: { accept: 'application/json' },
 })
+if (error.value?.statusCode) {
+    handleError(url, (error.value ?? {}) as ApiErrorType<ArticlePageType>)
+}
 const { currentArticle, popularArticleList } = data.value?.data ?? ({} as ArticlePageType)
 useHead({
     title: currentArticle?.title,

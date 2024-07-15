@@ -1,85 +1,137 @@
 interface NewDataType<T> {
-    newDataList: T[]
+    [key: string]: T[]
 }
 
-interface PageResponseType<T> {
+export interface PageResponseType<T> {
     msg: string
     data: T
-    next?: number | null
+    next: number | null
     previous?: number | null
     count?: number
 }
 
-interface LoadingMoreDataParams<T> {
-    url?: string
-    oldDataList?: T[]
+interface LoadingMoreDataParamsType<T> {
+    url: string
+    oldData: { [key: string]: T[] }
     dataLoading?: Ref<boolean>
-    query?: object
-}
-type PageParams<T> = {
     page?: Ref<number>
-    size: number
-} & {
-    [P in keyof T]?: T[P]
+    size?: number
+    delay?: number
+    query?: object
+    fetchOptions?: object
 }
 
-export function loadingMoreData<T>(options: PageParams<LoadingMoreDataParams<T>>) {
-    const { url = '', oldDataList = [], size = 24, dataLoading = ref(false), query, page = ref(1) } = options
-    // const dataLoading: Ref<boolean> = ref(false)
-    const hasMoreData: Ref<boolean> = ref(true)
+interface URLSearchParamsType {
+    page: string
+    size: string
+    [key: string]: string
+}
 
-    // 加载数据
-    const loadMoreData = async (oldDataList: T[]) => {
-        // 没有数据并且或者不在底部时，不触发
-        if (dataLoading.value || !hasMoreData.value) return
-        dataLoading.value = true
+export class GetMoreData<T> {
+    /**
+     * @param {string} url 请求地址
+     * @param {T[] | { [key: string]: T[] }} oldData 旧数据
+     * @param {number} [size=24] 每页数据量
+     * @param {number} [page=2] 当前页数
+     * @param {number} [delay=800] 节流延迟
+     * @param {object} [query] 查询参数
+     * @param {object} [fetchOptions] 请求配置
+     * @param {Ref<boolean>} [dataLoading] 数据加载状态
+     * @param {Ref<boolean>} [hasMoreData] 是否还有更多数据
+     * @param {Function} [debouncedHandleScroll] 节流处理滚动事件
+     *
+     */
+    url: string
+    oldData: { [key: string]: T[] }
+    size: number
+    page: Ref<number>
+    delay: number
 
-        // 等待0.2秒
-        // await new Promise((resolve) => setTimeout(resolve, time))
+    query?: object
+    fetchOptions?: object
 
-        // 请求数据
-        try {
-            const params = new URLSearchParams({
-                page: page.value.toString(),
-                size: size.toString(),
-                ...query,
-            }).toString()
-            const data = await $fetch<PageResponseType<NewDataType<T>>>(`${url}?${params}`, {
-                headers: { accept: 'application/json' },
-            })
+    dataLoading: Ref<boolean>
+    hasMoreData: Ref<boolean>
+    debouncedHandleScroll: () => void
+    constructor(options: LoadingMoreDataParamsType<T>) {
+        const { url, oldData, size = 24, page = ref(2), delay = 800, query, fetchOptions } = options
+        this.url = url
+        this.size = size
+        this.delay = delay
 
-            const newDataList = data.data.newDataList
-            const next = data.next
+        this.oldData = oldData
+        this.query = query
+        this.page = page
+        this.fetchOptions = fetchOptions
 
-            oldDataList.push(...(newDataList ?? []))
+        this.dataLoading = ref(false)
+        this.hasMoreData = ref(true)
+        this.debouncedHandleScroll = throttle(this.handleScroll, this.delay)
+    }
 
-            page.value++
-            hasMoreData.value = Boolean(next)
-        } catch (e) {
-            hasMoreData.value = false
-        } finally {
-            dataLoading.value = false
+    getURLParams() {
+        return {
+            page: this.page.value.toString(),
+            size: this.size.toString(),
+            ...this.query,
         }
     }
-    // 监听滚动是否到达底部
-    const handleScroll = () => {
+
+    async fetch(url: string, params: URLSearchParamsType, options?: object) {
+        return await $fetch<PageResponseType<NewDataType<T>>>(url, {
+            params,
+            headers: { accept: 'application/json' },
+            ...options,
+        })
+    }
+
+    parseData(data: PageResponseType<NewDataType<T>>) {
+        const newData = data.data
+
+        for (const key in newData) {
+            this.oldData[key].push(...newData[key])
+        }
+    }
+
+    async loadMoreData() {
+        if (this.dataLoading.value || !this.hasMoreData.value) return
+        this.dataLoading.value = true
+
+        try {
+            const params = this.getURLParams()
+
+            const data = await this.fetch(this.url, params, this.fetchOptions)
+            this.parseData(data)
+
+            this.page.value++
+            this.hasMoreData.value = Boolean(data.next)
+        } catch (e) {
+            this.hasMoreData.value = false
+        } finally {
+            this.dataLoading.value = false
+        }
+        if (!this.hasMoreData.value) {
+            window.removeEventListener('scroll', this.debouncedHandleScroll)
+        }
+    }
+
+    handleScroll = () => {
         const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
         const windowHeight = document.documentElement.clientHeight
         const scrollHeight = document.documentElement.scrollHeight
 
         if (scrollTop + windowHeight >= scrollHeight * 0.8) {
-            // 到达底部时，调用loadMoreData 函数
-            loadMoreData(oldDataList)
+            this.loadMoreData()
         }
     }
 
-    // 监听滚动是否到达底部
-    onBeforeMount(() => {
-        loadMoreData(oldDataList)
-        window.addEventListener('scroll', handleScroll)
-    })
+    addScrollListener() {
+        onBeforeMount(() => {
+            window.addEventListener('scroll', this.debouncedHandleScroll)
+        })
+    }
 
-    onUnmounted(() => {
-        window.removeEventListener('scroll', handleScroll)
-    })
+    run() {
+        this.addScrollListener()
+    }
 }

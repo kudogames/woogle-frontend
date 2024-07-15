@@ -9,12 +9,14 @@ const {
 definePageMeta({
     layout: 'search-ad-layout',
 })
-const { data, error } = await useFetch<APIResponseType<SearchAdPageType>>(
-    `/api/v1/article/page/Content/${uid}/${slug}`,
-    {
-        headers: { accept: 'application/json' },
-    }
-)
+
+const url = `/api/v1/article/page/Content/${uid}/${slug}`
+const { data, error } = await useFetch<APIResponseType<SearchAdPageType>>(url, {
+    headers: { accept: 'application/json' },
+})
+if (error.value?.statusCode) {
+    handleError(url, (error.value ?? {}) as ApiErrorType<SearchAdPageType>)
+}
 
 const { searchAdInfo, searchArticle } = data.value?.data ?? ({} as SearchAdPageType)
 useHead({

@@ -18,13 +18,13 @@ withDefaults(
             class="group rd-lg transition-transform duration-300 ease"
             :href="`/article/${item.uid}`"
         >
-            <div class="font-roboto-bold flex items-center gap-10px">
+            <div class="flex items-center gap-10px font-roboto-bold">
                 <div class="w-80px">
                     <div class="relative overflow-hidden rd-lg pt-100%">
                         <img
                             v-lazy="item.coverImg"
                             class="absolute left-0 top-0 h-full w-full object-cover"
-                            :alt="currentArticle?.title"
+                            :alt="item.title"
                         />
                         <div
                             class="absolute right-4px top-4px h-20px w-20px flex flex-center rd-20px bg-#e86187 text-14px color-white"

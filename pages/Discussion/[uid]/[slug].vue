@@ -17,12 +17,13 @@ const {
     public: { frontUrl },
 } = useRuntimeConfig()
 
-const { data, error } = await useFetch<APIResponseType<DiscussionPageType>>(
-    `/api/v1/article/page/Discussion/${uid}/${slug}`,
-    {
-        headers: { accept: 'application/json' },
-    }
-)
+const url = `/api/v1/article/page/Discussion/${uid}/${slug}`
+const { data, error } = await useFetch<APIResponseType<DiscussionPageType>>(url, {
+    headers: { accept: 'application/json' },
+})
+if (error.value?.statusCode) {
+    handleError(url, (error.value ?? {}) as ApiErrorType<DiscussionPageType>)
+}
 
 const { searchAdInfo, searchArticle, shareArticleList } = data.value?.data ?? ({} as DiscussionPageType)
 useHead({

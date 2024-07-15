@@ -7,9 +7,14 @@ const {
     params: { categoryName: category },
 } = useRoute('c-categoryName')
 
-const { data, error } = await useFetch<APIResponseType<CategoryPageType>>(`/api/v1/article/page/c/${category}`, {
+const url = `/api/v1/article/page/c/${category}`
+const { data, error } = await useFetch<PageResponseType<CategoryPageType>>(url, {
     headers: { accept: 'application/json' },
+    params: { page: 1, size: 24 },
 })
+if (error.value?.statusCode) {
+    handleError(url, (error.value ?? {}) as ApiErrorType<CategoryPageType>)
+}
 
 const categoryMap: Record<string, string> = {
     'vehicle-donation': 'Vehicle Donation',
@@ -24,16 +29,14 @@ useHead({
 
 const { topArticle, trendingArticleList, recentArticleList } = data.value?.data ?? ({} as CategoryPageType)
 
-// const dataLoading = ref(false)
-// loadingMoreData<Article>({
-//     url: `/api/v1/article/page/get-data/${category}`,
-//     oldDataList: recentArticleList,
-//     size: 12,
-//     dataLoading,
-//     query: {
-//         type: 'category',
-//     },
-// })
+if (data.value?.next) {
+    const getMoreData = new GetMoreData<Article>({
+        url: `/api/v1/article/data/c/${category}`,
+        oldData: { recentArticleList },
+        size: 24,
+    })
+    getMoreData.run()
+}
 </script>
 
 <template>

@@ -101,10 +101,26 @@ useHead({
     ],
 })
 
-const { data, error } = await useFetch<APIResponseType<QPageType>>(`/api/v1/article/page/q`, {
-    params: { saiId, q: searchText },
+if (!searchText) {
+    // 无搜索词
+    // 重定向到首页
+    navigateTo(
+        {
+            path: '/',
+        },
+        { redirectCode: 301 }
+    )
+}
+
+const url = `/api/v1/article/page/q`
+const { data, error } = await useFetch<PageResponseType<QPageType>>(url, {
+    params: { saiId, q: searchText, page: 1, size: 36 },
     headers: { accept: 'application/json' },
 })
+if (error.value?.statusCode) {
+    handleError(url, (error.value ?? {}) as ApiErrorType<QPageType>)
+}
+
 const { isOwn, searchArticleList, tagList = [] } = data.value?.data ?? ({} as QPageType)
 
 const {
@@ -193,17 +209,14 @@ onMounted(() => {
     trackSearch()
 })
 
-const dataLoading = ref(false)
-loadingMoreData<Article>({
-    url: `/api/v1/article/page/q`,
-    oldDataList: searchArticleList,
-    size: 36,
-    page: ref(2),
-    dataLoading,
-    query: {
-        q: searchText,
-    },
-})
+if (data.value?.next) {
+    const getMoreData = new GetMoreData<Article>({
+        url: `/api/v1/article/data/q`,
+        oldData: { searchArticleList },
+        size: 36,
+    })
+    getMoreData.run()
+}
 useHead({
     script: [
         {
