@@ -96,10 +96,13 @@ const trackParams: TrackParams = {
     saiId: searchAdInfo.uid,
 }
 
+// const ignoredPageParams =
+//     Math.random() < 0.1
+//         ? 'layout,utm_content,campaign_id,cfgKey,utm_content,utm_campaign,arb_direct,styleID,ad_group_id,arb_campaign_id,utm_medium,utm_source,cpc,ad_id,utm_campaign,click_id,_ckttl,network,section_id,utm_source,subDomain,account,pgttl'
+//         : 'layout,utm_content,campaign_id,cfgKey,utm_content,utm_campaign,arb_direct,styleID,ad_group_id,arb_campaign_id,utm_medium,utm_source,cpc,ad_id,utm_campaign,click_id,_ckttl,network,section_id,utm_source,subDomain,account'
+
 const ignoredPageParams =
-    Math.random() < 0.1
-        ? 'layout,utm_content,campaign_id,cfgKey,utm_content,utm_campaign,arb_direct,styleID,ad_group_id,arb_campaign_id,utm_medium,utm_source,cpc,ad_id,utm_campaign,click_id,_ckttl,network,section_id,utm_source,subDomain,account,pgttl'
-        : 'layout,utm_content,campaign_id,cfgKey,utm_content,utm_campaign,arb_direct,styleID,ad_group_id,arb_campaign_id,utm_medium,utm_source,cpc,ad_id,utm_campaign,click_id,_ckttl,network,section_id,utm_source,subDomain,account'
+    'layout,utm_content,campaign_id,cfgKey,utm_content,utm_campaign,arb_direct,styleID,ad_group_id,arb_campaign_id,utm_medium,utm_source,cpc,ad_id,utm_campaign,click_id,_ckttl,network,section_id,utm_source,subDomain,account,pgttl'
 
 // relatedSearch 组件
 const relatedSearch1 = ref()
@@ -135,9 +138,9 @@ const adLoadedCallback2 = () => {
 }
 const { isMobile } = useDevice()
 onMounted(() => {
-    const e = new URLSearchParams(window.location.search)
-    e.set('pgttl', uuidv4())
-    window.history.replaceState(null, '', '?' + e.toString())
+    // const e = new URLSearchParams(window.location.search)
+    // e.set('pgttl', uuidv4())
+    // window.history.replaceState(null, '', '?' + e.toString())
     relatedSearch1.value.loadAd()
     relatedSearch2.value.loadAd()
     if (isMobile) window.scrollTo({ top: 60, behavior: 'smooth' })
