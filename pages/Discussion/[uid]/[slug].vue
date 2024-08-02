@@ -141,8 +141,8 @@ onMounted(() => {
     // const e = new URLSearchParams(window.location.search)
     // e.set('pgttl', uuidv4())
     // window.history.replaceState(null, '', '?' + e.toString())
-    relatedSearch1.value.loadAd()
-    relatedSearch2.value.loadAd()
+    // relatedSearch1.value.loadAd()
+    // relatedSearch2.value.loadAd()
     if (isMobile) window.scrollTo({ top: 60, behavior: 'smooth' })
 })
 const showTip = ref(false)
@@ -230,7 +230,6 @@ const shareArticleUrl = (uid: string, slug: string) => {
                 v-show="adLoadComplete1 && adLoadComplete2"
                 ref="relatedSearch1"
                 class="w-full"
-                search-text="keyword"
                 :ele-id="'relatedSearch1'"
                 :terms="searchAdInfo.terms"
                 :channel-id="searchAdInfo.channelId"
@@ -238,6 +237,7 @@ const shareArticleUrl = (uid: string, slug: string) => {
                 :style-id="relatedDiscussionStyleId"
                 :referrer-ad-creative="searchArticle.referrerAdCreative"
                 :track-params="trackParams"
+                :manual-load="false"
                 @ad-loaded-callback="adLoadedCallback1"
             />
             <div class="relative mb-25px mt-40px w-full flex-center flex-shrink-0 overflow-hidden rd-15px pt-66.7%">
@@ -260,6 +260,7 @@ const shareArticleUrl = (uid: string, slug: string) => {
                 :ignored-page-params="ignoredPageParams"
                 :referrer-ad-creative="searchArticle.referrerAdCreative"
                 :track-params="trackParams"
+                :manual-load="false"
                 @ad-loaded-callback="adLoadedCallback2"
             />
             <div

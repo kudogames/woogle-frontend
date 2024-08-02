@@ -112,7 +112,7 @@ onMounted(() => {
     // const e = new URLSearchParams(window.location.search)
     // e.set('pgttl', uuidv4())
     // window.history.replaceState(null, '', '?' + e.toString())
-    relatedSearch.value.loadAd()
+    // relatedSearch.value.loadAd()
 })
 </script>
 
